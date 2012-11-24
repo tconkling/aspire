@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="yes"?>
-<project name="aspirin" default="aslib" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+<project name="aspire" default="aslib" basedir="." xmlns:artifact="urn:maven-artifact-ant">
   <property name="asrc.dir" location="src/main/as"/>
   <property name="deploy.dir" location="dist"/>
 

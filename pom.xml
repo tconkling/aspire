@@ -7,17 +7,13 @@
     <version>5</version>
   </parent>
 
-  <groupId>com.threerings</groupId>
-  <artifactId>aspirin</artifactId>
+  <groupId>com.timconkling</groupId>
+  <artifactId>aspire</artifactId>
   <packaging>swc</packaging>
-  <version>1.14-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
 
-  <name>Aspirin</name>
+  <name>aspire</name>
   <description>Utilities for use in developing ActionScript applications.</description>
-  <url>http://github.com/threerings/aspirin/</url>
-  <issueManagement>
-    <url>http://github.com/threerings/aspirin/issues</url>
-  </issueManagement>
 
   <licenses>
     <license>
@@ -26,20 +22,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <developers>
-    <developer>
-      <id>ray.j.greenwell</id>
-      <name>Ray Greenwell</name>
-      <email>ray.j.greenwell@gmail.com</email>
-    </developer>
-  </developers>
-
-  <scm>
-    <connection>scm:git:git://github.com/threerings/aspirin.git</connection>
-    <developerConnection>scm:git:git@github.com:threerings/aspirin.git</developerConnection>
-    <url>http://github.com/threerings/aspirin/</url>
-  </scm>
 
   <properties>
     <flex.version>4.6.0.23201</flex.version>
