@@ -86,11 +86,6 @@ public class XmlUtil
         }
     }
 
-    public static function newClassMap () :XmlClassMapBuilder
-    {
-        return new XmlClassMapBuilder();
-    }
-
     public static function hasChild (xml :XML, name :String) :Boolean
     {
         return xml.child(name).length() > 0;
@@ -112,34 +107,6 @@ public class XmlUtil
         return children[0];
     }
 
-    public static function instantiateNode (classMap :XmlClassMap, xml :XML, ...initArgs) :*
-    {
-        var ctor :Function = requireClassMapping(xml, classMap);
-
-        initArgs = Util.unfuckVarargs(initArgs);
-
-        // Discover whether the class an XML arg in its first position. If it does,
-        // pass 'xml' as the first argument to the constructor
-        var initArgTypes :Array = classMap.getConstructorParamTypes();
-        if (initArgTypes.length > 0 &&
-            initArgTypes[0] == XML &&
-            initArgs.length == initArgTypes.length - 1) {
-            initArgs.unshift(xml);
-        }
-
-        return ctor.apply(null, initArgs);
-    }
-
-    public static function instantiateAllChildren (classMap :XmlClassMap, xml :XML,
-        ...initArgs) :Array
-    {
-        var objects :Array = [];
-        for each (var childXml :XML in xml.elements()) {
-            objects.push(instantiateNode(classMap, childXml, initArgs));
-        }
-        return objects;
-    }
-
     public static function map (xs :XMLList, f :Function) :Array
     {
         const result :Array = [];
@@ -149,24 +116,9 @@ public class XmlUtil
         return result;
     }
 
-    [Deprecated(replacement="hasAttr(xml, name)")]
-    public static function hasAttribute (xml :XML, name :String) :Boolean
-    {
-        return hasAttr(xml, name);
-    }
-
     public static function hasAttr (xml :XML, name :String) :Boolean
     {
         return (null != xml.attribute(name)[0]);
-    }
-
-    public static function getStringArrayAttr (
-        xml :XML, name :String, stringMapping :Array, defaultValue :* = undefined) :int
-    {
-        return getAttr(xml, name, defaultValue,
-            function (attrString :String) :int {
-                return parseStringMember(attrString, stringMapping);
-            });
     }
 
     public static function getUintAttr (xml :XML, name :String, defaultValue :* = undefined) :uint
@@ -307,47 +259,6 @@ public class XmlUtil
             values.push(Enum.valueOf(enumType, enumName));
         }
         return values;
-    }
-
-    protected static function requireClassMapping (xml :XML, classMap :XmlClassMap) :Function
-    {
-        var ctor :Function = classMap.getConstructor(xml);
-        if (ctor == null) {
-            throw new XmlReadError("No mapped class for '" + xml.localName() + "'", xml);
-        }
-        return ctor;
-    }
-
-    protected static function parseStringMember (stringVal :String, stringMapping :Array) :int
-    {
-        var value :int;
-        var foundValue :Boolean;
-
-        // try to map the attribute value to one of the Strings in stringMapping
-        for (var ii :int = 0; ii < stringMapping.length; ++ii) {
-            if (String(stringMapping[ii]) == stringVal) {
-                value = ii;
-                foundValue = true;
-                break;
-            }
-        }
-
-        if (!foundValue) {
-            // we couldn't perform the mapping - generate an appropriate error string
-            var errString :String = "could not convert '" + stringVal +
-                "' to the correct value (must be one of: ";
-            for (ii = 0; ii < stringMapping.length; ++ii) {
-                errString += String(stringMapping[ii]);
-                if (ii < stringMapping.length - 1) {
-                    errString += ", ";
-                }
-            }
-            errString += ")";
-
-            throw new ArgumentError(errString);
-        }
-
-        return value;
     }
 }
 }

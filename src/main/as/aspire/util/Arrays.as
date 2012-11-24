@@ -500,8 +500,7 @@ public class Arrays
     public static function transpose (x :Array, y :Array, ...arrays) :Array
     {
         arrays.splice(0, 0, x, y);
-        var len :int = Math.max.apply(null, arrays.map(Util.adapt(function (arr :Array) :int
-        {
+        var len :int = Math.max.apply(null, arrays.map(F.adapt(function (arr :Array) :int {
             return arr.length;
         })));
         var result :Array = new Array(len);

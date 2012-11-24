@@ -4,6 +4,7 @@
 package aspire.util.maps {
 
 import aspire.util.Comparators;
+import aspire.util.F;
 import aspire.util.Map;
 import aspire.util.Util;
 
@@ -38,7 +39,7 @@ public class SortedMap extends ForwardingMap
     override public function values () :Array
     {
         // not very optimal, but we need to return the values in order...
-        return keys().map(Util.adapt(get));
+        return keys().map(F.adapt(get));
     }
 
     /** @inheritDoc */

@@ -45,46 +45,6 @@ public class Util
     }
 
     /**
-     * Return a var-args function that will attempt to pass only the arguments accepted by the
-     * passed-in function. Does not work if the passed-in function is varargs, and anyway
-     * then you don't need adapting, do you? An array of arguments to prepend to each call may also
-     * be given.
-     *
-     *
-     * @example
-     * <listing version="3.0">
-     * // let's say you have this function
-     * function printUser (user :User) :void
-     * {
-     *     trace("UserId: " + user.id + ", name: " + user.name);
-     * }
-     *
-     * // and you want to print all your users. (Normally the forEach callback requires 3 params)
-     * allUsersArray.forEach(Util.adapt(printUser))
-     *
-     * // now let's say you have this function
-     * function printUser (indent :String, user :User) :void
-     * {
-     *     trace(indent + "UserId: " + user.id + ", name: " + user.name);
-     * }
-     *
-     * // and you want to print all your users with some spaces before each line:
-     * allUsersArray.forEach(Util.adapt(printUser, "   "))
-     * </listing>
-     */
-    public static function adapt (fn :Function, ... prepend) :Function
-    {
-        return function (... args) :* {
-            // fit the args to the fn, filling in 'undefined' if growing
-            if (prepend.length > 0) {
-                args.unshift.apply(null, prepend);
-            }
-            Arrays.resize(args, fn.length);
-            return fn.apply(null, args);
-        };
-    }
-
-    /**
      * Returns a function that will call each of the given functions in order. The return values
      * of the functions are ignored. The returned function returns void.
      */

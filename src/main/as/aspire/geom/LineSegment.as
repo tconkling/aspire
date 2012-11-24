@@ -1,10 +1,11 @@
 //
 // aspire
 
-package aspire.util {
+package aspire.geom {
 
 import flash.geom.Matrix;
 import flash.geom.Point;
+import aspire.util.Equalable;
 
 /**
  * Merely a typed container for two Points.

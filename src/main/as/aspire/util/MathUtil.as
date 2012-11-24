@@ -8,7 +8,6 @@ package aspire.util {
  */
 public class MathUtil
 {
-    /** Tau, the circle constant (&#932;) http://tauday.com */
     public static const TWO_PI :Number = Math.PI * 2;
 
     /**
