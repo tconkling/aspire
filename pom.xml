@@ -45,22 +45,6 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>nochump</groupId>
-      <artifactId>zip</artifactId>
-      <version>1.0</version>
-      <type>swc</type>
-    </dependency>
-    <dependency>
-      <groupId>com.adobe.flex.framework</groupId>
-      <artifactId>flex-framework</artifactId>
-      <version>${flex.version}</version>
-      <type>pom</type>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
-
   <build>
     <sourceDirectory>src/main/as</sourceDirectory>
     <plugins>
