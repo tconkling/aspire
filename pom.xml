@@ -45,6 +45,15 @@
     </pluginRepository>
   </pluginRepositories>
 
+  <dependencies>
+    <dependency>
+      <groupId>nochump</groupId>
+      <artifactId>zip</artifactId>
+      <version>1.0</version>
+      <type>swc</type>
+    </dependency>
+  </dependencies>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
