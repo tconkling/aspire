@@ -13,8 +13,9 @@ import flash.utils.Timer;
  * thane, "frames" are a minimum of 1ms apart, but may be more if other code doesn't yield.
  */
 public class FrameDelayer
+    implements Registration
 {
-    public function FrameDelayer()
+    public function FrameDelayer ()
     {
         _t.addEventListener(TimerEvent.TIMER, handleTimer);
     }
@@ -50,7 +51,7 @@ public class FrameDelayer
     /**
      * Cancels any delayed functions waiting to be called and prevents any future calls to delay.
      */
-    public function shutdown() :void
+    public function cancel () :void
     {
         _t.stop();
         _t = null;

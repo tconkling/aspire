@@ -10,47 +10,19 @@ import flash.utils.Timer;
  * Allows a group of Timers to be cancelled en masse.
  */
 public class TimerGroup
+    implements Registration
 {
-    /**
-     * Constructs a new TimerGroup.
-     *
-     * @param parent (optional) if not null, this TimerGroup will become a child of
-     * the specified parent TimerGroup. If the parent is shutdown, or its cancelAllTimers()
-     * function is called, this TimerGroup will be similarly affected.
-     */
-    public function TimerGroup (parent :TimerGroup = null)
-    {
-        if (parent != null) {
-            _parent = parent;
-            parent._children.push(this);
-        }
-    }
-
     /**
      * Cancels all running timers, and disconnects the TimerGroup from its parent, if it has one.
      * All child TimerGroups will be shutdown as well.
      *
      * It's an error to call any function on TimerGroup after shutdown() has been called.
      */
-    public function shutdown () :void
+    public function cancel () :void
     {
-        // detach from our parent, if we have one
-        if (_parent != null) {
-            Arrays.removeFirst(_parent._children, this);
-        }
-
-        // shutdown our children
-        for each (var child :TimerGroup in _children) {
-            child._parent = null;
-            child.shutdown();
-        }
-
-        cancelAllTimers();
-
+        stopAllTimers();
         // null out internal state so that future calls to this TimerGroup will
         // immediately NPE
-        _parent = null;
-        _children = null;
         _timers = null;
     }
 
@@ -62,7 +34,7 @@ public class TimerGroup
         var timer :Timer = createTimer(delay, 1);
         timer.addEventListener(TimerEvent.TIMER,
             function (e :TimerEvent) :void {
-                cancelTimer(timer);
+                stopTimer(timer);
                 callback(e);
             });
 
@@ -103,6 +75,9 @@ public class TimerGroup
      */
     public function delayFrames (frames :int, fn :Function, args :Array = null) :void
     {
+        if (_delayer == null) {
+            _delayer = new FrameDelayer();
+        }
         _delayer.delayFrames(frames, fn, args);
     }
 
@@ -110,7 +85,7 @@ public class TimerGroup
      * Stops all timers being managed by this TimerGroup.
      * All child TimerGroups will have their timers stopped as well.
      */
-    public function cancelAllTimers () :void
+    public function stopAllTimers () :void
     {
         for each (var timer :Timer in _timers) {
             // we can have holes in the _timers array
@@ -121,18 +96,16 @@ public class TimerGroup
 
         _timers = [];
 
-        _delayer.shutdown();
-        _delayer = new FrameDelayer();
-
-        for each (var child :TimerGroup in _children) {
-            child.cancelAllTimers();
+        if (_delayer != null) {
+            _delayer.cancel();
+            _delayer = null;
         }
     }
 
     /**
      * Causes the timer to be stopped, and removed from the TimerGroup's list of managed timers.
      */
-    public function cancelTimer (timer :Timer) :void
+    public function stopTimer (timer :Timer) :void
     {
         var idx :int = Arrays.indexOf(_timers, timer);
         if (idx >= 0) {
@@ -142,9 +115,7 @@ public class TimerGroup
         timer.stop();
     }
 
-    protected var _delayer :FrameDelayer = new FrameDelayer();
+    protected var _delayer :FrameDelayer;
     protected var _timers :Array = []; // Array<Timer>
-    protected var _parent :TimerGroup;
-    protected var _children :Array = []; // Array<TimerGroup>
 }
 }
