@@ -37,7 +37,7 @@ public class Predicates
     /**
      * Create a predicate that tests if the item has the specified property (with any value).
      */
-    public static function createHasProperty (propName :String) :Function
+    public static function hasProperty (propName :String) :Function
     {
         return function (item :*, ... _) :Boolean {
             return (item != null) && item.hasOwnProperty(propName);
@@ -48,7 +48,7 @@ public class Predicates
      * Create a predicate that tests if the item has a property that is Util.equals() to the
      * specified value.
      */
-    public static function createPropertyEquals (propName :String, value :Object) :Function
+    public static function propertyEquals (propName :String, value :Object) :Function
     {
         return function (item :*, ... _) :Boolean {
             return (item != null) && item.hasOwnProperty(propName) &&
@@ -59,7 +59,7 @@ public class Predicates
     /**
      * Create a predicate that returns true if the item is in the specified Array.
      */
-    public static function createIn (array :Array) :Function
+    public static function isIn (array :Array) :Function
     {
         return function (item :*, ... _) :Boolean {
             return Arrays.contains(array, item);
@@ -69,7 +69,7 @@ public class Predicates
     /**
      * Return a predicate that tests for items that are "is" the specified class.
      */
-    public static function createIs (clazz :Class) :Function
+    public static function isClass (clazz :Class) :Function
     {
         return function (item :*, ... _) :Boolean {
             return (item is clazz);
@@ -79,7 +79,7 @@ public class Predicates
     /**
      * Return a predicate that is the negation of the specified predicate.
      */
-    public static function createNot (pred :Function) :Function
+    public static function not (pred :Function) :Function
     {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
@@ -91,7 +91,7 @@ public class Predicates
      * Return a predicate that is true if all the specified predicate Functions are true
      * for any item.
      */
-    public static function createAnd (... predicates) :Function
+    public static function and (... predicates) :Function
     {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
@@ -108,7 +108,7 @@ public class Predicates
      * Return a predicate that is true if any of the specified predicate Functions are true
      * for any item.
      */
-    public static function createOr (... predicates) :Function
+    public static function or (... predicates) :Function
     {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
