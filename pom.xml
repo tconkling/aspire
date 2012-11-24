@@ -46,7 +46,7 @@
   </pluginRepositories>
 
   <build>
-    <sourceDirectory>src/main/as</sourceDirectory>
+    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.sonatype.flexmojos</groupId>
