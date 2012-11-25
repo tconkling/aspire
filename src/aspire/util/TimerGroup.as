@@ -13,10 +13,8 @@ public class TimerGroup
     implements Registration
 {
     /**
-     * Cancels all running timers, and disconnects the TimerGroup from its parent, if it has one.
-     * All child TimerGroups will be shutdown as well.
-     *
-     * It's an error to call any function on TimerGroup after shutdown() has been called.
+     * Cancels all running timers.
+     * It's an error to call any function on TimerGroup after cancel() has been called.
      */
     public function cancel () :void
     {
@@ -83,7 +81,6 @@ public class TimerGroup
 
     /**
      * Stops all timers being managed by this TimerGroup.
-     * All child TimerGroups will have their timers stopped as well.
      */
     public function stopAllTimers () :void
     {
