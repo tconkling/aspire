@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>5</version>
-  </parent>
 
   <groupId>com.timconkling</groupId>
   <artifactId>aspire</artifactId>
   <packaging>swc</packaging>
   <version>1.0-SNAPSHOT</version>
-
-  <name>aspire</name>
-  <description>Utilities for use in developing ActionScript applications.</description>
-
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License (LGPL), Version 2.1</name>
-      <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
 </project>

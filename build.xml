@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <project name="aspire" default="aslib" basedir="." xmlns:artifact="urn:maven-artifact-ant">
-  <property name="asrc.dir" location="src"/>
+  <property name="asrc.dir" location="src/main/as"/>
   <property name="deploy.dir" location="dist"/>
 
   <property name="ooo-build.vers" value="2.5"/>
@@ -29,6 +29,8 @@
           description="Builds the library (for consistency with Java builds)..">
   </target>
 
+  <!-- Set maven.deploy.repo to deploy to a local maven repo:
+        ant -Dmaven.deploy.repo=file:///path/to/local/repo maven-deploy -->
   <target name="maven-deploy" depends="aslib"
           description="Deploys build artifacts to a Maven repository.">
     <mavendeploy file="${deploy.dir}/${ant.project.name}.swc" pom="pom.xml" srcdir="${asrc.dir}"/>
