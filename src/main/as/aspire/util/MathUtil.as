@@ -23,7 +23,15 @@ public class MathUtil
      */
     public static function toRadians (degrees :Number) :Number
     {
-        return degrees * Math.PI / 180;
+        return degrees * D2R;
+    }
+
+    /**
+     * Converts radians to degrees.
+     */
+    public static function toDegrees (radians :Number) :Number
+    {
+        return radians * R2D
     }
 
     /**
@@ -33,14 +41,6 @@ public class MathUtil
     {
         var norm :Number = radians % TWO_PI;
         return (norm >= 0) ? norm : (norm + TWO_PI);
-    }
-
-    /**
-     * Converts radians to degrees.
-     */
-    public static function toDegrees (radians :Number) :Number
-    {
-        return radians * 180 / Math.PI;
     }
 
     /**
@@ -119,5 +119,8 @@ public class MathUtil
     {
         return ((dividend >= 0) ? dividend : (dividend - divisor + 1))/divisor;
     }
+
+    protected static const D2R :Number = Math.PI / 180.0;
+    protected static const R2D :Number = 180.0 / Math.PI;
 }
 }
