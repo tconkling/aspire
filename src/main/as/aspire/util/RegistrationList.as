@@ -21,13 +21,13 @@ public class RegistrationList
      */
     public function cancel () :void
     {
-        var regs :Array = _regs;
-        _regs = [];
+        var regs :Vector.<Registration> = _regs;
+        _regs = new <Registration>[];
         for each (var r :Registration in regs) {
             r.cancel();
         }
     }
 
-    protected var _regs :Array = [];
+    protected var _regs :Vector.<Registration> = new <Registration>[];
 }
 }
