@@ -1,8 +1,7 @@
 //
 // aspire
 
-package aspire.util
-{
+package aspire.util {
 
 /**
  * Contains methods that should be in Array, but aren't. Additionally
@@ -21,29 +20,6 @@ public class Arrays
     public static function create (size :uint, val :* = null) :Array
     {
         return padToLength([], size, val);
-    }
-
-    /**
-     * Creates a new Array filled with a range of numbers.
-     *
-     * @param min Number to start counting from.
-     * @param max Number to count up to, exclusive.
-     * @param step Count by this number. Must be positive.
-     * @return [min, max)
-     */
-    public static function range (min :Number, max :Number = 0, step :Number = 1) :Array
-    {
-        var list :Array = [];
-        if (min > max) {
-            var swap :Number = max;
-            max = min;
-            min = swap;
-        }
-        while (min < max) {
-            list.push(min);
-            min += step;
-        }
-        return list;
     }
 
     /**
