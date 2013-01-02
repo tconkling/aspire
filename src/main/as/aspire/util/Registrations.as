@@ -21,9 +21,11 @@ class FunctionRegistration
     }
 
     public function cancel () :void {
-        var f :Function = _f;
-        _f = null;
-        f();
+        if (_f != null) {
+            var f :Function = _f;
+            _f = null;
+            f();
+        }
     }
 
     protected var _f :Function;
