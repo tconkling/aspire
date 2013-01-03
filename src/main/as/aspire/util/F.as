@@ -95,10 +95,7 @@ public class F
      * Return a var-args function that will attempt to pass only the arguments accepted by the
      * passed-in function. Does not work if the passed-in function is varargs, and anyway
      * then you don't need adapting, do you?
-     *
-     * @see com.threerings.util.Util#adapt()
      */
-    // TODO: Reconcile with Util.adapt, having both is weird
     public static function adapt (f :Function) :Function
     {
         return function (... args) :* {
