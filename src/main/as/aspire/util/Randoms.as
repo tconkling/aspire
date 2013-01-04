@@ -103,7 +103,7 @@ public class Randoms
      * Pick a random element from the specified Array, or return <code>ifEmpty</code>
      * if it is empty.
      */
-    public function pick (list :Array, ifEmpty :*) :*
+    public function pick (list :Array, ifEmpty :* = undefined) :*
     {
         if (list == null || list.length == 0) {
             return ifEmpty;
@@ -116,7 +116,7 @@ public class Randoms
      * Pick a random element from the specified Array and remove it from the list, or return
      * <code>ifEmpty</code> if it is empty.
      */
-    public function pluck (list :Array, ifEmpty :*) :*
+    public function pluck (list :Array, ifEmpty :* = undefined) :*
     {
         if (list == null || list.length == 0) {
             return ifEmpty;
