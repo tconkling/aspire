@@ -138,6 +138,12 @@ public class Vector2
         return new Point(x, y);
     }
 
+    /** Converts the Vector2 to a PointI. */
+    public function toPointI () :PointI
+    {
+        return new PointI(x, y);
+    }
+
     /**
      * Returns a copy of this Vector2.
      */
