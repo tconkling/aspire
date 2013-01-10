@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="aspire.geom.PointI"/>
+    <classEntry path="aspire.util.JsonUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
