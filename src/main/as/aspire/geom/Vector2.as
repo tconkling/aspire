@@ -18,14 +18,13 @@ public class Vector2
     public var x :Number = 0;
     public var y :Number = 0;
 
-    /**
-     * Infinite vector - often the result of normalizing a zero vector.
-     */
+    /** Infinite vector - often the result of normalizing a zero vector. */
     public static const INFINITE :Vector2 = new Vector2(Infinity, Infinity);
+    
+    /** Epsilon value used to compare Vector equivalency */
+    public static const EPSILON :Number = 0.0001;
 
-    /**
-     * Converts Point p to a Vector2.
-     */
+    /** Converts Point p to a Vector2. */
     public static function fromPoint (p :Point, out :Vector2 = null) :Vector2
     {
         out = (out || new Vector2());
@@ -46,9 +45,7 @@ public class Vector2
         return out;
     }
 
-    /**
-     * Parses a string in the form "x,y" into a Vector2
-     */
+    /** Parses a string in the form "x,y" into a Vector2 */
     public static function fromString (str :String, out :Vector2 = null) :Vector2
     {
         var parts :Array = str.split(",");
@@ -89,9 +86,7 @@ public class Vector2
         return Math.acos(dot / (len1 * len2));
     }
 
-    /**
-     * Constructs a Vector2 from the given values.
-     */
+    /** Constructs a Vector2 from the given values. */
     public function Vector2 (x :Number = 0, y :Number = 0)
     {
         this.x = x;
@@ -104,26 +99,20 @@ public class Vector2
         return (x == 0 && y == 0);
     }
 
-    /**
-     * Sets the vector's components to the given values.
-     */
+    /** Sets the vector's components to the given values. */
     public function set (x :Number, y :Number) :void
     {
         this.x = x;
         this.y = y;
     }
 
-    /**
-     * Returns the dot product of this vector with vector v.
-     */
+    /** Returns the dot product of this vector with vector v. */
     public function dot (v :Vector2) :Number
     {
         return x * v.x + y * v.y;
     }
 
-    /**
-     * Converts the Vector2 to a Point.
-     */
+    /** Converts the Vector2 to a Point. */
     public function toPoint (out :Point = null) :Point
     {
         out = (out || new Point());
@@ -150,26 +139,20 @@ public class Vector2
         return out;
     }
 
-    /**
-     * Returns the angle represented by this Vector2, in radians.
-     */
+    /** Returns the angle represented by this Vector2, in radians. */
     public function get angle () :Number
     {
         var angle :Number = Math.atan2(y, x);
         return (angle >= 0 ? angle : angle + (2 * Math.PI));
     }
 
-    /**
-     * Returns this vector's length.
-     */
+    /** Returns this vector's length. */
     public function get length () :Number
     {
         return Math.sqrt(x * x + y * y);
     }
 
-    /**
-     * Sets this vector's length.
-     */
+    /** Sets this vector's length. */
     public function set length (newLen :Number) :void
     {
         var scale :Number = newLen / this.length;
@@ -178,9 +161,7 @@ public class Vector2
         y *= scale;
     }
 
-    /**
-     * Returns the square of this vector's length.
-     */
+    /** Returns the square of this vector's length. */
     public function get lengthSquared () :Number
     {
         return (x * x + y * y);
@@ -202,17 +183,13 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a rotated copy of this vector.
-     */
+    /** Returns a rotated copy of this vector. */
     public function rotate (radians :Number, out :Vector2 = null) :Vector2
     {
         return clone(out).rotateLocal(radians);
     }
 
-    /**
-     * Normalizes the vector in place and returns its original length.
-     */
+    /** Normalizes the vector in place and returns its original length. */
     public function normalizeLocalAndGetLength () :Number
     {
         var length :Number = this.length;
@@ -237,9 +214,7 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a normalized copy of the vector.
-     */
+    /** Returns a normalized copy of the vector. */
     public function normalize () :Vector2
     {
         return clone().normalizeLocal();
@@ -257,9 +232,7 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a copy of this vector added to 'v'.
-     */
+    /** Returns a copy of this vector added to 'v'. */
     public function add (v :Vector2, out :Vector2 = null) :Vector2
     {
         return clone(out).addLocal(v);
@@ -277,9 +250,7 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns (this - v).
-     */
+    /** Returns (this - v). */
     public function subtract (v :Vector2, out :Vector2 = null) :Vector2
     {
        return clone(out).subtractLocal(v);
@@ -296,9 +267,7 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a copy of this Vector2, offset by the specified amount.
-     */
+    /** Returns a copy of this Vector2, offset by the specified amount. */
     public function offset (xOffset :Number, yOffset :Number, out :Vector2 = null) :Vector2
     {
         return clone(out).offsetLocal(xOffset, yOffset);
@@ -320,9 +289,7 @@ public class Vector2
         return out;
     }
 
-    /**
-     * Scales this vector by value.
-     */
+    /** Scales this vector by value. */
     public function scaleLocal (value :Number) :Vector2
     {
         x *= value;
@@ -337,9 +304,7 @@ public class Vector2
         return clone(out).scaleLocal(value);
     }
 
-    /**
-     * Multiplies this vector's components by the given vector's components.
-     */
+    /** Multiplies this vector's components by the given vector's components. */
     public function multLocal (v :Vector2) :Vector2
     {
         x *= v.x;
@@ -347,17 +312,13 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a copy of this vector, multiplied by the given vector's components.
-     */
+    /** Returns a copy of this vector, multiplied by the given vector's components. */
     public function mult (v :Vector2, out :Vector2 = null) :Vector2
     {
         return clone(out).multLocal(v);
     }
 
-    /**
-     * Inverts the vector.
-     */
+    /** Inverts the vector. */
     public function invertLocal () :Vector2
     {
         x = -x;
@@ -366,21 +327,23 @@ public class Vector2
         return this;
     }
 
-    /**
-     * Returns a copy of the vector, inverted.
-     */
+    /** Returns a copy of the vector, inverted. */
     public function invert (out :Vector2 = null) :Vector2
     {
        return clone(out).invertLocal();
     }
 
-    /**
-     * Returns true if this vector is equal to v.
-     */
+    /** Returns true if this vector is exactly equal to v. */
     public function equals (obj :Object) :Boolean
     {
         var v :Vector2 = obj as Vector2;
         return (v != null && x == v.x && y == v.y);
+    }
+    
+    /** Returns true if this Vector's components are equal to v within EPSILON */
+    public function epsilonEquals (v :Vector2) :Boolean
+    {
+        return similar(v, EPSILON);
     }
 
     /**
