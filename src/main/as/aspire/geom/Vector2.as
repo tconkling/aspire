@@ -146,10 +146,14 @@ public class Vector2
 
     /**
      * Returns a copy of this Vector2.
+     * If 'out' is not null, it will be used for the clone.
      */
-    public function clone () :Vector2
+    public function clone (out :Vector2 = null) :Vector2
     {
-        return new Vector2(x, y);
+        out = (out || new Vector2());
+        out.x = x;
+        out.y = y;
+        return out;
     }
 
     /**
@@ -207,9 +211,9 @@ public class Vector2
     /**
      * Returns a rotated copy of this vector.
      */
-    public function rotate (radians :Number) :Vector2
+    public function rotate (radians :Number, out :Vector2 = null) :Vector2
     {
-        return clone().rotateLocal(radians);
+        return clone(out).rotateLocal(radians);
     }
 
     /**
@@ -262,9 +266,9 @@ public class Vector2
     /**
      * Returns a copy of this vector added to 'v'.
      */
-    public function add (v :Vector2) :Vector2
+    public function add (v :Vector2, out :Vector2 = null) :Vector2
     {
-        return clone().addLocal(v);
+        return clone(out).addLocal(v);
     }
 
     /**
@@ -282,9 +286,9 @@ public class Vector2
     /**
      * Returns (this - v).
      */
-    public function subtract (v :Vector2) :Vector2
+    public function subtract (v :Vector2, out :Vector2 = null) :Vector2
     {
-       return clone().subtractLocal(v);
+       return clone(out).subtractLocal(v);
     }
 
     /**
@@ -301,9 +305,9 @@ public class Vector2
     /**
      * Returns a copy of this Vector2, offset by the specified amount.
      */
-    public function offset (xOffset :Number, yOffset :Number) :Vector2
+    public function offset (xOffset :Number, yOffset :Number, out :Vector2 = null) :Vector2
     {
-        return clone().offsetLocal(xOffset, yOffset);
+        return clone(out).offsetLocal(xOffset, yOffset);
     }
 
     /**
@@ -311,13 +315,15 @@ public class Vector2
      * If ccw = true, the perpendicular vector is rotated 90 degrees counter-clockwise from this
      * vector, otherwise it's rotated 90 degrees clockwise.
      */
-    public function getPerp (ccw :Boolean = true) :Vector2
+    public function getPerp (ccw :Boolean = true, out :Vector2 = null) :Vector2
     {
+        out = (out || new Vector2());
         if (ccw) {
-            return new Vector2(-y, x);
+            out.set(-y, x);
         } else {
-            return new Vector2(y, -x);
+            out.set(y, -x);
         }
+        return out;
     }
 
     /**
@@ -332,9 +338,9 @@ public class Vector2
     }
 
     /** Returns (this * value). */
-    public function scale (value :Number) :Vector2
+    public function scale (value :Number, out :Vector2 = null) :Vector2
     {
-        return clone().scaleLocal(value);
+        return clone(out).scaleLocal(value);
     }
 
     /**
@@ -350,9 +356,9 @@ public class Vector2
     /**
      * Returns a copy of this vector, multiplied by the given vector's components.
      */
-    public function mult (v :Vector2) :Vector2
+    public function mult (v :Vector2, out :Vector2 = null) :Vector2
     {
-        return clone().multLocal(v);
+        return clone(out).multLocal(v);
     }
 
     /**
@@ -369,9 +375,9 @@ public class Vector2
     /**
      * Returns a copy of the vector, inverted.
      */
-    public function invert () :Vector2
+    public function invert (out :Vector2 = null) :Vector2
     {
-       return clone().invertLocal();
+       return clone(out).invertLocal();
     }
 
     /**

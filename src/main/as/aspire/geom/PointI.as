@@ -48,10 +48,16 @@ public class PointI
         return new Vector2(x, y);
     }
 
-    /** Returns a copy of this PointI. */
-    public function clone () :PointI
+    /** 
+     * Returns a copy of this PointI.
+     * If 'out' is not null, it will be used for the clone. 
+     */
+    public function clone (out :PointI = null) :PointI
     {
-        return new PointI(x, y);
+        out = (out || new PointI());
+        out.x = x;
+        out.y = y;
+        return out;
     }
 
     /**
@@ -67,9 +73,9 @@ public class PointI
     }
 
     /** Returns a copy of this point added to 'p'. */
-    public function add (p :PointI) :PointI
+    public function add (p :PointI, out :PointI = null) :PointI
     {
-        return clone().addLocal(p);
+        return clone(out).addLocal(p);
     }
 
     /**
@@ -85,9 +91,9 @@ public class PointI
     }
 
     /** Returns (this - p). */
-    public function subtract (p :PointI) :PointI
+    public function subtract (p :PointI, out :PointI = null) :PointI
     {
-        return clone().subtractLocal(p);
+        return clone(out).subtractLocal(p);
     }
 
     /**
@@ -102,9 +108,9 @@ public class PointI
     }
 
     /** Returns a copy of this PointI, offset by the specified amount. */
-    public function offset (xOffset :int, yOffset :int) :PointI
+    public function offset (xOffset :int, yOffset :int, out :PointI = null) :PointI
     {
-        return clone().offsetLocal(xOffset, yOffset);
+        return clone(out).offsetLocal(xOffset, yOffset);
     }
 
     /** Returns true if this PointI is equal to obj. */
