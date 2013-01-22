@@ -17,9 +17,11 @@ public class PointI
     public var y :int = 0;
 
     /** Converts Point p to a PointI */
-    public static function fromPoint (p :Point) :PointI
+    public static function fromPoint (p :Point, out :PointI = null) :PointI
     {
-        return new PointI(p.x, p.y);
+        out = (out || new PointI());
+        out.set(p.x, p.y);
+        return out;
     }
 
     /** Constructs a PointI from the given values. */
@@ -37,15 +39,19 @@ public class PointI
     }
 
     /** Converts the PointI to a Point. */
-    public function toPoint () :Point
+    public function toPoint (out :Point = null) :Point
     {
-        return new Point(x, y);
+        out = (out || new Point());
+        out.setTo(x, y);
+        return out;
     }
 
     /** Converts the PointI to a Vector2 */
-    public function toVector2 () :Vector2
+    public function toVector2 (out :Vector2 = null) :Vector2
     {
-        return new Vector2(x, y);
+        out = (out || new Vector2());
+        out.set(x, y);
+        return out;
     }
 
     /** 

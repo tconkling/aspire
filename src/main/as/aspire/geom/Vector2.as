@@ -8,7 +8,6 @@ import flash.geom.Point;
 import aspire.util.Equalable;
 import aspire.util.Preconditions;
 import aspire.util.StringUtil;
-import aspire.util.XmlUtil;
 
 /**
  * Basic 2D vector implementation.
@@ -27,52 +26,36 @@ public class Vector2
     /**
      * Converts Point p to a Vector2.
      */
-    public static function fromPoint (p :Point) :Vector2
+    public static function fromPoint (p :Point, out :Vector2 = null) :Vector2
     {
-        return new Vector2(p.x, p.y);
-    }
-
-    /**
-     * Creates a new Vector2 pointing from s to t.
-     */
-    public static function fromPoints (s :Point, t :Point) :Vector2
-    {
-        return new Vector2(t.x - s.x, t.y - s.y);
+        out = (out || new Vector2());
+        out.set(p.x, p.y);
+        return out;
     }
 
     /**
      * Creates a Vector2 of magnitude 'len' that has been rotated about the origin by 'radians'.
      */
-    public static function fromAngle (radians :Number, len :Number = 1) :Vector2
+    public static function fromAngle (radians :Number, len :Number = 1, out :Vector2 = null) :Vector2
     {
-       // we use the unit vector (1, 0)
-
-        return new Vector2(
+        out = (out || new Vector2());
+        // we use the unit vector (1, 0)
+        out.set(
             Math.cos(radians) * len,   // == len * (cos(theta)*x - sin(theta)*y)
             Math.sin(radians) * len);  // == len * (sin(theta)*x + cos(theta)*y)
-    }
-
-    /**
-     * Creates a Vector2 from attributes on <code>xml</code>.
-     */
-    public static function fromXml (xml :XML, xAttrName :String="x", yAttrName :String="y",
-        defaultValue :Vector2 = null) :Vector2
-    {
-        var x :Number = XmlUtil.getNumberAttr(xml, xAttrName,
-            (defaultValue != null ? defaultValue.x : undefined));
-        var y :Number = XmlUtil.getNumberAttr(xml, yAttrName,
-            (defaultValue != null ? defaultValue.y : undefined));
-        return new Vector2(x, y);
+        return out;
     }
 
     /**
      * Parses a string in the form "x,y" into a Vector2
      */
-    public static function fromString (str :String) :Vector2
+    public static function fromString (str :String, out :Vector2 = null) :Vector2
     {
         var parts :Array = str.split(",");
         Preconditions.checkState(parts.length == 2, "Bad format (should look like \"x,y\")");
-        return new Vector2(StringUtil.parseNumber(parts[0]), StringUtil.parseNumber(parts[1]));
+        out = (out || new Vector2());
+        out.set(StringUtil.parseNumber(parts[0]), StringUtil.parseNumber(parts[1]));
+        return out;
     }
 
     /**
@@ -80,12 +63,14 @@ public class Vector2
      * at proportion p, where p is in [0, 1], p = 0 means the result is equal to a,
      * and p = 1 means the result is equal to b.
      */
-    public static function interpolate (a :Vector2, b :Vector2, p :Number) :Vector2
+    public static function interpolate (a :Vector2, b :Vector2, p :Number, 
+        out :Vector2 = null) :Vector2
     {
-        // todo: maybe convert this into a non-static function, to fit the rest of the class?
+        out = (out || new Vector2());
         var q :Number = 1 - p;
-        return new Vector2(q * a.x + p * b.x,
-            q * a.y + p * b.y);
+        out.set(q * a.x + p * b.x,
+                q * a.y + p * b.y);
+        return out;
     }
 
     /**
@@ -139,15 +124,19 @@ public class Vector2
     /**
      * Converts the Vector2 to a Point.
      */
-    public function toPoint () :Point
+    public function toPoint (out :Point = null) :Point
     {
-        return new Point(x, y);
+        out = (out || new Point());
+        out.setTo(x, y);
+        return out;
     }
 
     /** Converts the Vector2 to a PointI. */
-    public function toPointI () :PointI
+    public function toPointI (out :PointI = null) :PointI
     {
-        return new PointI(x, y);
+        out = (out || new PointI());
+        out.set(x, y);
+        return out;
     }
 
     /**
@@ -157,8 +146,7 @@ public class Vector2
     public function clone (out :Vector2 = null) :Vector2
     {
         out = (out || new Vector2());
-        out.x = x;
-        out.y = y;
+        out.set(x, y);
         return out;
     }
 
