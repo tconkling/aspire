@@ -112,6 +112,12 @@ public class Vector2
         this.x = x;
         this.y = y;
     }
+    
+    /** Return true if this is the zero Vector */
+    public function get isZero () :Boolean
+    {
+        return (x == 0 && y == 0);
+    }
 
     /**
      * Sets the vector's components to the given values.
