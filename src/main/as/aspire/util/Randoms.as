@@ -5,20 +5,15 @@ package aspire.util {
 
 /**
  * <p>Provides utility routines to simplify obtaining randomized values.</p>
- *
- * Each instance of Randoms contains an underlying Random instance. If you wish to have a
- * private stream of pseudorandom numbers, pass an unshared Random to the constructor.
  */
 public class Randoms
 {
-    public static const RAND :Randoms = new Randoms(Random.createRandom());
-
     /**
      * Construct a Randoms.
      */
-    public function Randoms (rand :Random)
+    public function Randoms (stream :RandomStream)
     {
-        _r = rand;
+        _stream = stream;
     }
 
     /**
@@ -31,7 +26,7 @@ public class Randoms
      */
     public function getInt (high :int) :int
     {
-        return _r.nextInt(high);
+        return _stream.nextInt(high);
     }
 
     /**
@@ -42,7 +37,7 @@ public class Randoms
      */
     public function getInRange (low :int, high :int) :int
     {
-        return low + _r.nextInt(high - low);
+        return low + _stream.nextInt(high - low);
     }
 
     /**
@@ -53,7 +48,7 @@ public class Randoms
      */
     public function getNumber (high :Number) :Number
     {
-        return _r.nextNumber() * high;
+        return _stream.nextNumber() * high;
     }
 
     /**
@@ -62,7 +57,7 @@ public class Randoms
      */
     public function getNumberInRange (low :Number, high :Number) :Number
     {
-        return low + (_r.nextNumber() * (high - low));
+        return low + (_stream.nextNumber() * (high - low));
     }
 
     /**
@@ -72,7 +67,7 @@ public class Randoms
      */
     public function getChance (n :int) :Boolean
     {
-        return (0 == _r.nextInt(n));
+        return (0 == _stream.nextInt(n));
     }
 
     /**
@@ -80,7 +75,7 @@ public class Randoms
      */
     public function getProbability (p :Number) :Boolean
     {
-        return _r.nextNumber() < p;
+        return _stream.nextNumber() < p;
     }
 
     /**
@@ -88,43 +83,47 @@ public class Randoms
      */
     public function getBoolean () :Boolean
     {
-        return _r.nextBoolean();
+        return getChance(2);
     }
 
     /**
-     * Shuffle the specified list using our Random.
+     * Shuffle the specified array
      */
-    public function shuffle (list :Array) :void
+    public function shuffle (arr :Array) :void
     {
-        Arrays.shuffle(list, _r);
+        // starting from the end of the list, repeatedly swap the element in question with a
+        // random element previous to it up to and including itself
+        for (var ii :int = arr.length; ii > 1; ii--) {
+            Arrays.swap(arr, ii - 1, getInt(ii));
+        }
     }
 
     /**
      * Pick a random element from the specified Array, or return <code>ifEmpty</code>
      * if it is empty.
      */
-    public function pick (list :Array, ifEmpty :* = undefined) :*
+    public function pick (arr :Array, ifEmpty :* = undefined) :*
     {
-        if (list == null || list.length == 0) {
+        if (arr == null || arr.length == 0) {
             return ifEmpty;
         }
 
-        return list[_r.nextInt(list.length)];
+        return arr[_stream.nextInt(arr.length)];
     }
 
     /**
      * Pick a random element from the specified Array and remove it from the list, or return
      * <code>ifEmpty</code> if it is empty.
      */
-    public function pluck (list :Array, ifEmpty :* = undefined) :*
+    public function pluck (arr :Array, ifEmpty :* = undefined) :*
     {
-        if (list == null || list.length == 0) {
+        if (arr == null || arr.length == 0) {
             return ifEmpty;
         }
 
-        return list.splice(_r.nextInt(list.length), 1)[0];
+        return arr.splice(_stream.nextInt(arr.length), 1)[0];
     }
 
-    protected var _r :Random;
+    protected var _stream :RandomStream;
 }
 }

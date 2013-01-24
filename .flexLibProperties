@@ -3,6 +3,7 @@
   <includeClasses>
     <classEntry path="aspire.geom.PointI"/>
     <classEntry path="aspire.util.JsonUtil"/>
+    <classEntry path="aspire.util.RandomStream"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

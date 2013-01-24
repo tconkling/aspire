@@ -177,30 +177,11 @@ public class Arrays
     }
 
     /**
-     * Randomly shuffle the elements in the specified array.
-     *
-     * @param rando a random number generator to use, or null if you don't care.
-     */
-    public static function shuffle (arr :Array, rando :Random = null) :void
-    {
-        var randFunc :Function = (rando != null) ? rando.nextInt :
-                function (n :int) :int
-                {
-                    return int(Math.random() * n);
-                };
-        // starting from the end of the list, repeatedly swap the element in question with a
-        // random element previous to it up to and including itself
-        for (var ii :int = arr.length; ii > 1; ii--) {
-            swap(arr, ii-1, randFunc(ii));
-        }
-    }
-
-    /**
      * Swap the elements in the specified positions in the specified list.
      */
     public static function swap (arr :Array, ii :int, jj :int) :void
     {
-        var tmp :Object = arr[ii];
+        var tmp :* = arr[ii];
         arr[ii] = arr[jj];
         arr[jj] = tmp;
     }

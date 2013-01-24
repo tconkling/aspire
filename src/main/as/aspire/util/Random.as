@@ -12,11 +12,12 @@ package aspire.util {
  *    http://en.wikipedia.org/wiki/Mersenne_twister
  */
 public class Random
+    implements RandomStream
 {
     /**
      * Creates a pseudo random number generator with a random seed.
      */
-    public static function createRandom () :Random
+    public static function create () :Random
     {
         return new Random(uint(_seedUniquifier++ + uint(Math.random() * 4294967295)));
     }
@@ -45,27 +46,28 @@ public class Random
         _q = 1;
         _r = M;
     }
+    
+    /** Returns an int value where int.MIN_VALUE &lt;= value &lt;= int.MAX_VALUE */
+    public function next () :int
+    {
+        return int(nextBits(32));
+    }
 
     /**
      * Returns the an int value n where 0 &lt;= value &lt; n.
      *
-     * @param n the range to return. If this is set to 0 it will return a random integer value.
-     * Anything less than 0 will throw an error.
+     * @param n the range to return. Must be > 0.
      */
-    public function nextInt (n :int = 0) :int
+    public function nextInt (n :int) :int
     {
-        if (n < 0) {
+        if (n <= 0) {
             throw new Error("n must be positive");
-        }
-
-        if (n == 0) {
-            return int(next(32));
         }
 
         // Eyeball Sun's documentation of java.util.Random for an explanation of this while loop.
         var bits :int, val :int;
         do {
-            bits = int(next(31));
+            bits = int(nextBits(31));
             val = bits % n;
         } while (bits - val + (n - 1) < 0);
         return val;
@@ -76,7 +78,7 @@ public class Random
      */
     public function nextBoolean () :Boolean
     {
-        return next(1) != 0;
+        return nextBits(1) != 0;
     }
 
     /**
@@ -84,10 +86,10 @@ public class Random
      */
     public function nextNumber () :Number
     {
-        return next(32) / 4294967296;
+        return nextBits(32) / 4294967296;
     }
 
-    protected function next (bits: int) :uint
+    protected function nextBits (bits: int) :uint
     {
         var y :uint = (_x[_p] & UPPER_MASK) | (_x[_q] & LOWER_MASK);
         _x[_p] = _x[_r] ^ (y >>> 1) ^ ((y & 1) * MATRIX_A);
