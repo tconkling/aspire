@@ -9,11 +9,12 @@ package aspire.util {
 public class Randoms
 {
     /**
-     * Construct a Randoms.
+     * Construct a Randoms with the given RandomStream.
+     * If the stream is null, a default one will be created.
      */
-    public function Randoms (stream :RandomStream)
+    public function Randoms (stream :RandomStream = null)
     {
-        _stream = stream;
+        _stream = (stream || Random.create());
     }
 
     /**
