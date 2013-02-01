@@ -87,8 +87,7 @@ public class XmlUtil
     }
 
     public static function getSingleChild (xml :XML, name :String = "*",
-        defaultValue :* = undefined) :XML
-    {
+        defaultValue :* = undefined) :XML {
         var children :XMLList = xml.elements(name);
         if (children.length() == 0 && undefined !== defaultValue) {
             return defaultValue;
@@ -122,27 +121,23 @@ public class XmlUtil
         return getAttr(xml, name, defaultValue, StringUtil.parseInteger);
     }
 
-    public static function getNumberAttr (xml :XML, name :String, defaultValue :* = undefined)
-        :Number
-    {
+    public static function getNumberAttr (xml :XML, name :String,
+        defaultValue :* = undefined) :Number {
         return getAttr(xml, name, defaultValue, StringUtil.parseNumber);
     }
 
-    public static function getBooleanAttr (xml :XML, name :String, defaultValue :* = undefined)
-        :Boolean
-    {
+    public static function getBooleanAttr (xml :XML, name :String,
+        defaultValue :* = undefined) :Boolean {
         return getAttr(xml, name, defaultValue, StringUtil.parseBoolean);
     }
 
-    public static function getStringAttr (xml :XML, name :String, defaultValue :* = undefined)
-        :String
-    {
+    public static function getStringAttr (xml :XML, name :String,
+        defaultValue :* = undefined) :String {
         return getAttr(xml, name, defaultValue);
     }
 
     public static function getEnumAttr (
-        xml :XML, name :String, enumClazz :Class, defaultValue :* = undefined) :*
-    {
+        xml :XML, name :String, enumClazz :Class, defaultValue :* = undefined) :* {
         return getAttr(xml, name, defaultValue,
             function (value :String) :Enum {
                 return Enum.valueOf(enumClazz, value);
@@ -153,8 +148,7 @@ public class XmlUtil
      * Parses a string in the form "FOO,BAR,MONKEY" into a Set of Enums
      */
     public static function getEnumSetAttr (xml :XML, name :String, enumType :Class,
-        defaultValue :* = undefined) :Set
-    {
+        defaultValue :* = undefined) :Set {
         return getAttr(xml, name, defaultValue, function (value :String) :Set {
             return parseEnumSet(value, enumType);
         });
@@ -164,8 +158,7 @@ public class XmlUtil
      * Parses a string in the form "FOO,BAR,MONKEY" into an Array of Enums
      */
     public static function getEnumArrayAttr (xml :XML, name :String, enumType :Class,
-        defaultValue :* = undefined) :Array
-    {
+        defaultValue :* = undefined) :Array {
         return getAttr(xml, name, defaultValue, function (value :String) :Array {
             return parseEnumArray(value, enumType);
         });
