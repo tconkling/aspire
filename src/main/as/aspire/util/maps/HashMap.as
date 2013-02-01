@@ -19,15 +19,13 @@ public class HashMap extends AbstractMap
      *                     get before it is automatically resized. The default
      *                     value of 1.75 should be fine.
      */
-    public function HashMap (loadFactor :Number = 1.75)
-    {
+    public function HashMap (loadFactor :Number = 1.75) {
         _loadFactor = loadFactor;
         clear(); // build the _entries array
     }
 
     /** @inheritDoc */
-    public function put (key :Object, value :Object) :*
-    {
+    public function put (key :Object, value :Object) :* {
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
@@ -52,8 +50,7 @@ public class HashMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function get (key :Object) :*
-    {
+    public function get (key :Object) :* {
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
@@ -68,14 +65,12 @@ public class HashMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function containsKey (key :Object) :Boolean
-    {
+    public function containsKey (key :Object) :Boolean {
         return (undefined !== get(key));
     }
 
     /** @inheritDoc */
-    public function remove (key :Object) :*
-    {
+    public function remove (key :Object) :* {
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
@@ -104,16 +99,14 @@ public class HashMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function clear () :void
-    {
+    public function clear () :void {
         _entries = [];
         _entries.length = DEFAULT_BUCKETS;
         _size = 0;
     }
 
     /** @inheritDoc */
-    public function keys () :Array
-    {
+    public function keys () :Array {
         var keys :Array = [];
         forEach(function (k :*, v :*) :void {
             keys.push(k);
@@ -122,8 +115,7 @@ public class HashMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function values () :Array
-    {
+    public function values () :Array {
         var vals :Array = [];
         forEach(function (k :*, v :*) :void {
             vals.push(v);
@@ -136,8 +128,7 @@ public class HashMap extends AbstractMap
      *
      * @internal inheritDoc doesn't work here because forEach is defined in our private superclass.
      */
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         for (var ii :int = _entries.length - 1; ii >= 0; ii--) {
             for (var e :HashMap_Entry = (_entries[ii] as HashMap_Entry); e != null; e = e.next) {
                 if (Boolean(fn(fromKey(e.key), e.value))) {
@@ -152,8 +143,7 @@ public class HashMap extends AbstractMap
      * Will throw a ReferenceError if the key is not Hashable.
      * @private
      */
-    protected function toKey (key :Object) :Hashable
-    {
+    protected function toKey (key :Object) :Hashable {
         if ((key is String) || (key == null)) {
             return new StringWrapper(key as String);
         } else {
@@ -165,8 +155,7 @@ public class HashMap extends AbstractMap
      * Return the original key from a Hashable.
      * @private
      */
-    protected function fromKey (key :Hashable) :Object
-    {
+    protected function fromKey (key :Hashable) :Object {
         if (key is StringWrapper) {
             return StringWrapper(key).get();
         } else {
@@ -178,8 +167,7 @@ public class HashMap extends AbstractMap
      * Return an index for the specified hashcode.
      * @private
      */
-    protected function indexFor (hash :int) :int
-    {
+    protected function indexFor (hash :int) :int {
         // TODO: improve?
         return Math.abs(hash) % _entries.length;
     }
@@ -189,8 +177,7 @@ public class HashMap extends AbstractMap
      * the memory/performance tradeoff.
      * @private
      */
-    protected function resize (newSize :int) :void
-    {
+    protected function resize (newSize :int) :void {
         var oldEntries :Array = _entries;
         _entries = [];
         _entries.length = newSize;

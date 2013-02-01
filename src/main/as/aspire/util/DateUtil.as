@@ -20,8 +20,7 @@ public class DateUtil
      * Date occured in the past 23 hours:
      *   15:10
      **/
-    public static function getConversationalDateString (date :Date, now :Date = null) :String
-    {
+    public static function getConversationalDateString (date :Date, now :Date = null) :String {
         if (now == null) {
             now = new Date();
         }
@@ -46,16 +45,14 @@ public class DateUtil
     /**
      * Return the name of the given (integer) month; 0 is January, and so on.
      */
-    public static function getMonthName (month :uint, full :Boolean = false) :String
-    {
+    public static function getMonthName (month :uint, full :Boolean = false) :String {
         return full ? _months[month] : _months[month].substr(0, 3);
     }
 
     /**
      * Return the name of the given (integer) day; 0 is Sunday, and so on.
      */
-    public static function getDayName (day :uint, full :Boolean = false) :String
-    {
+    public static function getDayName (day :uint, full :Boolean = false) :String {
         return full ? _days[day] : _days[day].substr(0, 3);
     }
 

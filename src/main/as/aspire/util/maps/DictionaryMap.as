@@ -16,8 +16,7 @@ public class DictionaryMap extends AbstractMap
     implements Map
 {
     /** @inheritDoc */
-    public function put (key :Object, value :Object) :*
-    {
+    public function put (key :Object, value :Object) :* {
         var oldVal :* = _dict[key];
         _dict[key] = value;
         if (oldVal === undefined) {
@@ -27,20 +26,17 @@ public class DictionaryMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function get (key :Object) :*
-    {
+    public function get (key :Object) :* {
         return _dict[key];
     }
 
     /** @inheritDoc */
-    public function containsKey (key :Object) :Boolean
-    {
+    public function containsKey (key :Object) :Boolean {
         return (key in _dict);
     }
 
     /** @inheritDoc */
-    public function remove (key :Object) :*
-    {
+    public function remove (key :Object) :* {
         var oldVal :* = _dict[key];
         if (oldVal !== undefined) {
             delete _dict[key];
@@ -50,21 +46,18 @@ public class DictionaryMap extends AbstractMap
     }
 
     /** @inheritDoc */
-    public function clear () :void
-    {
+    public function clear () :void {
         _dict = new Dictionary();
         _size = 0;
     }
 
     /** @inheritDoc */
-    public function keys () :Array
-    {
+    public function keys () :Array {
         return Util.keys(_dict);
     }
 
     /** @inheritDoc */
-    public function values () :Array
-    {
+    public function values () :Array {
         return Util.values(_dict);
     }
 
@@ -73,8 +66,7 @@ public class DictionaryMap extends AbstractMap
      *
      * @internal inheritDoc doesn't work here because forEach is defined in our private superclass.
      */
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         for (var key :Object in _dict) {
             if (Boolean(fn(key, _dict[key]))) {
                 return;

@@ -16,16 +16,14 @@ public class ClassUtil
      * Calling getClassName with a Class object will return the same value as calling it with an
      * instance of that class. That is, getClassName(Foo) == getClassName(new Foo()).
      */
-    public static function getClassName (obj :Object) :String
-    {
+    public static function getClassName (obj :Object) :String {
         return getQualifiedClassName(obj).replace("::", ".");
     }
 
     /**
      * Get the class name with the last part of the package, e.g. "util.ClassUtil".
      */
-    public static function shortClassName (obj :Object) :String
-    {
+    public static function shortClassName (obj :Object) :String {
         var s :String = getQualifiedClassName(obj);
         var dex :int = s.lastIndexOf(".");
         s = s.substring(dex + 1); // works even if dex is -1
@@ -35,8 +33,7 @@ public class ClassUtil
     /**
      * Get just the class name, e.g. "ClassUtil".
      */
-    public static function tinyClassName (obj :Object) :String
-    {
+    public static function tinyClassName (obj :Object) :String {
         var s :String = getClassName(obj);
         var dex :int = s.lastIndexOf(".");
         return s.substring(dex + 1); // works even if dex is -1
@@ -46,14 +43,12 @@ public class ClassUtil
      * Return a new instance that is the same class as the specified
      * object. The class must have a zero-arg constructor.
      */
-    public static function newInstance (obj :Object) :Object
-    {
+    public static function newInstance (obj :Object) :Object {
         var clazz :Class = getClass(obj);
         return new clazz();
     }
 
-    public static function isSameClass (obj1 :Object, obj2 :Object) :Boolean
-    {
+    public static function isSameClass (obj1 :Object, obj2 :Object) :Boolean {
         return (getQualifiedClassName(obj1) == getQualifiedClassName(obj2));
     }
 
@@ -66,8 +61,7 @@ public class ClassUtil
      *     var s :Streamable = (new someClass() as Streamable);
      * </code>
      */
-    public static function isAssignableAs (asClass :Class, srcClass :Class) :Boolean
-    {
+    public static function isAssignableAs (asClass :Class, srcClass :Class) :Boolean {
         if ((asClass == srcClass) || (asClass == Object)) {
             return true;
 
@@ -79,16 +73,14 @@ public class ClassUtil
         return getMetadata(srcClass).isSubtypeOf(asClass);
     }
 
-    public static function getClass (obj :Object) :Class
-    {
+    public static function getClass (obj :Object) :Class {
         if (obj.constructor is Class) {
             return Class(obj.constructor);
         }
         return getClassByName(getQualifiedClassName(obj));
     }
 
-    public static function getClassByName (cname :String) :Class
-    {
+    public static function getClassByName (cname :String) :Class {
         try {
             return (getDefinitionByName(cname.replace("::", ".")) as Class);
 
@@ -98,8 +90,7 @@ public class ClassUtil
         return null; // error case
     }
 
-    protected static function getMetadata (forClass :Class) :Metadata
-    {
+    protected static function getMetadata (forClass :Class) :Metadata {
         var metadata :Metadata = _metadata[forClass];
         if (metadata == null) {
             metadata = _metadata[forClass] = new Metadata(forClass);
@@ -123,8 +114,7 @@ class Metadata
     public const extSet :Set = new MapSet(new DictionaryMap());
     public const impSet :Set = new MapSet(new DictionaryMap());
 
-    public function Metadata (forClass :Class)
-    {
+    public function Metadata (forClass :Class) {
         const typeInfo :XMLList = describeType(forClass).child("factory");
 
         // See which classes we extend.
@@ -140,8 +130,7 @@ class Metadata
         }
     }
 
-    public function isSubtypeOf (asClass :Class) :Boolean
-    {
+    public function isSubtypeOf (asClass :Class) :Boolean {
         return extSet.contains(asClass) || impSet.contains(asClass);
     }
 }

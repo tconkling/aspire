@@ -15,16 +15,14 @@ public class StringUtil
     /**
      * Compares two String values, returning -1, 0, or 1. Case-sensitive.
      */
-    public static function compare (s1 :String, s2 :String) :int
-    {
+    public static function compare (s1 :String, s2 :String) :int {
         return Comparators.compareStrings(s1, s2);
     }
 
     /**
      * Compares two String values, returning -1, 0, or 1. Not case-sensitive.
      */
-    public static function compareIgnoreCase (s1 :String, s2 :String) :int
-    {
+    public static function compareIgnoreCase (s1 :String, s2 :String) :int {
         return Comparators.compareStringsInsensitively(s1, s2);
     }
 
@@ -33,8 +31,7 @@ public class StringUtil
      * This hashes identically to Java's String.hashCode(). This behavior has been useful
      * in various situations.
      */
-    public static function hashCode (str :String) :int
-    {
+    public static function hashCode (str :String) :int {
         var code :int = 0;
         if (str != null) {
             for (var ii :int = 0; ii < str.length; ii++) {
@@ -47,24 +44,21 @@ public class StringUtil
     /**
      * Is the specified string null, empty, or does it contain only whitespace?
      */
-    public static function isBlank (str :String) :Boolean
-    {
+    public static function isBlank (str :String) :Boolean {
         return (str == null) || (str.search("\\S") == -1);
     }
 
     /**
      * Return the specified String, or "" if it is null.
      */
-    public static function deNull (str :String) :String
-    {
+    public static function deNull (str :String) :String {
         return (str == null) ? "" : str;
     }
 
     /**
      * Does the specified string end with any of the specified substrings.
      */
-    public static function endsWith (str :String, substr :String, ... additionalSubstrs) :Boolean
-    {
+    public static function endsWith (str :String, substr :String, ... additionalSubstrs) :Boolean {
         var startDex :int = str.length - substr.length;
         if ((startDex >= 0) && (str.indexOf(substr, startDex) >= 0)) {
             return true;
@@ -81,8 +75,7 @@ public class StringUtil
     /**
      * Does the specified string start with any of the specified substrings.
      */
-    public static function startsWith (str :String, substr :String, ... additionalSubstrs) :Boolean
-    {
+    public static function startsWith (str :String, substr :String, ... additionalSubstrs) :Boolean {
         if (str.lastIndexOf(substr, 0) == 0) {
             return true;
         }
@@ -97,8 +90,7 @@ public class StringUtil
     /**
      * Return true iff the first character is a lower-case character.
      */
-    public static function isLowerCase (str :String) :Boolean
-    {
+    public static function isLowerCase (str :String) :Boolean {
         var firstChar :String = str.charAt(0);
         return (firstChar.toUpperCase() != firstChar) &&
             (firstChar.toLowerCase() == firstChar);
@@ -107,8 +99,7 @@ public class StringUtil
     /**
      * Return true iff the first character is an upper-case character.
      */
-    public static function isUpperCase (str :String) :Boolean
-    {
+    public static function isUpperCase (str :String) :Boolean {
         var firstChar :String = str.charAt(0);
         return (firstChar.toUpperCase() == firstChar) &&
             (firstChar.toLowerCase() != firstChar);
@@ -125,8 +116,7 @@ public class StringUtil
      *        unless the String begins with "0x" in which case it will be 16,
      *        or the String begins with "0" in which case it will be 8.
      */
-    public static function parseInteger (str :String, radix :uint = 0) :int
-    {
+    public static function parseInteger (str :String, radix :uint = 0) :int {
         return int(parseInt0(str, radix, true));
     }
 
@@ -141,8 +131,7 @@ public class StringUtil
      *        unless the String begins with "0x" in which case it will be 16,
      *        or the String begins with "0" in which case it will be 8.
      */
-    public static function parseUnsignedInteger (str :String, radix :uint = 0) :uint
-    {
+    public static function parseUnsignedInteger (str :String, radix :uint = 0) :uint {
         var result :Number = parseInt0(str, radix, false);
         if (result < 0) {
             throw new ArgumentError(
@@ -158,16 +147,14 @@ public class StringUtil
      * @param prefix the prefix to place in front of it. @default "0x", other possibilities are
      * "#" or "".
      */
-    public static function toColorString (c :uint, prefix :String = "0x") :String
-    {
+    public static function toColorString (c :uint, prefix :String = "0x") :String {
         return prefix + prepad(c.toString(16), 6, "0");
     }
 
     /**
      * Format the specified numbers as coordinates, (e.g. "+3-2" or "-7.4432-54.23+6.3").
      */
-    public static function toCoordsString (x :Number, y :Number, z :Number = NaN) :String
-    {
+    public static function toCoordsString (x :Number, y :Number, z :Number = NaN) :String {
         var result :String = ((x >= 0) ? "+" : "") + x + ((y >= 0) ? "+" : "") + y;
         if (!isNaN(z)) {
             result += ((z >= 0) ? "+" : "") + z;
@@ -180,8 +167,7 @@ public class StringUtil
      * TODO: format specifyer, locale handling, etc. We'll probably move this into a
      * NumberFormat-style class.
      */
-    public static function formatNumber (n :Number) :String
-    {
+    public static function formatNumber (n :Number) :String {
         var postfix :String = "";
         var s :String = n.toString(); // use standard to-stringing
 
@@ -209,8 +195,7 @@ public class StringUtil
      *
      * @param str the String to parse.
      */
-    public static function parseNumber (str :String) :Number
-    {
+    public static function parseNumber (str :String) :Number {
         if (str == null) {
             throw new ArgumentError("Cannot parseNumber(null)");
         }
@@ -254,8 +239,7 @@ public class StringUtil
      *
      * @param str the String to parse.
      */
-    public static function parseBoolean (str :String) :Boolean
-    {
+    public static function parseBoolean (str :String) :Boolean {
         var originalString :String = str;
 
         if (str != null) {
@@ -274,8 +258,7 @@ public class StringUtil
      * Append 0 or more copies of the padChar String to the input String
      * until it is at least the specified length.
      */
-    public static function pad (str :String, length :int, padChar :String = " ") :String
-    {
+    public static function pad (str :String, length :int, padChar :String = " ") :String {
         while (str.length < length) {
             str += padChar;
         }
@@ -286,8 +269,7 @@ public class StringUtil
      * Prepend 0 or more copies of the padChar String to the input String
      * until it is at least the specified length.
      */
-    public static function prepad (str :String, length :int, padChar :String = " ") :String
-    {
+    public static function prepad (str :String, length :int, padChar :String = " ") :String {
         while (str.length < length) {
             str = padChar + str;
         }
@@ -298,16 +280,14 @@ public class StringUtil
      * Returns a string representation of the number that's prepadded with zeros to be at least
      * the specified length.
      */
-    public static function zeroPad (n :int, length :int = 2) :String
-    {
+    public static function zeroPad (n :int, length :int = 2) :String {
         return prepad(n.toString(), length, "0");
     }
 
     /**
      * Substitute "{n}" tokens for the corresponding passed-in arguments.
      */
-    public static function substitute (str :String, ... args) :String
-    {
+    public static function substitute (str :String, ... args) :String {
         // if someone passed an array as arg 1, fix it
         args = Util.unfuckVarargs(args);
         var len :int = args.length;
@@ -322,16 +302,14 @@ public class StringUtil
     /**
      * Utility function that strips whitespace from the beginning and end of a String.
      */
-    public static function trim (str :String) :String
-    {
+    public static function trim (str :String) :String {
         return trimEnd(trimBeginning(str));
     }
 
     /**
      * Utility function that strips whitespace from the beginning of a String.
      */
-    public static function trimBeginning (str :String) :String
-    {
+    public static function trimBeginning (str :String) :String {
         if (str == null) {
             return null;
         }
@@ -350,8 +328,7 @@ public class StringUtil
     /**
      * Utility function that strips whitespace from the end of a String.
      */
-    public static function trimEnd (str :String) :String
-    {
+    public static function trimEnd (str :String) :String {
         if (str == null) {
             return null;
         }
@@ -370,8 +347,7 @@ public class StringUtil
     /**
      * @return true if the specified String is == to a single whitespace character.
      */
-    public static function isWhitespace (character :String) :Boolean
-    {
+    public static function isWhitespace (character :String) :Boolean {
         switch (character) {
         case " ":
         case "\t":
@@ -388,8 +364,7 @@ public class StringUtil
     /**
      * Nicely format the specified object into a String.
      */
-    public static function toString (obj :*, refs :Dictionary = null) :String
-    {
+    public static function toString (obj :*, refs :Dictionary = null) :String {
         if (obj == null) { // checks null or undefined
             return String(obj);
         }
@@ -441,8 +416,7 @@ public class StringUtil
      * @param obj the object to be string'd
      * @param fieldNames the names of fields to print, or null to print all public variables.
      */
-    public static function simpleToString (obj :Object, fieldNames :Array = null) :String
-    {
+    public static function simpleToString (obj :Object, fieldNames :Array = null) :String {
         // TODO: deprecate this? Format like the old way??
         return Joiner.simpleToString(obj, fieldNames);
     }
@@ -468,8 +442,7 @@ public class StringUtil
     /**
      * Returns a version of the supplied string with the first letter capitalized.
      */
-    public static function capitalize (s :String) :String
-    {
+    public static function capitalize (s :String) :String {
         if (isBlank(s)) {
             return s;
         }
@@ -481,8 +454,7 @@ public class StringUtil
      * other letters are lower cased. e.g.
      *     toTitleCase("The wind in thE WILLOWS") -> "The Wind In The Willows"
      */
-    public static function toTitleCase (s :String) :String
-    {
+    public static function toTitleCase (s :String) :String {
         return s.toLowerCase().replace(/\b[a-z]/g, String.prototype.toUpperCase.call);
     }
 
@@ -491,8 +463,7 @@ public class StringUtil
      * are plain text, odd elements are urls (as Strings). Any even element
      * may be an empty string.
      */
-    public static function parseURLs (s :String) :Array
-    {
+    public static function parseURLs (s :String) :Array {
         var array :Array = [];
         while (true) {
             var result :Object = URL_REGEXP.exec(s);
@@ -520,8 +491,7 @@ public class StringUtil
     /**
      * Turn the specified byte array, containing only ascii characters, into a String.
      */
-    public static function fromBytes (bytes :ByteArray) :String
-    {
+    public static function fromBytes (bytes :ByteArray) :String {
         var s :String = "";
         if (bytes != null) {
             for (var ii :int = 0; ii < bytes.length; ii++) {
@@ -534,8 +504,7 @@ public class StringUtil
     /**
      * Turn the specified String, containing only ascii characters, into a ByteArray.
      */
-    public static function toBytes (s :String) :ByteArray
-    {
+    public static function toBytes (s :String) :ByteArray {
         if (s == null) {
             return null;
         }
@@ -555,8 +524,7 @@ public class StringUtil
      * representation of those byts. Returns the empty String for a
      * <code>null</code> or empty byte array.
      */
-    public static function hexlate (bytes :ByteArray) :String
-    {
+    public static function hexlate (bytes :ByteArray) :String {
         var str :String = "";
         if (bytes != null) {
             for (var ii :int = 0; ii < bytes.length; ii++) {
@@ -570,8 +538,7 @@ public class StringUtil
     /**
      * Turn a hexlated String back into a ByteArray.
      */
-    public static function unhexlate (hex :String) :ByteArray
-    {
+    public static function unhexlate (hex :String) :ByteArray {
         if (hex == null || (hex.length % 2 != 0)) {
             return null;
         }
@@ -595,8 +562,7 @@ public class StringUtil
      * zeroes to arrive at of precisely the requested width, e.g.
      *       toHex(131, 4) -> "0083"
      */
-    public static function toHex (n :uint, width :uint) :String
-    {
+    public static function toHex (n :uint, width :uint) :String {
         return prepad(n.toString(16), width, "0");
     }
 
@@ -604,8 +570,7 @@ public class StringUtil
      * Create line-by-line hexadecimal output with a counter, much like the
      * 'hexdump' Unix utility. For debugging purposes.
      */
-    public static function hexdump (bytes :ByteArray) :String
-    {
+    public static function hexdump (bytes :ByteArray) :String {
         var str :String = "";
         for (var lineIx :int = 0; lineIx < bytes.length; lineIx += 16) {
             str += toHex(lineIx, 4);
@@ -666,8 +631,7 @@ public class StringUtil
     /**
      * Internal helper function for parseInteger and parseUnsignedInteger.
      */
-    protected static function parseInt0 (str :String, radix :uint, allowNegative :Boolean) :Number
-    {
+    protected static function parseInt0 (str :String, radix :uint, allowNegative :Boolean) :Number {
         if (str == null) {
             throw new ArgumentError("Cannot parseInt(null)");
         }

@@ -15,23 +15,19 @@ import aspire.util.StringUtil;
 public class StringWrapper
     implements Hashable
 {
-    public function StringWrapper (val :String)
-    {
+    public function StringWrapper (val :String) {
         _val = val;
     }
 
-    public function hashCode () :int
-    {
+    public function hashCode () :int {
         return StringUtil.hashCode(_val); // this function returns 0 for nulls
     }
 
-    public function equals (other :Object) :Boolean
-    {
+    public function equals (other :Object) :Boolean {
         return (other is StringWrapper) && (_val == StringWrapper(other)._val);
     }
 
-    public function get () :String
-    {
+    public function get () :String {
         return _val;
     }
 

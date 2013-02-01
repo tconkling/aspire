@@ -13,8 +13,7 @@ public class Lists
     /**
      * Create a new List.
      */
-    public static function newList () :List
-    {
+    public static function newList () :List {
         return new ArrayList();
     }
 }

@@ -43,8 +43,7 @@ public class F
      * trace(divideByTwo(12)); // 6
      * </listing>
      */
-    public static function partial (f :Function, ... left) :Function
-    {
+    public static function partial (f :Function, ... left) :Function {
         return function (... right) :* {
             return adapt(f).apply(this,
                 left.map(function (arg :*, index :int, arr :Array) :* {
@@ -54,36 +53,31 @@ public class F
     }
 
     /** Creates a function that calls f with args and ignores any extra args passed to it. */
-    public static function callback (f: Function, ... args) :Function
-    {
+    public static function callback (f: Function, ... args) :Function {
         return function (... _) :* {
             return f.apply(this, args);
         }
     }
 
-    public static function compose (f :Function, g :Function) :Function
-    {
+    public static function compose (f :Function, g :Function) :Function {
         return function (... rest) :* {
             return f(g.apply(this, rest));
         }
     }
 
     /** Creates a function that always returns x. */
-    public static function constant (x :*) :Function
-    {
+    public static function constant (x :*) :Function {
         return function (... _) :* {
             return x;
         }
     }
 
     /** The identity function. */
-    public static function id (x :*) :*
-    {
+    public static function id (x :*) :* {
         return x;
     }
 
-    public static function foldl (xs :Array, e :*, f :Function) :*
-    {
+    public static function foldl (xs :Array, e :*, f :Function) :* {
         for each (var x :* in xs) {
             e = f(e, x);
         }
@@ -96,8 +90,7 @@ public class F
      * passed-in function. Does not work if the passed-in function is varargs, and anyway
      * then you don't need adapting, do you?
      */
-    public static function adapt (f :Function) :Function
-    {
+    public static function adapt (f :Function) :Function {
         return function (... args) :* {
             args.length = f.length; // fit the args to the fn, filling in 'undefined' if growing
             return f.apply(this, args);
@@ -109,8 +102,7 @@ public class F
      *
      * @param f (Object -> Object)
      */
-    public static function map (xs :Array, f :Function) :Array
-    {
+    public static function map (xs :Array, f :Function) :Array {
         return xs.map(adapt(f));
     }
 
@@ -119,8 +111,7 @@ public class F
      *
      * @param f (Object -> Boolean)
      */
-    public static function filter (xs :Array, f :Function) :Array
-    {
+    public static function filter (xs :Array, f :Function) :Array {
         return xs.filter(adapt(f));
     }
 
@@ -129,8 +120,7 @@ public class F
      *
      * @param f (Object -> void)
      */
-    public static function forEach (xs :Array, f :Function) :void
-    {
+    public static function forEach (xs :Array, f :Function) :void {
         return xs.forEach(adapt(f));
     }
 
@@ -139,8 +129,7 @@ public class F
      *
      * @param f (Object -> Boolean)
      */
-    public static function every (xs :Array, f :Function) :Boolean
-    {
+    public static function every (xs :Array, f :Function) :Boolean {
         return xs.every(adapt(f));
     }
 
@@ -149,8 +138,7 @@ public class F
      *
      * @param f (Object -> Boolean)
      */
-    public static function some (xs :Array, f :Function) :Boolean
-    {
+    public static function some (xs :Array, f :Function) :Boolean {
         return xs.some(adapt(f));
     }
 
@@ -159,8 +147,7 @@ public class F
      *
      * @param handler (Event -> void)
      */
-    public static function justOnce (handler :Function) :Function
-    {
+    public static function justOnce (handler :Function) :Function {
         return function listener (event :Event) :void {
             event.currentTarget.removeEventListener(event.type, listener);
             handler(event);
@@ -172,8 +159,7 @@ public class F
      *
      * Functionally equivalent to justOnce(callback(f, args));
      */
-    public static function callbackOnce (f: Function, ... args) :Function
-    {
+    public static function callbackOnce (f: Function, ... args) :Function {
         return function listener (event :Event) :void {
             event.currentTarget.removeEventListener(event.type, listener);
             f.apply(this, args);
@@ -184,8 +170,7 @@ public class F
      * Creates a function that calls through to klass' constructor with the args given to it and
      * returns the created object.
      */
-    public static function constructor (klass :Class) :Function
-    {
+    public static function constructor (klass :Class) :Function {
         return function (... a) :* {
             switch (a.length) {
                 case 0:
@@ -220,8 +205,7 @@ public class F
      * Creates a function that calls through to the given varargs function with a well-defined
      * number of parameters.
      */
-    public static function argify (fn :Function, argCount :int) :Function
-    {
+    public static function argify (fn :Function, argCount :int) :Function {
         switch (argCount) {
             case 0: return function () :* {
                 return fn();

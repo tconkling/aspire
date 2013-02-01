@@ -14,16 +14,14 @@ public class DelayUtil
     /**
      * Delay invocation of the specified function closure by one frame.
      */
-    public static function delayFrame (fn :Function, args :Array = null) :void
-    {
+    public static function delayFrame (fn :Function, args :Array = null) :void {
         delayFrames(1, fn, args);
     }
 
     /**
      * Delay invocation of the specified function closure by one or more frames.
      */
-    public static function delayFrames (frames :int, fn :Function, args :Array = null) :void
-    {
+    public static function delayFrames (frames :int, fn :Function, args :Array = null) :void {
         _delayer.delayFrames(frames, fn, args);
     }
 

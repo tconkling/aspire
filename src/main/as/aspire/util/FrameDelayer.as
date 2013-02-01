@@ -15,24 +15,21 @@ import flash.utils.Timer;
 public class FrameDelayer
     implements Registration
 {
-    public function FrameDelayer ()
-    {
+    public function FrameDelayer () {
         _t.addEventListener(TimerEvent.TIMER, handleTimer);
     }
 
     /**
      * Delay invocation of the specified function closure by one frame.
      */
-    public function delayFrame (fn :Function, args :Array = null) :void
-    {
+    public function delayFrame (fn :Function, args :Array = null) :void {
         delayFrames(1, fn, args);
     }
 
     /**
      * Delay invocation of the specified function closure by the given number of frames.
      */
-    public function delayFrames (frames :int, fn :Function, args :Array = null) :void
-    {
+    public function delayFrames (frames :int, fn :Function, args :Array = null) :void {
         if (_t == null) {
             throw new Error("Can't delay frames after the delayer has been shutdown");
         }
@@ -51,8 +48,7 @@ public class FrameDelayer
     /**
      * Cancels any delayed functions waiting to be called and prevents any future calls to delay.
      */
-    public function cancel () :void
-    {
+    public function cancel () :void {
         _t.stop();
         _t = null;
     }
@@ -61,8 +57,7 @@ public class FrameDelayer
      * Execute the closures for this "frame".
      * @private
      */
-    protected function handleTimer (event :TimerEvent) :void
-    {
+    protected function handleTimer (event :TimerEvent) :void {
         // get this frame's frameData
         var frameData :Array = _queue.shift() as Array;
         if (frameData != null) { // it could be a "placeholder frame" for a later frame..

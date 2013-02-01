@@ -42,8 +42,7 @@ public class Throttle
      * possible). However, note that you may not always want to reduce the ratio as much as
      * possible if you wish to allow bursts of operations up to some large value. </p>
      */
-    public function Throttle (operations :int, period :int)
-    {
+    public function Throttle (operations :int, period :int) {
         _ops = Arrays.create(operations, 0);
         _period = period;
     }
@@ -56,8 +55,7 @@ public class Throttle
      * @param operations the new maximum number of operations.
      * @param period the new period (in milliseconds).
      */
-    public function reinit (operations :int, period :int) :void
-    {
+    public function reinit (operations :int, period :int) :void {
         _period = period;
         if (operations != _ops.length) {
             var ops :Array = Arrays.create(operations, 0);
@@ -86,8 +84,7 @@ public class Throttle
      *
      * @return true if the throttle is activated, false if the operation can proceed.
      */
-    public function throttleOp () :Boolean
-    {
+    public function throttleOp () :Boolean {
         return throttleOpAt(getTimer());
     }
 
@@ -100,8 +97,7 @@ public class Throttle
      *
      * @return true if the throttle is activated, false if the operation can proceed.
      */
-    public function throttleOpAt (timeStamp :int) :Boolean
-    {
+    public function throttleOpAt (timeStamp :int) :Boolean {
         if (wouldThrottle(timeStamp)) {
             return true;
         }
@@ -114,8 +110,7 @@ public class Throttle
      * Check to see if we would throttle an operation occuring at the specified timestamp.
      * Typically used in conjunction with {@link #noteOp}.
      */
-    public function wouldThrottle (timeStamp :int) :Boolean
-    {
+    public function wouldThrottle (timeStamp :int) :Boolean {
         // if the oldest operation was performed less than _period ago, we need to throttle
         var elapsed :int = timeStamp - _ops[_oldestOp];
         // cope with negative time elapsed (shouldn't happen) by not throttling
@@ -129,8 +124,7 @@ public class Throttle
      * determines whether the operation can occur. You are responsible for calling this method in a
      * safe and timely manner after using wouldThrottle.
      */
-    public function noteOp (timeStamp :int) :void
-    {
+    public function noteOp (timeStamp :int) :void {
         // overwrite the oldest operation with the current time and move the oldest operation
         // pointer to the second oldest operation (which is now the oldest as we overwrote the
         // oldest)
@@ -141,14 +135,12 @@ public class Throttle
     /**
      * Returns the timestamp of the most recently recorded operation.
      */
-    public function getLatestOperation () :int
-    {
+    public function getLatestOperation () :int {
         return _ops[(_oldestOp + _ops.length - 1) % _ops.length];
     }
 
     // from Object
-    public function toString () :String
-    {
+    public function toString () :String {
         var oldest :int = getTimer() - _ops[_oldestOp];
         return _ops.length + " ops per " + _period + "ms (oldest " + oldest + ")";
     }
@@ -156,8 +148,7 @@ public class Throttle
     /**
      * For debugging, includes the age of all operations.
      */
-    public function opsToString () :String
-    {
+    public function opsToString () :String {
         var now :int = getTimer();
         var ages :Array = []
         for (var ii :int = 0; ii < _ops.length; ++ii) {

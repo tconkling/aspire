@@ -12,8 +12,7 @@ public class AsyncConditions
      * Creates an AsyncConditions that calls onAllComplete when satisfy is called for everything in
      * conditions.
      */
-    public function AsyncConditions (conditions :Array, onAllSatisfied :Function)
-    {
+    public function AsyncConditions (conditions :Array, onAllSatisfied :Function) {
         _onAllSatisfied = onAllSatisfied;
         for each (var cond :String in conditions) {
             _unsatisfied.add(cond);
@@ -25,8 +24,7 @@ public class AsyncConditions
      * wasn't in the set of conditions, a warning is logged. If condition is the last unsatisfied
      * condition, the satisfaction callback is called.
      */
-    public function satisfy (condition :Object) :void
-    {
+    public function satisfy (condition :Object) :void {
         if (_unsatisfied.remove(condition)) {
             _satisfied.add(condition);
             if(_unsatisfied.isEmpty()) {

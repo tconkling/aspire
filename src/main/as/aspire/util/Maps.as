@@ -31,8 +31,7 @@ public class Maps
      * DictionaryMap. If your key type is not Hashable, then be sure that reference equality
      * (the == operator) can be used to compare your keys!
      */
-    public static function newMapOf (keyClazz :Class) :Map
-    {
+    public static function newMapOf (keyClazz :Class) :Map {
         if (ClassUtil.isAssignableAs(Hashable, keyClazz) &&
                 !ClassUtil.isAssignableAs(Enum, keyClazz)) {
             return new HashMap();
@@ -50,8 +49,7 @@ public class Maps
      *
      * This is a convenience for calling newBuilder(keyClazz).makeSorted(comp).build();
      */
-    public static function newSortedMapOf (keyClazz :Class, comp :Function = null) :Map
-    {
+    public static function newSortedMapOf (keyClazz :Class, comp :Function = null) :Map {
         return newBuilder(keyClazz).makeSorted(comp).build();
     }
 
@@ -67,8 +65,7 @@ public class Maps
      *     .build();
      * </listing>
      */
-    public static function newBuilder (keyClazz :Class) :MapBuilder
-    {
+    public static function newBuilder (keyClazz :Class) :MapBuilder {
         return new MapBuilder(keyClazz);
     }
 
@@ -77,8 +74,7 @@ public class Maps
      *
      * This method returns the same Map instance to every caller.
      */
-    public static function empty () :Map
-    {
+    public static function empty () :Map {
         if (EMPTY == null) {
             // Type doesn't matter, and DictionaryMap has slightly less overhead.
             EMPTY = newBuilder(int).makeImmutable().build();
@@ -89,8 +85,7 @@ public class Maps
     /**
      * Do the two Maps contain the same keys and values?
      */
-    public static function equals (map1 :Map, map2 :Map) :Boolean
-    {
+    public static function equals (map1 :Map, map2 :Map) :Boolean {
         if (map1 === map2) {
             return true;
 
@@ -113,8 +108,7 @@ public class Maps
     /**
      * Return the first key found for the specified value, or undefined if not found.
      */
-    public static function findKey (map :Map, value :Object) :*
-    {
+    public static function findKey (map :Map, value :Object) :* {
         var key :* = undefined;
         map.forEach(function (k :Object, v :Object) :Boolean {
             if (Util.equals(value, v)) {
@@ -134,8 +128,7 @@ public class Maps
      *     function predicate (key :Object, value :Object) :Boolean
      * </listing>
      */
-    public static function some (map :Map, condition :Function) :Boolean
-    {
+    public static function some (map :Map, condition :Function) :Boolean {
         var found :Boolean = false;
         map.forEach(function (key :Object, val :Object) :Boolean {
             if (condition(key, val)) {
@@ -150,16 +143,14 @@ public class Maps
     /**
      * Returns the key of a map entry (for use as a transform function in <code>filter</code>).
      */
-    public static function selectKey (key :Object, value :Object) :Object
-    {
+    public static function selectKey (key :Object, value :Object) :Object {
         return key;
     }
 
     /**
      * Returns the value of a map entry (for use as a transform function in <code>filter</code>).
      */
-    public static function selectValue (key :Object, value :Object) :Object
-    {
+    public static function selectValue (key :Object, value :Object) :Object {
         return value;
     }
 
@@ -178,8 +169,7 @@ public class Maps
      *     If the transform is null, the map values are returned.
      */
     public static function filter (
-        map :Map, condition :Function, transform :Function = null) :Array
-    {
+        map :Map, condition :Function, transform :Function = null) :Array {
         if (transform == null) {
             transform = selectValue;
         }

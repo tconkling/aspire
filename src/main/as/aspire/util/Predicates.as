@@ -11,24 +11,21 @@ public class Predicates
     /**
      * A predicate that tests for null (or undefined) items.
      */
-    public static function isNull (item :*, ... ignored) :Boolean
-    {
+    public static function isNull (item :*, ... ignored) :Boolean {
         return (item == null);
     }
 
     /**
      * A predicate that tests for items that are not null (or undefined).
      */
-    public static function notNull (item :*, ... ignored) :Boolean
-    {
+    public static function notNull (item :*, ... ignored) :Boolean {
         return (item != null);
     }
 
     /**
      * Create a predicate that tests if the item is Util.equals() to the specified value.
      */
-    public static function createEquals (value :Object) :Function
-    {
+    public static function createEquals (value :Object) :Function {
         return function (item :*, ... _) :Boolean {
             return Util.equals(item, value);
         };
@@ -37,8 +34,7 @@ public class Predicates
     /**
      * Create a predicate that tests if the item has the specified property (with any value).
      */
-    public static function hasProperty (propName :String) :Function
-    {
+    public static function hasProperty (propName :String) :Function {
         return function (item :*, ... _) :Boolean {
             return (item != null) && item.hasOwnProperty(propName);
         };
@@ -48,8 +44,7 @@ public class Predicates
      * Create a predicate that tests if the item has a property that is Util.equals() to the
      * specified value.
      */
-    public static function propertyEquals (propName :String, value :Object) :Function
-    {
+    public static function propertyEquals (propName :String, value :Object) :Function {
         return function (item :*, ... _) :Boolean {
             return (item != null) && item.hasOwnProperty(propName) &&
                 Util.equals(item[propName], value);
@@ -59,8 +54,7 @@ public class Predicates
     /**
      * Create a predicate that returns true if the item is in the specified Array.
      */
-    public static function isIn (array :Array) :Function
-    {
+    public static function isIn (array :Array) :Function {
         return function (item :*, ... _) :Boolean {
             return Arrays.contains(array, item);
         };
@@ -69,8 +63,7 @@ public class Predicates
     /**
      * Return a predicate that tests for items that are "is" the specified class.
      */
-    public static function isClass (clazz :Class) :Function
-    {
+    public static function isClass (clazz :Class) :Function {
         return function (item :*, ... _) :Boolean {
             return (item is clazz);
         };
@@ -79,8 +72,7 @@ public class Predicates
     /**
      * Return a predicate that is the negation of the specified predicate.
      */
-    public static function not (pred :Function) :Function
-    {
+    public static function not (pred :Function) :Function {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
             return !pred.apply(null, args);
@@ -91,8 +83,7 @@ public class Predicates
      * Return a predicate that is true if all the specified predicate Functions are true
      * for any item.
      */
-    public static function and (... predicates) :Function
-    {
+    public static function and (... predicates) :Function {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
             for each (var pred :Function in predicates) {
@@ -108,8 +99,7 @@ public class Predicates
      * Return a predicate that is true if any of the specified predicate Functions are true
      * for any item.
      */
-    public static function or (... predicates) :Function
-    {
+    public static function or (... predicates) :Function {
         return function (item :*, ... args) :Boolean {
             args.unshift(item);
             for each (var pred :Function in predicates) {

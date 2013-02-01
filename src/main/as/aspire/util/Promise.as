@@ -9,8 +9,7 @@ package aspire.util {
  */
 public class Promise
 {
-    public function get (f :Function) :void
-    {
+    public function get (f :Function) :void {
         if (_callbacks != null) {
             _callbacks.push(f);
         } else {
@@ -18,8 +17,7 @@ public class Promise
         }
     }
 
-    public function set (...value) :void
-    {
+    public function set (...value) :void {
         _value = value;
 
         if (_callbacks != null) {
@@ -32,8 +30,7 @@ public class Promise
         }
     }
 
-    public function and (other :Promise) :Promise
-    {
+    public function and (other :Promise) :Promise {
         var p :Promise = new Promise();
         var values :Array = null; // The results from the first promise to complete
 
@@ -55,8 +52,7 @@ public class Promise
         return p;
     }
 
-    public function get ready () :Boolean
-    {
+    public function get ready () :Boolean {
         return (_callbacks == null);
     }
 

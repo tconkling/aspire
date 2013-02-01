@@ -10,8 +10,7 @@ public class RegistrationList
      * Adds a Registration to the manager.
      * @return the Registration passed to the function.
      */
-    public function add (r :Registration) :Registration
-    {
+    public function add (r :Registration) :Registration {
         _regs.push(r);
         return r;
     }
@@ -19,8 +18,7 @@ public class RegistrationList
     /**
      * Cancels all Registrations that have been added to the manager.
      */
-    public function cancel () :void
-    {
+    public function cancel () :void {
         var regs :Vector.<Registration> = _regs;
         _regs = new <Registration>[];
         for each (var r :Registration in regs) {

@@ -16,16 +16,14 @@ import aspire.util.Map;
  */
 public class LRMap extends LinkedMap
 {
-    public function LRMap (source :Map, maxSize :int, accessOrder :Boolean = true)
-    {
+    public function LRMap (source :Map, maxSize :int, accessOrder :Boolean = true) {
         super(source);
         _maxSize = maxSize;
         _accessOrder = accessOrder;
     }
 
     /** @inheritDoc */
-    override public function put (key :Object, value :Object) :*
-    {
+    override public function put (key :Object, value :Object) :* {
         var oldVal :* = super.put(key, value);
         if ((oldVal === undefined) && (size() > _maxSize)) {
             // remove the oldest entry
@@ -35,8 +33,7 @@ public class LRMap extends LinkedMap
     }
 
     /** @private */
-    override protected function getEntry (key :Object) :*
-    {
+    override protected function getEntry (key :Object) :* {
         var val :* = super.getEntry(key);
         if ((val !== undefined) && _accessOrder) {
             var le :LinkedEntry = LinkedEntry(val);

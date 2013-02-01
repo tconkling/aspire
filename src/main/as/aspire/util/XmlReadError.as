@@ -13,13 +13,11 @@ public class XmlReadError extends Error
      * (that is, if the args list has an odd number of elements, and the last element is an XML),
      * its XML content will be included in a new line, below the rest of the message content.
      */
-    public function XmlReadError (message :String = "", ...args)
-    {
+    public function XmlReadError (message :String = "", ...args) {
         super(getErrString(message, args));
     }
 
-    protected static function getErrString (message :String, args :Array) :String
-    {
+    protected static function getErrString (message :String, args :Array) :String {
         // if the last arg is an XML, pull it out
         var badXml :XML;
         if (args.length % 2 != 0 && args[args.length - 1] is XML) {

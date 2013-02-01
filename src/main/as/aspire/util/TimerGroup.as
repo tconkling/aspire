@@ -16,8 +16,7 @@ public class TimerGroup
      * Cancels all running timers.
      * It's an error to call any function on TimerGroup after cancel() has been called.
      */
-    public function cancel () :void
-    {
+    public function cancel () :void {
         stopAllTimers();
         // null out internal state so that future calls to this TimerGroup will
         // immediately NPE
@@ -27,8 +26,7 @@ public class TimerGroup
     /**
      * Creates and runs a timer that will run once, and clean up after itself.
      */
-    public function runOnce (delay :Number, callback :Function) :void
-    {
+    public function runOnce (delay :Number, callback :Function) :void {
         var timer :Timer = createTimer(delay, 1);
         timer.addEventListener(TimerEvent.TIMER,
             function (e :TimerEvent) :void {
@@ -42,8 +40,7 @@ public class TimerGroup
     /**
      * Creates and runs a timer that will run forever, or until canceled.
      */
-    public function runForever (delay :Number, callback :Function) :Timer
-    {
+    public function runForever (delay :Number, callback :Function) :Timer {
         var timer :Timer = createTimer(delay, 0);
         timer.addEventListener(TimerEvent.TIMER, callback);
         timer.start();
@@ -53,8 +50,7 @@ public class TimerGroup
     /**
      * Creates, but doesn't run, a new Timer managed by this TimerGroup.
      */
-    public function createTimer (delay :Number, repeatCount :int = 0) :Timer
-    {
+    public function createTimer (delay :Number, repeatCount :int = 0) :Timer {
         var timer :Timer = new Timer(delay, repeatCount);
         _timers.push(timer);
         return timer;
@@ -63,16 +59,14 @@ public class TimerGroup
     /**
      * Delay invocation of the specified function closure by one frame.
      */
-    public function delayFrame (fn :Function, args :Array = null) :void
-    {
+    public function delayFrame (fn :Function, args :Array = null) :void {
         delayFrames(1, fn, args);
     }
 
     /**
      * Delay invocation of the specified function closure by one or more frames.
      */
-    public function delayFrames (frames :int, fn :Function, args :Array = null) :void
-    {
+    public function delayFrames (frames :int, fn :Function, args :Array = null) :void {
         if (_delayer == null) {
             _delayer = new FrameDelayer();
         }
@@ -82,8 +76,7 @@ public class TimerGroup
     /**
      * Stops all timers being managed by this TimerGroup.
      */
-    public function stopAllTimers () :void
-    {
+    public function stopAllTimers () :void {
         for each (var timer :Timer in _timers) {
             // we can have holes in the _timers array
             if (timer != null) {
@@ -102,8 +95,7 @@ public class TimerGroup
     /**
      * Causes the timer to be stopped, and removed from the TimerGroup's list of managed timers.
      */
-    public function stopTimer (timer :Timer) :void
-    {
+    public function stopTimer (timer :Timer) :void {
         var idx :int = Arrays.indexOf(_timers, timer);
         if (idx >= 0) {
             _timers.splice(idx, 1);

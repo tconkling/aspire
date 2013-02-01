@@ -11,8 +11,7 @@ import flash.external.ExternalInterface;
  */
 public class JavascriptLogTarget implements LogTarget
 {
-    public function log (msg :String) :void
-    {
+    public function log (msg :String) :void {
         try {
             ExternalInterface.call("console.log", msg);
         } catch (error :Error) {

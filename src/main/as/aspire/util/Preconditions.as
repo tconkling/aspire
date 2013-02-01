@@ -12,8 +12,7 @@ public class Preconditions
      * Checks that the specified expression is true.
      * @throws Error
      */
-    public static function checkState (expression :Boolean, message :String = null, ... args) :void
-    {
+    public static function checkState (expression :Boolean, message :String = null, ... args) :void {
         if (!expression) {
             throw new Error(Joiner.pairsArray(message || "", args));
         }
@@ -24,8 +23,7 @@ public class Preconditions
      * @return the reference that was checked.
      * @throws TypeError
      */
-    public static function checkNotNull (ref :*, message :String = null, ... args) :*
-    {
+    public static function checkNotNull (ref :*, message :String = null, ... args) :* {
         if (ref == null) {
             throw new TypeError(Joiner.pairsArray(message || "Null reference", args));
         }
@@ -49,8 +47,7 @@ public class Preconditions
      * @return the index that was checked.
      * @throws RangeError
      */
-    public static function checkIndex (index :int, size :int, message :String = null, ... args) :int
-    {
+    public static function checkIndex (index :int, size :int, message :String = null, ... args) :int {
         if ((index < 0) || (index >= size)) {
             if (message == null) {
                 message = "Index out of bounds";

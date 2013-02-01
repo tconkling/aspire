@@ -32,8 +32,7 @@ public class ColorUtil
      * Returns a color's Hue value, in degrees. 0 &lt;= Hue &lt;= 360.
      * http://en.wikipedia.org/wiki/Hue
      */
-    public static function getHue (color :uint) :Number
-    {
+    public static function getHue (color :uint) :Number {
         var r :Number = getRed(color);
         var g :Number = getGreen(color);
         var b :Number = getBlue(color);
@@ -45,8 +44,7 @@ public class ColorUtil
     /**
      * Returns a color's brightness value, as a percentage. 0 &lt;= Brightness &lt;= 1.
      */
-    public static function getBrightness (color :uint) :Number
-    {
+    public static function getBrightness (color :uint) :Number {
         var r :Number = getRed(color) * INV_255;
         var g :Number = getGreen(color) * INV_255;
         var b :Number = getBlue(color) * INV_255;
@@ -57,8 +55,7 @@ public class ColorUtil
     /**
      * Adjusts the brightness of the given color. 0&lt;=brightness&lt;=1.
      */
-    public static function setBrightness (color :uint, brightness :Number) :uint
-    {
+    public static function setBrightness (color :uint, brightness :Number) :uint {
         if (brightness <= 0) {
             return 0;
         }
@@ -82,32 +79,28 @@ public class ColorUtil
      * Converts RGB components into a single 8 bit color value.
      * r, g, and b must all be in [0, 255]
      */
-    public static function composeColor (r :uint, g :uint, b :uint) :uint
-    {
+    public static function composeColor (r :uint, g :uint, b :uint) :uint {
         return (Math.min(r, 255) << 16) | (Math.min(g, 255) << 8) | Math.min(b, 255);
     }
 
     /**
      * Returns the 8-bit red component of the 24-bit color.
      */
-    public static function getRed (color :uint) :uint
-    {
+    public static function getRed (color :uint) :uint {
         return color >> 16 & 0xFF;
     }
 
     /**
      * Returns the 8-bit green component of the 24-bit color.
      */
-    public static function getGreen (color :uint) :uint
-    {
+    public static function getGreen (color :uint) :uint {
         return color >> 8 & 0xFF;
     }
 
     /**
      * Returns the 8-bit blue component of the 24-bit color.
      */
-    public static function getBlue (color :uint) :uint
-    {
+    public static function getBlue (color :uint) :uint {
         return color & 0xFF;
     }
 
@@ -115,8 +108,7 @@ public class ColorUtil
      * Returns an array of Numbers representing Hue, Saturation, and Brightness for the color
      *  specified in RGB.  Based on java.awt.Color.RGBtoHSB.
      */
-    public static function RGBtoHSB (r :int, g :int, b :int) :Array
-    {
+    public static function RGBtoHSB (r :int, g :int, b :int) :Array {
         var hue :Number;
         var saturation :Number;
         var brightness :Number;
@@ -166,8 +158,7 @@ public class ColorUtil
      * Returns the uint representing the color in RGB that is equivalent to the hue, saturation,
      *  and brightness specified.  Based upon java.awt.Color.HSBtoRGB.
      */
-    public static function HSBtoRGB (hue :Number, saturation :Number, brightness :Number) :uint
-    {
+    public static function HSBtoRGB (hue :Number, saturation :Number, brightness :Number) :uint {
         var r :int = 0;
         var g :int = 0;
         var b :int = 0;

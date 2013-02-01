@@ -17,16 +17,14 @@ public class Random
     /**
      * Creates a pseudo random number generator with a random seed.
      */
-    public static function create () :Random
-    {
+    public static function create () :Random {
         return new Random(uint(_seedUniquifier++ + uint(Math.random() * 4294967295)));
     }
 
     /**
      * Creates a pseudo random number generator with the specified seed.
      */
-    public function Random (seed :uint)
-    {
+    public function Random (seed :uint) {
         _x = new Array();
         setSeed(seed);
     }
@@ -35,8 +33,7 @@ public class Random
      * Sets the seed of the generator. This will result in the same generator sequence of values
      * as a new generator created with the specified seed.
      */
-    public function setSeed (seed :uint) :void
-    {
+    public function setSeed (seed :uint) :void {
         _x[0] = seed;
         for (var ii :int = 1; ii < N; ii++) {
             _x[ii] = imul(1812433253, _x[ii - 1] ^ (_x[ii - 1] >>> 30)) + ii;
@@ -46,10 +43,9 @@ public class Random
         _q = 1;
         _r = M;
     }
-    
+
     /** Returns an int value where int.MIN_VALUE &lt;= value &lt;= int.MAX_VALUE */
-    public function next () :int
-    {
+    public function next () :int {
         return int(nextBits(32));
     }
 
@@ -58,8 +54,7 @@ public class Random
      *
      * @param n the range to return. Must be > 0.
      */
-    public function nextInt (n :int) :int
-    {
+    public function nextInt (n :int) :int {
         if (n <= 0) {
             throw new Error("n must be positive");
         }
@@ -76,21 +71,18 @@ public class Random
     /**
      * Returns a random Boolean value.
      */
-    public function nextBoolean () :Boolean
-    {
+    public function nextBoolean () :Boolean {
         return nextBits(1) != 0;
     }
 
     /**
      * Returns a random Number where 0.0 &lt;= value &lt; 1.0.
      */
-    public function nextNumber () :Number
-    {
+    public function nextNumber () :Number {
         return nextBits(32) / 4294967296;
     }
 
-    protected function nextBits (bits: int) :uint
-    {
+    protected function nextBits (bits: int) :uint {
         var y :uint = (_x[_p] & UPPER_MASK) | (_x[_q] & LOWER_MASK);
         _x[_p] = _x[_r] ^ (y >>> 1) ^ ((y & 1) * MATRIX_A);
         y = _x[_p];
@@ -107,8 +99,7 @@ public class Random
         return y >>> (32 - bits);
     }
 
-    protected function imul (a: Number, b: Number): Number
-    {
+    protected function imul (a: Number, b: Number): Number {
         var al :Number = a & 0xffff;
         var ah :Number = a >>> 16;
         var bl :Number = b & 0xffff;

@@ -62,8 +62,7 @@ public class Log
      * @param moduleSpec can be a String of the module name, or any Object or Class to
      * have the module name be the full package and name of the class (recommended).
      */
-    public static function getLog (moduleSpec :*) :Log
-    {
+    public static function getLog (moduleSpec :*) :Log {
         const module :String = (moduleSpec is String) ? String(moduleSpec)
             : getQualifiedClassName(moduleSpec).replace("::", ".");
         return new Log(module);
@@ -73,8 +72,7 @@ public class Log
      * A convenience function for quickly and easily inserting printy
      * statements during application development.
      */
-    public static function testing (... params) :void
-    {
+    public static function testing (... params) :void {
         var log :Log = new Log("testing");
         log.debug.apply(log, params);
     }
@@ -83,24 +81,21 @@ public class Log
      * A convenience function for quickly printing a stack trace
      * to the log, useful for debugging.
      */
-    public static function dumpStack (msg :String = "dumpStack") :void
-    {
+    public static function dumpStack (msg :String = "dumpStack") :void {
         testing(new Error(msg).getStackTrace());
     }
 
     /**
      * Add a logging target.
      */
-    public static function addTarget (target :LogTarget) :void
-    {
+    public static function addTarget (target :LogTarget) :void {
         _targets.push(target);
     }
 
     /**
      * Remove a logging target.
      */
-    public static function removeTarget (target :LogTarget) :void
-    {
+    public static function removeTarget (target :LogTarget) :void {
         var idx :int = _targets.indexOf(target);
         if (idx >= 0) {
             _targets.splice(idx, 1);
@@ -110,16 +105,14 @@ public class Log
     /**
      * Adds a preformat logging target.
      */
-    public static function addPreformatTarget (target :PreformatLogTarget) :void
-    {
+    public static function addPreformatTarget (target :PreformatLogTarget) :void {
         _preformatTargets.push(target);
     }
 
     /**
      * Remove a preformat logging target.
      */
-    public static function removePreformatTarget (target :PreformatLogTarget) :void
-    {
+    public static function removePreformatTarget (target :PreformatLogTarget) :void {
         var idx :int = _preformatTargets.indexOf(target);
         if (idx >= 0) {
             _preformatTargets.splice(idx, 1);
@@ -134,8 +127,7 @@ public class Log
      * Then you can Log.setLevel("com.foo.game", Log.DEBUG). Now, everything
      * logs at INFO level except for modules within com.foo.game, which is at DEBUG.
      */
-    public static function setLevel (module :String, level :int) :void
-    {
+    public static function setLevel (module :String, level :int) :void {
         var settings :Object = {};
         settings[module] = level;
         setLevels(settings);
@@ -152,8 +144,7 @@ public class Log
      *
      * Semicolons separate modules, colons separate a module name from the log level.
     */
-    public static function setLevels (settings :Object) :void
-    {
+    public static function setLevels (settings :Object) :void {
         if (settings is String) {
             for each (var setting :String in String(settings).split(";")) {
                 var pieces :Array = setting.split(":");
@@ -172,8 +163,7 @@ public class Log
      *
      * @private
      */
-    public function Log (module :String)
-    {
+    public function Log (module :String) {
         if (module == null) module = "";
         _module = module;
     }
@@ -194,8 +184,7 @@ public class Log
      *    log.debug("Message", "key1", value1, "key2", value2, optionalError);
      * </listing>
      */
-    public function debug (... args) :void
-    {
+    public function debug (... args) :void {
         doLog(DEBUG, args);
     }
 
@@ -215,8 +204,7 @@ public class Log
      *    log.info("Message", "key1", value1, "key2", value2, optionalError);
      * </listing>
      */
-    public function info (... args) :void
-    {
+    public function info (... args) :void {
         doLog(INFO, args);
     }
 
@@ -236,8 +224,7 @@ public class Log
      *    log.warning("Message", "key1", value1, "key2", value2, optionalError);
      * </listing>
      */
-    public function warning (... args) :void
-    {
+    public function warning (... args) :void {
         doLog(WARNING, args);
     }
 
@@ -257,8 +244,7 @@ public class Log
      *    log.error("Message", "key1", value1, "key2", value2, optionalError);
      * </listing>
      */
-    public function error (... args) :void
-    {
+    public function error (... args) :void {
         doLog(ERROR, args);
     }
 
@@ -266,13 +252,11 @@ public class Log
      * Log just a stack trace with 'warning' priority.
      */
     [Deprecated(replacement="warning(\"message\", error)")]
-    public function logStackTrace (error :Error) :void
-    {
+    public function logStackTrace (error :Error) :void {
         warning("stackTrace", error);
     }
 
-    public function format (... args) :String
-    {
+    public function format (... args) :String {
         var msg :String = String(args[0]); // the primary log message
         var strace :String = (args.length % 2 == 1) ? null : processFinalArg(args);
         if (args.length > 1) {
@@ -290,8 +274,7 @@ public class Log
     }
 
     /** @private */
-    protected function doLog (level :int, args :Array) :void
-    {
+    protected function doLog (level :int, args :Array) :void {
         if (level < getLevel(_module)) {
             return; // we don't want to log it!
         }
@@ -307,8 +290,7 @@ public class Log
     }
 
     /** @private */
-    protected function formatMessage (level :int, args :Array) :String
-    {
+    protected function formatMessage (level :int, args :Array) :String {
         var msg :String = getTimeStamp() + " " + LEVEL_NAMES[level] + ": " + _module;
         if (args.length > 0) {
             msg += " " + format.apply(this, args);
@@ -321,8 +303,7 @@ public class Log
      * Note: we do not reference the UncaughtErrorEvent class to remain flash 9 compatible.
      * @private
      */
-    protected function processFinalArg (args :Array) :String
-    {
+    protected function processFinalArg (args :Array) :String {
         var lastArg :Object = args.pop();
         var errMsg :String;
         if (lastArg == null) {
@@ -358,8 +339,7 @@ public class Log
      * Safely format the argument to a String, calling the function if it is one.
      * @private
      */
-    protected function argToString (arg :*) :String
-    {
+    protected function argToString (arg :*) :String {
         try {
             if (arg is Function) {
                 return String(arg());
@@ -377,8 +357,7 @@ public class Log
     }
 
     /** @private */
-    protected function getTimeStamp () :String
-    {
+    protected function getTimeStamp () :String {
         var d :Date = new Date();
         // return d.toLocaleTimeString();
 
@@ -397,8 +376,7 @@ public class Log
      * (and all its dependencies)
      * @private
      */
-    protected static function padZero (value :int, digits :int = 2) :String
-    {
+    protected static function padZero (value :int, digits :int = 2) :String {
         var s :String = String(value);
         while (s.length < digits) {
             s = "0" + s;
@@ -410,8 +388,7 @@ public class Log
      * Get the logging level for the specified module.
      * @private
      */
-    protected static function getLevel (module :String) :int
-    {
+    protected static function getLevel (module :String) :int {
         // we probably already have the level cached for this module
         var lev :Object = _levels[module];
         if (lev == null) {
@@ -433,8 +410,7 @@ public class Log
     }
 
     /** @private */
-    protected static function stringToLevel (s :String) :int
-    {
+    protected static function stringToLevel (s :String) :int {
         switch (s.toLowerCase()) {
         default: // default to DEBUG
         case "debug": return DEBUG;

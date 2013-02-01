@@ -12,14 +12,12 @@ import aspire.util.Map;
  */
 public /* abstract */ class ForeachingMap extends ForwardingMap
 {
-    public function ForeachingMap (source :Map)
-    {
+    public function ForeachingMap (source :Map) {
         super(source);
     }
 
     /** @inheritDoc */
-    override public function keys () :Array
-    {
+    override public function keys () :Array {
         var arr :Array = [];
         forEach(function (k :*, v :*) :void {
             arr.push(k);
@@ -28,8 +26,7 @@ public /* abstract */ class ForeachingMap extends ForwardingMap
     }
 
     /** @inheritDoc */
-    override public function values () :Array
-    {
+    override public function values () :Array {
         var arr :Array = [];
         forEach(function (k :*, v :*) :void {
             arr.push(v);

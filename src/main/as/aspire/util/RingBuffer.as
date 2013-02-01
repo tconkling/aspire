@@ -6,15 +6,13 @@ package aspire.util {
 public class RingBuffer
 {
     /** Creates a new RingBuffer with the specified capacity. */
-    public function RingBuffer (capacity :uint = 1)
-    {
+    public function RingBuffer (capacity :uint = 1) {
         _capacity = capacity;
         _array.length = _capacity;
     }
 
     /** Returns the capacity of the RingBuffer. */
-    public function get capacity () :uint
-    {
+    public function get capacity () :uint {
         return _capacity;
     }
 
@@ -24,8 +22,7 @@ public class RingBuffer
      * elements will be removed from the end of the RingBuffer
      * to accommodate the smaller capacity.
      */
-    public function set capacity (newCapacity :uint) :void
-    {
+    public function set capacity (newCapacity :uint) :void {
         // Copy all the elements to a new array.
         var newArray :Array = new Array();
         var newLength :uint = Math.min(_length, newCapacity);
@@ -41,14 +38,12 @@ public class RingBuffer
     }
 
     /** Returns the number of elements currently stored in the RingBuffer. */
-    public function get length () :uint
-    {
+    public function get length () :uint {
         return _length;
     }
 
     /** Returns true if the RingBuffer contains 0 elements. */
-    public function get empty () :Boolean
-    {
+    public function get empty () :Boolean {
         return (0 == _length);
     }
 
@@ -59,8 +54,7 @@ public class RingBuffer
      * the RingBuffer.
      * Returns the new length of the RingBuffer.
      */
-    public function unshift (...args) :uint
-    {
+    public function unshift (...args) :uint {
         for (var ii :int = args.length - 1; ii >= 0; --ii) {
             var index :uint = (_firstIndex > 0 ? _firstIndex - 1 : _capacity - 1);
             _array[index] = args[ii];
@@ -78,8 +72,7 @@ public class RingBuffer
      * the RingBuffer.
      * Returns the new length of the RingBuffer.
      */
-    public function push (...args) :uint
-    {
+    public function push (...args) :uint {
         for (var ii :uint = 0; ii < args.length; ++ii) {
             var index :uint = ((_firstIndex + _length) % _capacity);
             _array[index] = args[ii];
@@ -98,8 +91,7 @@ public class RingBuffer
      * Removes the first element from the RingBuffer and returns it.
      * If the RingBuffer is empty, shift() will return undefined.
      */
-    public function shift () :*
-    {
+    public function shift () :* {
         if (this.empty) {
             return undefined;
         }
@@ -116,8 +108,7 @@ public class RingBuffer
      * Removes the last element from the RingBuffer and returns it.
      * If the RingBuffer is empty, pop() will return undefined.
      */
-    public function pop () :*
-    {
+    public function pop () :* {
         if (this.empty) {
             return undefined;
         }
@@ -132,8 +123,7 @@ public class RingBuffer
     }
 
     /** Removes all elements from the RingBuffer. */
-    public function clear () :void
-    {
+    public function clear () :void {
         _array = new Array();
         _array.length = _capacity;
         _length = 0;
@@ -144,8 +134,7 @@ public class RingBuffer
      * Returns the element at the specified index.
      * If index >= length, at() will return undefined.
      */
-    public function at (index :uint) :*
-    {
+    public function at (index :uint) :* {
         if (index >= _length) {
             return undefined;
         } else {
@@ -162,8 +151,7 @@ public class RingBuffer
      * Returns a Boolean value of true if all items in the buffer return
      * true for the specified function; otherwise, false.
      */
-    public function every (callback :Function, thisObject :* = null) :Boolean
-    {
+    public function every (callback :Function, thisObject :* = null) :Boolean {
         for (var ii :int = 0; ii < _length; ++ii) {
             if (!callback.call(thisObject, this.at(ii))) {
                 return false;
@@ -176,8 +164,7 @@ public class RingBuffer
     /**
      * Executes a function on each item in the ring buffer.
      */
-    public function forEach (callback :Function, thisObject :* = null) :void
-    {
+    public function forEach (callback :Function, thisObject :* = null) :void {
         for (var ii :int = 0; ii < _length; ++ii) {
             callback.call(thisObject, this.at(ii));
         }
@@ -188,8 +175,7 @@ public class RingBuffer
      * (===) and returns the index position of the item, or -1
      * if the item is not found.
      */
-    public function indexOf (searchElement :*, fromIndex :int = 0) :int
-    {
+    public function indexOf (searchElement :*, fromIndex :int = 0) :int {
         for (var ii :int = 0; ii < _length; ++ii) {
             if (this.at(ii) === searchElement) {
                 return ii;

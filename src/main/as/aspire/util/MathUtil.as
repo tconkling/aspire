@@ -13,32 +13,28 @@ public class MathUtil
     /**
      * Returns the value of n clamped to be within the range [min, max].
      */
-    public static function clamp (n :Number, min :Number, max :Number) :Number
-    {
+    public static function clamp (n :Number, min :Number, max :Number) :Number {
         return Math.min(Math.max(n, min), max);
     }
 
     /**
      * Converts degrees to radians.
      */
-    public static function toRadians (degrees :Number) :Number
-    {
+    public static function toRadians (degrees :Number) :Number {
         return degrees * D2R;
     }
 
     /**
      * Converts radians to degrees.
      */
-    public static function toDegrees (radians :Number) :Number
-    {
+    public static function toDegrees (radians :Number) :Number {
         return radians * R2D
     }
 
     /**
      * Normalizes an angle in radians to occupy the [0, 2pi) range.
      */
-    public static function normalizeRadians (radians :Number) :Number
-    {
+    public static function normalizeRadians (radians :Number) :Number {
         var norm :Number = radians % TWO_PI;
         return (norm >= 0) ? norm : (norm + TWO_PI);
     }
@@ -46,8 +42,7 @@ public class MathUtil
     /**
      * Normalizes an angle in degrees to occupy the [0, 360) range.
      */
-    public static function normalizeDegrees (degrees :Number) :Number
-    {
+    public static function normalizeDegrees (degrees :Number) :Number {
         var norm :Number = degrees % 360;
         return (norm >= 0) ? norm : (norm + 360);
     }
@@ -115,8 +110,7 @@ public class MathUtil
      *  -2  -1 -1 -1 0 0 0  1  1
      * </pre></p>
      */
-    public static function floorDiv (dividend :int, divisor :int) :int
-    {
+    public static function floorDiv (dividend :int, divisor :int) :int {
         return ((dividend >= 0) ? dividend : (dividend - divisor + 1))/divisor;
     }
 

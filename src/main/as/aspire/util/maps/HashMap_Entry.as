@@ -17,8 +17,7 @@ public class HashMap_Entry
     public var hash :int;
     public var next :HashMap_Entry;
 
-    public function HashMap_Entry (hash :int, key :Hashable, value :Object, next :HashMap_Entry)
-    {
+    public function HashMap_Entry (hash :int, key :Hashable, value :Object, next :HashMap_Entry) {
         this.hash = hash;
         this.key = key;
         this.value = value;

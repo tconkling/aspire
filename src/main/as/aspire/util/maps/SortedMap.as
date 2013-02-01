@@ -21,30 +21,26 @@ public class SortedMap extends ForwardingMap
      * @param source the backing Map
      * @param comp the Comparator used to sort the keys, or null to use Comparators.compareUnknown.
      */
-    public function SortedMap (source :Map, comp :Function = null)
-    {
+    public function SortedMap (source :Map, comp :Function = null) {
         super(source);
         _comp = comp || Comparators.compareUnknowns;
     }
 
     /** @inheritDoc */
-    override public function keys () :Array
-    {
+    override public function keys () :Array {
         var keys :Array = super.keys();
         keys.sort(_comp);
         return keys;
     }
 
     /** @inheritDoc */
-    override public function values () :Array
-    {
+    override public function values () :Array {
         // not very optimal, but we need to return the values in order...
         return keys().map(F.adapt(get));
     }
 
     /** @inheritDoc */
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         // also not very optimal. In an ideal world we'd maintain an ordering of entries,
         // but since we can be combined with expiring maps, etc, this is fine for now.
         var keys :Array = keys();

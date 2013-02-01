@@ -5,19 +5,16 @@ package aspire.util {
 
 public class WeightedArray
 {
-    public function WeightedArray (rands :Randoms)
-    {
+    public function WeightedArray (rands :Randoms) {
         _rands = rands;
     }
 
-    public function clear () :void
-    {
+    public function clear () :void {
         _data = [];
         _dataDirty = true;
     }
 
-    public function push (data :*, relativeChance :Number) :void
-    {
+    public function push (data :*, relativeChance :Number) :void {
         if (relativeChance <= 0) {
             throw new ArgumentError("relativeChance must be > 0");
         }
@@ -26,8 +23,7 @@ public class WeightedArray
         _dataDirty = true;
     }
 
-    public function getNextData () :*
-    {
+    public function getNextData () :* {
         updateData();
 
         if (_data.length == 0) {
@@ -67,8 +63,7 @@ public class WeightedArray
     /**
      * Get an array of all of the items that can be returned by this WeightedArray.
      */
-    public function getAllData () :Array
-    {
+    public function getAllData () :Array {
         return _data.map(function (wd :WeightedData, ...ignored) :* {
             return wd.data;
         });
@@ -79,8 +74,7 @@ public class WeightedArray
      * function (item :*, relativeChance :Number) :void.
      * It will be called once per item in the array.
      */
-    public function forEach (callback :Function) :void
-    {
+    public function forEach (callback :Function) :void {
         _data.forEach(function (wd :WeightedData, ...ignored) :void {
             callback(wd.data, wd.relativeChance);
         });
@@ -90,8 +84,7 @@ public class WeightedArray
      * @return the percentage chance - a value in [0, 1] - that the given data will be returned
      * from a call to getNextData(), given the relative chance of all other data in the array.
      */
-    public function getAbsoluteChance (data :*) :Number
-    {
+    public function getAbsoluteChance (data :*) :Number {
         updateData();
 
         if (_data.length == 0) {
@@ -109,13 +102,11 @@ public class WeightedArray
         return dataChance / max;
     }
 
-    public function get length () :int
-    {
+    public function get length () :int {
         return _data.length;
     }
 
-    protected function updateData () :void
-    {
+    protected function updateData () :void {
         if (_dataDirty) {
             var totalVal :Number = 0;
             for each (var wd :WeightedData in _data) {
@@ -141,13 +132,11 @@ class WeightedData
     public var relativeChance :Number;
     public var min :Number;
 
-    public function get max () :Number
-    {
+    public function get max () :Number {
         return min + relativeChance;
     }
 
-    public function WeightedData (data :*, relativeChance :Number)
-    {
+    public function WeightedData (data :*, relativeChance :Number) {
         this.data = data;
         this.relativeChance = relativeChance;
     }

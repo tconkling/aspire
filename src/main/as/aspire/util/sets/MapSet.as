@@ -14,50 +14,42 @@ import aspire.util.Set;
 public class MapSet extends AbstractSet
     implements Set
 {
-    public function MapSet (source :Map)
-    {
+    public function MapSet (source :Map) {
         _source = Preconditions.checkNotNull(source);
     }
 
     /** @inheritDoc */
-    public function add (o :Object) :Boolean
-    {
+    public function add (o :Object) :Boolean {
         return (undefined === _source.put(o, true));
     }
 
     /** @inheritDoc */
-    public function contains (o :Object) :Boolean
-    {
+    public function contains (o :Object) :Boolean {
         return _source.containsKey(o);
     }
 
     /** @inheritDoc */
-    public function remove (o :Object) :Boolean
-    {
+    public function remove (o :Object) :Boolean {
         return (undefined !== _source.remove(o));
     }
 
     /** @inheritDoc */
-    public function size () :int
-    {
+    public function size () :int {
         return _source.size();
     }
 
     /** @inheritDoc */
-    public function isEmpty () :Boolean
-    {
+    public function isEmpty () :Boolean {
         return _source.isEmpty();
     }
 
     /** @inheritDoc */
-    public function clear () :void
-    {
+    public function clear () :void {
         return _source.clear();
     }
 
     /** @inheritDoc */
-    public function toArray () :Array
-    {
+    public function toArray () :Array {
         return _source.keys();
     }
 
@@ -66,8 +58,7 @@ public class MapSet extends AbstractSet
      *
      * @internal inheritDoc doesn't work here because forEach is defined in our private superclass.
      */
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         _source.forEach(function (k :Object, v :Object) :* {
             return fn(k);
         });

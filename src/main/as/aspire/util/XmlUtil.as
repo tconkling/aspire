@@ -16,8 +16,7 @@ public class XmlUtil
      * use the default settings.
      * @see XML#setSettings()
      */
-    public static function newXML (value :Object, settings :Object = null) :XML
-    {
+    public static function newXML (value :Object, settings :Object = null) :XML {
         return safeOp(function () :* {
             return new XML(value);
         }, settings) as XML;
@@ -36,8 +35,7 @@ public class XmlUtil
      * @see XML#toString()
      * @see XML#setSettings()
      */
-    public static function toString (xml :XML, settings :Object = null) :String
-    {
+    public static function toString (xml :XML, settings :Object = null) :String {
         return safeOp(function () :* {
             return xml.toString();
         }, settings) as String;
@@ -56,8 +54,7 @@ public class XmlUtil
      * @see XML#toXMLString()
      * @see XML#setSettings()
      */
-    public static function toXMLString (xml :XML, settings :Object = null) :String
-    {
+    public static function toXMLString (xml :XML, settings :Object = null) :String {
         return safeOp(function () :* {
             return xml.toXMLString();
         }, settings) as String;
@@ -75,8 +72,7 @@ public class XmlUtil
      * @see XML#setSettings()
      * @see XML#settings()
      */
-    public static function safeOp (fn :Function, settings :Object = null) :*
-    {
+    public static function safeOp (fn :Function, settings :Object = null) :* {
         var oldSettings :Object = XML.settings();
         try {
             XML.setSettings(settings); // setting to null resets to all the defaults
@@ -86,8 +82,7 @@ public class XmlUtil
         }
     }
 
-    public static function hasChild (xml :XML, name :String) :Boolean
-    {
+    public static function hasChild (xml :XML, name :String) :Boolean {
         return xml.child(name).length() > 0;
     }
 
@@ -107,8 +102,7 @@ public class XmlUtil
         return children[0];
     }
 
-    public static function map (xs :XMLList, f :Function) :Array
-    {
+    public static function map (xs :XMLList, f :Function) :Array {
         const result :Array = [];
         for each (var node :XML in xs) {
             result.push(f(node));
@@ -116,18 +110,15 @@ public class XmlUtil
         return result;
     }
 
-    public static function hasAttr (xml :XML, name :String) :Boolean
-    {
+    public static function hasAttr (xml :XML, name :String) :Boolean {
         return (null != xml.attribute(name)[0]);
     }
 
-    public static function getUintAttr (xml :XML, name :String, defaultValue :* = undefined) :uint
-    {
+    public static function getUintAttr (xml :XML, name :String, defaultValue :* = undefined) :uint {
         return getAttr(xml, name, defaultValue, StringUtil.parseUnsignedInteger);
     }
 
-    public static function getIntAttr (xml :XML, name :String, defaultValue :* = undefined) :int
-    {
+    public static function getIntAttr (xml :XML, name :String, defaultValue :* = undefined) :int {
         return getAttr(xml, name, defaultValue, StringUtil.parseInteger);
     }
 
@@ -180,9 +171,8 @@ public class XmlUtil
         });
     }
 
-    public static function getAttr (
-        xml :XML, name :String, defaultValue :*, parseFunction :Function = null) :*
-    {
+    public static function getAttr (xml :XML, name :String, defaultValue :*,
+        parseFunction :Function = null) :* {
         var value :*;
 
         // read the attribute; throw an error if it doesn't exist (unless we have a default value)
@@ -214,8 +204,7 @@ public class XmlUtil
      * getText(<text>some text</text>) -> "some text"
      * getText(<text>some <asdf/>more<asdf/> text</text>) -> "some more text"
      */
-    public static function getText (xml :XML) :String
-    {
+    public static function getText (xml :XML) :String {
         var text :String = "";
         for each (var textNode :XML in xml.text()) {
             text += textNode.toString();
@@ -238,16 +227,14 @@ public class XmlUtil
     /**
      * Parses a string in the form "FOO,BAR,MONKEY" into a Set of Enums
      */
-    public static function parseEnumSet (value :String, enumType :Class) :Set
-    {
+    public static function parseEnumSet (value :String, enumType :Class) :Set {
         return Sets.newSetOf(enumType, parseEnumArray(value, enumType));
     }
 
     /**
      * Parses a string in the form "FOO,BAR,MONKEY" into a Set of Enums
      */
-    public static function parseEnumArray (value :String, enumType :Class) :Array
-    {
+    public static function parseEnumArray (value :String, enumType :Class) :Array {
         var values :Array = [];
 
         // Since enums can't have 0-length enum names, an empty string means an empty array.

@@ -15,8 +15,7 @@ public /* abstract */ class AbstractSet
      * Return a String representation of this Set.
      * @public
      */
-    public function toString () :String
-    {
+    public function toString () :String {
         var s :String = "Set [";
         var theSet :Object = this;
         var comma :Boolean = false;
@@ -32,8 +31,7 @@ public /* abstract */ class AbstractSet
     }
 
     /** @copy com.threerings.util.Set#forEach() */
-    public function forEach (fn :Function) :void
-    {
+    public function forEach (fn :Function) :void {
         throw new Error("Abstract");
     }
 }

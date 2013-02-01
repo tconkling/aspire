@@ -29,8 +29,7 @@ public class Sets
      * Create a new Set for storing values of the specified class. If values is given, the items in
      * the Array or Set are added to the created Set.
      */
-    public static function newSetOf (valueClazz :Class, values :Object = null) :Set
-    {
+    public static function newSetOf (valueClazz :Class, values :Object = null) :Set {
         var set :Set = new MapSet(Maps.newMapOf(valueClazz));
         if (values != null) {
             addAll(set, values);
@@ -63,8 +62,7 @@ public class Sets
      *     .build();
      * </listing>
      */
-    public static function newBuilder (valueClazz :Class) :SetBuilder
-    {
+    public static function newBuilder (valueClazz :Class) :SetBuilder {
         return new SetBuilder(valueClazz);
     }
 
@@ -73,8 +71,7 @@ public class Sets
      *
      * This method returns the same Set instance to every caller.
      */
-    public static function empty () :Set
-    {
+    public static function empty () :Set {
         if (EMPTY == null) {
             // Type doesn't matter, and DictionaryMap has slightly less overhead.
             EMPTY = newBuilder(int).makeImmutable().build();
@@ -85,8 +82,7 @@ public class Sets
     /**
      * Return true if the two sets are equal.
      */
-    public static function equals (a :Set, b :Set) :Boolean
-    {
+    public static function equals (a :Set, b :Set) :Boolean {
         if (a === b) {
             return true;
 
@@ -111,8 +107,7 @@ public class Sets
      *
      * @return result
      */
-    public static function union (a :Set, b :Set, result :Set) :Set
-    {
+    public static function union (a :Set, b :Set, result :Set) :Set {
         checkSets(a, b, result);
 
         function addToResult (e :Object) :void {
@@ -130,8 +125,7 @@ public class Sets
      *
      * @return result
      */
-    public static function intersection (a :Set, b :Set, result :Set) :Set
-    {
+    public static function intersection (a :Set, b :Set, result :Set) :Set {
         checkSets(a, b, result);
 
         // iterate the smaller of the two sets
@@ -156,8 +150,7 @@ public class Sets
      *
      * @return result
      */
-    public static function difference (a :Set, b :Set, result :Set) :Set
-    {
+    public static function difference (a :Set, b :Set, result :Set) :Set {
         checkSets(a, b, result);
 
         a.forEach(function (o :Object) :void {
@@ -177,8 +170,7 @@ public class Sets
      *
      * @return result
      */
-    public static function symmetricDifference (a :Set, b :Set, result :Set) :Set
-    {
+    public static function symmetricDifference (a :Set, b :Set, result :Set) :Set {
         checkSets(a, b, result);
 
         a.forEach(function (o :Object) :void {
@@ -205,8 +197,7 @@ public class Sets
      * </listing>
      * @see Predicates
      */
-    public static function some (theSet :Set, condition :Function) :Boolean
-    {
+    public static function some (theSet :Set, condition :Function) :Boolean {
         var found :Boolean = false;
         theSet.forEach(function (o :Object) :Boolean {
             if (condition(o)) {
@@ -222,8 +213,7 @@ public class Sets
      * Adds an Array or Set of objects to the given set.
      * @return true if any object was added to the set, and false otherwise.
      */
-    public static function addAll (theSet :Set, objects :Object) :Boolean
-    {
+    public static function addAll (theSet :Set, objects :Object) :Boolean {
         var modified :Boolean = false;
         if (objects is Set) {
             Set(objects).forEach(function (item :Object) :void {
@@ -248,8 +238,7 @@ public class Sets
      * Removes an Array or Set of objects from the given set.
      * @return true if any object was removed from the set, and false otherwise.
      */
-    public static function removeAll (theSet :Set, objects :Object) :Boolean
-    {
+    public static function removeAll (theSet :Set, objects :Object) :Boolean {
         var modified :Boolean = false;
         if (objects is Set) {
             Set(objects).forEach(function (item :Object) :void {
@@ -273,8 +262,7 @@ public class Sets
     /**
      * Helper method for Set operations.
      */
-    protected static function checkSets (a :Set, b :Set, result :Set) :void
-    {
+    protected static function checkSets (a :Set, b :Set, result :Set) :void {
         if (a == result || b == result) {
             throw new ArgumentError("result must not be a or b");
         }

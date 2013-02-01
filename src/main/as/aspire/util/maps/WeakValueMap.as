@@ -12,47 +12,40 @@ import aspire.util.WeakReference;
  */
 public class WeakValueMap extends ForeachingMap
 {
-    public function WeakValueMap (source :Map)
-    {
+    public function WeakValueMap (source :Map) {
         super(source);
     }
 
     /** @inheritDoc */
-    override public function put (key :Object, value :Object) :*
-    {
+    override public function put (key :Object, value :Object) :* {
         return unwrap(super.put(key, (value == null) ? null : new WeakReference(value)));
     }
 
     /** @inheritDoc */
-    override public function get (key :Object) :*
-    {
+    override public function get (key :Object) :* {
         return unwrap(super.get(key));
     }
 
     /** @inheritDoc */
-    override public function containsKey (key :Object) :Boolean
-    {
+    override public function containsKey (key :Object) :Boolean {
         // take special care here
         var val :* = super.get(key);
         return ((val is WeakReference) && (undefined !== WeakReference(val).get()));
     }
 
     /** @inheritDoc */
-    override public function remove (key :Object) :*
-    {
+    override public function remove (key :Object) :* {
         return unwrap(super.remove(key));
     }
 
     /** @inheritDoc */
-    override public function size () :int
-    {
+    override public function size () :int {
         forEach(function (... args) :void {});
         return super.size();
     }
 
     /** @inheritDoc */
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         var removeKeys :Array = [];
         super.forEach(function (key :*, value :*) :Boolean {
             var rawVal :* = unwrap(value);
@@ -72,8 +65,7 @@ public class WeakValueMap extends ForeachingMap
      * Unwrap a possible WeakReference for returning.
      * @private
      */
-    protected function unwrap (val :*) :*
-    {
+    protected function unwrap (val :*) :* {
         return (val is WeakReference) ? WeakReference(val).get() : val;
     }
 }

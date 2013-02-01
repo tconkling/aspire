@@ -13,26 +13,22 @@ import aspire.util.Maps;
 public class ValueComputingMap extends ForwardingMap
 {
     /** Creates a new ValueComputingMap that uses the given function */
-    public static function newMapOf(keyClazz :Class, computer :Function) :Map
-    {
+    public static function newMapOf(keyClazz :Class, computer :Function) :Map {
         return new ValueComputingMap(Maps.newMapOf(keyClazz), computer);
     }
 
     /** Creates a new ValueComputing map that fills in empty arrays for missing keys. */
-    public static function newArrayMapOf(keyClazz :Class) :Map
-    {
+    public static function newArrayMapOf(keyClazz :Class) :Map {
         return new ValueComputingMap(Maps.newMapOf(keyClazz), function (..._) :Array { return [] });
     }
 
-    public function ValueComputingMap (source :Map, computer :Function)
-    {
+    public function ValueComputingMap (source :Map, computer :Function) {
         super(source);
         _computer = computer;
     }
 
     /** @inheritDoc */
-    override public function get (key :Object) :*
-    {
+    override public function get (key :Object) :* {
         var val :* = super.get(key);
         if (val === undefined) {
             val = _computer(key);

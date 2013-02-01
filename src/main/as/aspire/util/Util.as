@@ -48,8 +48,7 @@ public class Util
      * Returns a function that will call each of the given functions in order. The return values
      * of the functions are ignored. The returned function returns void.
      */
-    public static function sequence (... functions) :Function
-    {
+    public static function sequence (... functions) :Function {
         return function (... args) :void {
             for each (var fn :Function in functions) {
                 fn.apply(null, args);
@@ -60,8 +59,7 @@ public class Util
     /**
      * Returns a function that returns its nth argument, or undefined if there is no nth argument.
      */
-    public static function unit (n :int) :Function
-    {
+    public static function unit (n :int) :Function {
         return function (... args) :* {
             return args[n];
         };
@@ -75,8 +73,7 @@ public class Util
      *      function finish () :void {}
      * </listing>
      */
-    public static function asyncForEach (xs :Array, iterate :Function, finish :Function) :void
-    {
+    public static function asyncForEach (xs :Array, iterate :Function, finish :Function) :void {
         var rest :Array = Arrays.copyOf(xs);
         function doNext () :void {
             if (rest.length == 0) {
@@ -97,8 +94,7 @@ public class Util
      *      function finish () :void {}
      * </listing>
      */
-    public static function parallelForEach (xs :Array, iterate :Function, finish :Function) :void
-    {
+    public static function parallelForEach (xs :Array, iterate :Function, finish :Function) :void {
         var remaining :int = 1; // one for this method
         function onOneComplete () :void {
             if (--remaining == 0) {
@@ -126,8 +122,7 @@ public class Util
      * </listing>
      * @param onSuccess the callback to invoke when all executed functions have completed.
      */
-    public static function executeInParallel (functions :Array, onSuccess :Function) :void
-    {
+    public static function executeInParallel (functions :Array, onSuccess :Function) :void {
         function iterate (elem :Function, onSuccess :Function) :void {
             elem(onSuccess);
         }
@@ -138,16 +133,14 @@ public class Util
     /**
      * Returns true if the specified object is just a regular old associative hash.
      */
-    public static function isPlainObject (obj :Object) :Boolean
-    {
+    public static function isPlainObject (obj :Object) :Boolean {
         return getQualifiedClassName(obj) == "Object";
     }
 
     /**
      * Is the specified object 'simple': one of the basic built-in flash types.
      */
-    public static function isSimple (obj :Object) :Boolean
-    {
+    public static function isSimple (obj :Object) :Boolean {
         var type :String = typeof(obj);
         switch (type) {
         case "number":
@@ -167,8 +160,7 @@ public class Util
      * Returns a property of an object by name if the object contains the property, otherwise
      * returns a default value.
      */
-    public static function getDefault (props :Object, name :String, defaultValue :Object) :Object
-    {
+    public static function getDefault (props :Object, name :String, defaultValue :Object) :Object {
         return (name in props) ? props[name] : defaultValue;
     }
 
@@ -176,8 +168,7 @@ public class Util
      * Get an array containing the property keys of the specified object, in their
      * natural iteration order.
      */
-    public static function keys (obj :Object) :Array
-    {
+    public static function keys (obj :Object) :Array {
         var arr :Array = [];
         for (var k :* in obj) { // no "each": iterate over keys
             arr.push(k);
@@ -189,8 +180,7 @@ public class Util
      * Get an array containing the property values of the specified object, in their
      * natural iteration order.
      */
-    public static function values (obj :Object) :Array
-    {
+    public static function values (obj :Object) :Array {
         var arr :Array = [];
         for each (var v :* in obj) { // "each" iterates over values
             arr.push(v);
@@ -204,8 +194,7 @@ public class Util
      * and ByteArrays are also compared and are equal if they have
      * elements that are equals (deeply).
      */
-    public static function equals (obj1 :Object, obj2 :Object) :Boolean
-    {
+    public static function equals (obj1 :Object, obj2 :Object) :Boolean {
         // catch various common cases (both primitive or null)
         if (obj1 === obj2) {
             return true;
@@ -237,8 +226,7 @@ public class Util
      * If you call a varargs method by passing it an array, the array
      * will end up being arg 1.
      */
-    public static function unfuckVarargs (args :Array) :Array
-    {
+    public static function unfuckVarargs (args :Array) :Array {
         return (args.length == 1 && (args[0] is Array)) ? (args[0] as Array)
                                                         : args;
     }

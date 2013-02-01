@@ -13,38 +13,32 @@ import aspire.util.Map;
  */
 public /* abstract */ class LinkedMap extends ForeachingMap
 {
-    public function LinkedMap (source :Map)
-    {
+    public function LinkedMap (source :Map) {
         super(source);
         _anchor = new LinkedEntry(this, this); // fake entry
         _anchor.before = _anchor.after = _anchor;
     }
 
-    override public function put (key :Object, value :Object) :*
-    {
+    override public function put (key :Object, value :Object) :* {
         var entry :LinkedEntry = newEntry(key, value);
         entry.addBefore(_anchor);
         return unlink(super.put(key, entry));
     }
 
-    override public function get (key :Object) :*
-    {
+    override public function get (key :Object) :* {
         return unwrap(getEntry(key));
     }
 
-    override public function remove (key :Object) :*
-    {
+    override public function remove (key :Object) :* {
         return unlink(super.remove(key));
     }
 
-    override public function clear () :void
-    {
+    override public function clear () :void {
         super.clear();
         _anchor.before = _anchor.after = _anchor;
     }
 
-    override public function forEach (fn :Function) :void
-    {
+    override public function forEach (fn :Function) :void {
         // iterate over entries, oldest to newest.
         for (var entry :LinkedEntry = _anchor.after; entry != _anchor; entry = entry.after) {
             if (Boolean(fn(entry.key, entry.value))) {
@@ -57,8 +51,7 @@ public /* abstract */ class LinkedMap extends ForeachingMap
      * Unlink the specified entry and return the value.
      * @private
      */
-    protected function unlink (val :*) :*
-    {
+    protected function unlink (val :*) :* {
         if (val === undefined) {
             return undefined;
         }
@@ -71,8 +64,7 @@ public /* abstract */ class LinkedMap extends ForeachingMap
      * Unwrap the entry. Varargs so that it can be passed to Array.map.
      * @private
      */
-    protected function unwrap (val :*, ... ignored) :*
-    {
+    protected function unwrap (val :*, ... ignored) :* {
         return (val is LinkedEntry) ? LinkedEntry(val).value : val;
     }
 
@@ -80,8 +72,7 @@ public /* abstract */ class LinkedMap extends ForeachingMap
      * So that this can be overridden separately from the unwrap.
      * @private
      */
-    protected function getEntry (key :Object) :*
-    {
+    protected function getEntry (key :Object) :* {
         return super.get(key);
     }
 
@@ -89,8 +80,7 @@ public /* abstract */ class LinkedMap extends ForeachingMap
      * For overriding.
      * @private
      */
-    protected function newEntry (key :Object, value :Object) :LinkedEntry
-    {
+    protected function newEntry (key :Object, value :Object) :LinkedEntry {
         return new LinkedEntry(key, value);
     }
 

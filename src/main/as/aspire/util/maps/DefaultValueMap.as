@@ -11,15 +11,13 @@ import aspire.util.Map;
  */
 public class DefaultValueMap extends ForwardingMap
 {
-    public function DefaultValueMap (source :Map, defaultValue :Object)
-    {
+    public function DefaultValueMap (source :Map, defaultValue :Object) {
         super(source);
         _defVal = defaultValue;
     }
 
     /** @inheritDoc */
-    override public function get (key :Object) :*
-    {
+    override public function get (key :Object) :* {
         var val :* = super.get(key);
         return (val !== undefined) ? val : _defVal;
     }

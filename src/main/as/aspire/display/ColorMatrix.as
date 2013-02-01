@@ -42,8 +42,7 @@ public class ColorMatrix
 
     public var matrix :Array;
 
-    public function ColorMatrix (mat :Object = null)
-    {
+    public function ColorMatrix (mat :Object = null) {
         if (mat is ColorMatrix) {
             matrix = mat.matrix.concat();
         } else if (mat is Array) {
@@ -57,8 +56,7 @@ public class ColorMatrix
      * Resets the matrix to the identity matrix. Apply this matrix to an image will not make
      * any changes to it.
      */
-    public function reset () :ColorMatrix
-    {
+    public function reset () :ColorMatrix {
         matrix = IDENTITY.concat();
         return this;
     }
@@ -66,13 +64,11 @@ public class ColorMatrix
     /**
      * Returns a copy of this ColorMatrix.
      */
-    public function clone () :ColorMatrix
-    {
+    public function clone () :ColorMatrix {
         return new ColorMatrix(matrix);
     }
 
-    public function invert () :ColorMatrix
-    {
+    public function invert () :ColorMatrix {
         return concat([-1, 0, 0, 0, 255,
                        0, -1, 0, 0, 255,
                        0, 0, -1, 0, 255,
@@ -126,8 +122,7 @@ public class ColorMatrix
     /**
      * Performs the same transformation as the FAT "Tint" function.
      */
-    public function tint (rgb :Number, amount :Number = 1) :ColorMatrix
-    {
+    public function tint (rgb :Number, amount :Number = 1) :ColorMatrix {
         var r:Number = ((rgb >> 16) & 0xff) * amount;
         var g:Number = ((rgb >> 8) & 0xff) * amount;
         var b:Number = (rgb & 0xff) * amount;
@@ -148,8 +143,7 @@ public class ColorMatrix
      * Other values outside of this range are possible: -1.0 will invert the hue but keep the
      * luminance
      */
-    public function adjustSaturation (s :Number) :ColorMatrix
-    {
+    public function adjustSaturation (s :Number) :ColorMatrix {
         var sInv :Number = (1 - s);
         var irlum :Number = (sInv * LUMA_R);
         var iglum :Number = (sInv * LUMA_G);
@@ -167,8 +161,7 @@ public class ColorMatrix
      * @param s typical values come in the range -1.0 ... 1.0 where -1.0 means no contrast (grey)
      * 0 means no change 1.0 is high contrast
      */
-    public function adjustContrast (r :Number, g :Number = NaN, b :Number = NaN) :ColorMatrix
-    {
+    public function adjustContrast (r :Number, g :Number = NaN, b :Number = NaN) :ColorMatrix {
         if (isNaN(g)) {
             g = r;
         }
@@ -186,8 +179,7 @@ public class ColorMatrix
                        0, 0, 0, 1, 0]);
     }
 
-    public function adjustBrightness (r :Number, g :Number=NaN, b :Number=NaN) :ColorMatrix
-    {
+    public function adjustBrightness (r :Number, g :Number=NaN, b :Number=NaN) :ColorMatrix {
         if (isNaN(g)) {
             g = r;
         }
@@ -200,8 +192,7 @@ public class ColorMatrix
                        0, 0, 0, 1, 0]);
     }
 
-    public function adjustHue (degrees :Number) :ColorMatrix
-    {
+    public function adjustHue (degrees :Number) :ColorMatrix {
         degrees *= RAD;
         var cos :Number = Math.cos(degrees);
         var sin :Number = Math.sin(degrees);
@@ -211,8 +202,7 @@ public class ColorMatrix
                 0, 0, 0, 1, 0]);
     }
 
-    public function rotateHue (degrees :Number) :ColorMatrix
-    {
+    public function rotateHue (degrees :Number) :ColorMatrix {
         initHue();
 
         concat(_preHue.matrix);
@@ -220,16 +210,14 @@ public class ColorMatrix
         return concat(_postHue.matrix);
     }
 
-    public function luminance2Alpha () :ColorMatrix
-    {
+    public function luminance2Alpha () :ColorMatrix {
         return concat([0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        LUMA_R, LUMA_G, LUMA_B, 0, 0]);
     }
 
-    public function adjustAlphaContrast (amount :Number) :ColorMatrix
-    {
+    public function adjustAlphaContrast (amount :Number) :ColorMatrix {
         amount += 1;
         return concat([1, 0, 0, 0, 0,
                        0, 1, 0, 0, 0,
@@ -237,8 +225,7 @@ public class ColorMatrix
                        0, 0, 0, amount, (128 * (1 - amount))]);
     }
 
-    public function colorize (rgb :int, amount :Number = 1) :ColorMatrix
-    {
+    public function colorize (rgb :int, amount :Number = 1) :ColorMatrix {
         var r :Number;
         var g :Number;
         var b :Number;
@@ -255,8 +242,7 @@ public class ColorMatrix
                 0, 0, 0, 1, 0]);
     }
 
-    public function setChannels (r :int = 1, g :int = 2, b :int = 4, a :int = 8) :ColorMatrix
-    {
+    public function setChannels (r :int = 1, g :int = 2, b :int = 4, a :int = 8) :ColorMatrix {
         var rf :Number = ((((((r & 1) == 1)) ? 1 : 0 + (((r & 2) == 2)) ? 1 : 0) + (((r & 4) == 4)) ? 1 : 0) + (((r & 8) == 8)) ? 1 : 0);
         if (rf > 0) {
             rf = (1 / rf);
@@ -276,8 +262,7 @@ public class ColorMatrix
         return concat([(((r & 1) == 1)) ? rf : 0, (((r & 2) == 2)) ? rf : 0, (((r & 4) == 4)) ? rf : 0, (((r & 8) == 8)) ? rf : 0, 0, (((g & 1) == 1)) ? gf : 0, (((g & 2) == 2)) ? gf : 0, (((g & 4) == 4)) ? gf : 0, (((g & 8) == 8)) ? gf : 0, 0, (((b & 1) == 1)) ? bf : 0, (((b & 2) == 2)) ? bf : 0, (((b & 4) == 4)) ? bf : 0, (((b & 8) == 8)) ? bf : 0, 0, (((a & 1) == 1)) ? af : 0, (((a & 2) == 2)) ? af : 0, (((a & 4) == 4)) ? af : 0, (((a & 8) == 8)) ? af : 0, 0]);
     }
 
-    public function blend (mat :ColorMatrix, amount :Number) :ColorMatrix
-    {
+    public function blend (mat :ColorMatrix, amount :Number) :ColorMatrix {
         var inv_amount :Number = (1 - amount);
         var ii :int = 0;
         while (ii < 20) {
@@ -288,21 +273,18 @@ public class ColorMatrix
         return this;
     }
 
-    public function average (r :Number, g :Number, b :Number) :ColorMatrix
-    {
+    public function average (r :Number, g :Number, b :Number) :ColorMatrix {
         return concat([r, g, b, 0, 0,
                        r, g, b, 0, 0,
                        r, g, b, 0, 0,
                        0, 0, 0, 1, 0]);
     }
 
-    public function makeGrayscale () :ColorMatrix
-    {
+    public function makeGrayscale () :ColorMatrix {
         return average(ONETHIRD, ONETHIRD, ONETHIRD);
     }
 
-    public function threshold (threshold :Number, factor :Number = 256) :ColorMatrix
-    {
+    public function threshold (threshold :Number, factor :Number = 256) :ColorMatrix {
         concat([(LUMA_R * factor), (LUMA_G * factor), (LUMA_B * factor), 0, (-(factor) * threshold),
                 (LUMA_R * factor), (LUMA_G * factor), (LUMA_B * factor), 0, (-(factor) * threshold),
                 (LUMA_R * factor), (LUMA_G * factor), (LUMA_B * factor), 0, (-(factor) * threshold),
@@ -311,16 +293,14 @@ public class ColorMatrix
         return this;
     }
 
-    public function desaturate () :ColorMatrix
-    {
+    public function desaturate () :ColorMatrix {
         return concat([LUMA_R, LUMA_G, LUMA_B, 0, 0,
                        LUMA_R, LUMA_G, LUMA_B, 0, 0,
                        LUMA_R, LUMA_G, LUMA_B, 0, 0,
                        0, 0, 0, 1, 0]);
     }
 
-    public function randomize (amount :Number = 1) :ColorMatrix
-    {
+    public function randomize (amount :Number = 1) :ColorMatrix {
         var inv_amount :Number = (1 - amount);
         var r1 :Number = (inv_amount + (amount * (Math.random() - Math.random())));
         var g1 :Number = (amount * (Math.random() - Math.random()));
@@ -370,53 +350,46 @@ public class ColorMatrix
         return this;
     }
 
-    public function thresholdAlpha (threshold :Number, factor :Number = 256) :ColorMatrix
-    {
+    public function thresholdAlpha (threshold :Number, factor :Number = 256) :ColorMatrix {
         return concat([1, 0, 0, 0, 0,
                        0, 1, 0, 0, 0,
                        0, 0, 1, 0, 0,
                        0, 0, 0, factor, (-factor * threshold)]);
     }
 
-    public function averageRGB2Alpha () :ColorMatrix
-    {
+    public function averageRGB2Alpha () :ColorMatrix {
         return concat([0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        ONETHIRD, ONETHIRD, ONETHIRD, 0, 0]);
     }
 
-    public function invertAlpha () :ColorMatrix
-    {
+    public function invertAlpha () :ColorMatrix {
         return concat([1, 0, 0, 0, 0,
                        0, 1, 0, 0, 0,
                        0, 0, 1, 0, 0,
                        0, 0, 0, -1, 255]);
     }
 
-    public function rgb2Alpha (r :Number, g :Number, b :Number) :ColorMatrix
-    {
+    public function rgb2Alpha (r :Number, g :Number, b :Number) :ColorMatrix {
         return concat([0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        0, 0, 0, 0, 255,
                        r, g, b, 0, 0]);
     }
 
-    public function setAlpha (alpha :Number) :ColorMatrix
-    {
+    public function setAlpha (alpha :Number) :ColorMatrix {
         return concat([1, 0, 0, 0, 0,
                        0, 1, 0, 0, 0,
                        0, 0, 1, 0, 0,
                        0, 0, 0, alpha, 0]);
     }
 
-    public function createFilter () :ColorMatrixFilter
-    {
+    public function createFilter () :ColorMatrixFilter {
         return new ColorMatrixFilter(matrix);
     }
 
-    public function concat (mat :Array) :ColorMatrix
-    {
+    public function concat (mat :Array) :ColorMatrix {
         var i :int;
         var temp :Array = [];
         for (var y :int = 0; y < 4; y++) {
@@ -435,38 +408,31 @@ public class ColorMatrix
         return this;
     }
 
-    public function rotateRed (degrees :Number) :ColorMatrix
-    {
+    public function rotateRed (degrees :Number) :ColorMatrix {
         return rotateColor(degrees, 2, 1);
     }
 
-    public function rotateGreen (degrees :Number) :ColorMatrix
-    {
+    public function rotateGreen (degrees :Number) :ColorMatrix {
         return rotateColor(degrees, 0, 2);
     }
 
-    public function rotateBlue (degrees :Number) :ColorMatrix
-    {
+    public function rotateBlue (degrees :Number) :ColorMatrix {
         return rotateColor(degrees, 1, 0);
     }
 
-    public function shearRed (green :Number, blue :Number) :ColorMatrix
-    {
+    public function shearRed (green :Number, blue :Number) :ColorMatrix {
         return shearColor(0, 1, green, 2, blue);
     }
 
-    public function shearGreen (red :Number, blue :Number) :ColorMatrix
-    {
+    public function shearGreen (red :Number, blue :Number) :ColorMatrix {
         return shearColor(1, 0, red, 2, blue);
     }
 
-    public function shearBlue (red :Number, green :Number) :ColorMatrix
-    {
+    public function shearBlue (red :Number, green :Number) :ColorMatrix {
         return shearColor(2, 0, red, 1, green);
     }
 
-    public function applyColorDeficiency (type :String) :ColorMatrix
-    {
+    public function applyColorDeficiency (type :String) :ColorMatrix {
         // the values of this method are copied from http://www.nofunc.com/Color_Matrix_Library/
 
         switch (type) {
@@ -499,8 +465,7 @@ public class ColorMatrix
         return this;
     }
 
-    public function applyMatrix (rgba :uint) :uint
-    {
+    public function applyMatrix (rgba :uint) :uint {
         var a :Number = (rgba >>> 24) & 0xff;
         var r :Number = (rgba >>> 16) & 0xff;
         var g :Number = (rgba >>> 8) & 0xff;
@@ -546,8 +511,7 @@ public class ColorMatrix
         return a2 << 24 | r2 << 16 | g2 << 8 | b2;
     }
 
-    public function transformVector (values :Array) :void
-    {
+    public function transformVector (values :Array) :void {
         if (values.length != 4) {
             return;
         }
@@ -582,16 +546,14 @@ public class ColorMatrix
         values[3] = a;
     }
 
-    protected function shearColor (x :int, y1 :int, d1 :Number, y2 :int, d2 :Number) :ColorMatrix
-    {
+    protected function shearColor (x :int, y1 :int, d1 :Number, y2 :int, d2 :Number) :ColorMatrix {
         var mat :Array = IDENTITY.concat();
         mat[ y1 + x * 5 ] = d1;
         mat[ y2 + x * 5 ] = d2;
         return concat(mat);
     }
 
-    protected function rotateColor (degrees :Number, x :int, y :int) :ColorMatrix
-    {
+    protected function rotateColor (degrees :Number, x :int, y :int) :ColorMatrix {
           degrees *= RAD;
           var mat :Array = IDENTITY.concat();
           mat[ x + x * 5 ] = mat[ y + y * 5 ] = Math.cos(degrees);
@@ -600,8 +562,7 @@ public class ColorMatrix
           return concat(mat);
     }
 
-    protected function initHue () :void
-    {
+    protected function initHue () :void {
         //var greenRotation :Number = 35.0;
         var greenRotation :Number = 39.182655;
 

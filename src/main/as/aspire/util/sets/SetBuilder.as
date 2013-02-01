@@ -21,8 +21,7 @@ import aspire.util.maps.MapBuilder;
  */
 public class SetBuilder
 {
-    public function SetBuilder (valueClazz :Class)
-    {
+    public function SetBuilder (valueClazz :Class) {
         _mb = new MapBuilder(valueClazz);
     }
 
@@ -32,8 +31,7 @@ public class SetBuilder
      *
      * @return this SetBuilder, for chaining.
      */
-    public function makeSorted (comp :Function = null) :SetBuilder
-    {
+    public function makeSorted (comp :Function = null) :SetBuilder {
         _mb.makeSorted(comp);
         return this;
     }
@@ -45,8 +43,7 @@ public class SetBuilder
      *
      * @return this SetBuilder, for chaining.
      */
-    public function makeLR (maxSize :int, accessOrder :Boolean = true) :SetBuilder
-    {
+    public function makeLR (maxSize :int, accessOrder :Boolean = true) :SetBuilder {
         _mb.makeLR(maxSize, accessOrder);
         return this;
     }
@@ -60,8 +57,7 @@ public class SetBuilder
      *
      * @return this SetBuilder, for chaining.
      */
-    public function makeExpiring (ttl :int, expireHandler :Function = null) :SetBuilder
-    {
+    public function makeExpiring (ttl :int, expireHandler :Function = null) :SetBuilder {
         _mb.makeExpiring(ttl, (expireHandler == null) ? null :
             function (key :*, value :*) :* {
                 return expireHandler(key);
@@ -72,8 +68,7 @@ public class SetBuilder
     /**
      * Make the Set immutable.
      */
-    public function makeImmutable () :SetBuilder
-    {
+    public function makeImmutable () :SetBuilder {
         _mb.makeImmutable();
         return this;
     }
@@ -81,8 +76,7 @@ public class SetBuilder
     /**
      * Add a value to the Set, once built.
      */
-    public function add (value :Object) :SetBuilder
-    {
+    public function add (value :Object) :SetBuilder {
         _mb.put(value, true); // since MapSet stores trues for everything
         return this;
     }
@@ -90,8 +84,7 @@ public class SetBuilder
     /**
      * Add all the values in the specified Set or Array.
      */
-    public function addAll (objects :Object) :SetBuilder
-    {
+    public function addAll (objects :Object) :SetBuilder {
         if (objects is Set) {
             Set(objects).forEach(function (item :Object) :void {
                 _mb.put(o, true);
@@ -110,8 +103,7 @@ public class SetBuilder
     /**
      * Adds all objects in the values Array to the Set, once built.
      */
-    public function addEach (values :Array) :SetBuilder
-    {
+    public function addEach (values :Array) :SetBuilder {
         for each (var value :Object in values) {
             add(value);
         }
@@ -121,8 +113,7 @@ public class SetBuilder
     /**
      * Build the Set!
      */
-    public function build () :Set
-    {
+    public function build () :Set {
         return new MapSet(_mb.build());
     }
 

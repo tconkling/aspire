@@ -28,22 +28,19 @@ public class TimeBuffer
      * be used. Defaults to null.
      */
     public function TimeBuffer (maxAge :int = 0, initialCapacity :int = 10,
-                                timerFn :Function = null)
-    {
+                                timerFn :Function = null) {
         _maxAge = maxAge;
         _array = new Array(initialCapacity);
         _timerFn = (timerFn != null ? timerFn : flash.utils.getTimer);
     }
 
     /** Returns the number of elements currently stored in the TimeBuffer. */
-    public function get length () :uint
-    {
+    public function get length () :uint {
         return _length;
     }
 
     /** Returns true if the TimeBuffer contains 0 elements. */
-    public function get empty () :Boolean
-    {
+    public function get empty () :Boolean {
         return (0 == _length);
     }
 
@@ -51,8 +48,7 @@ public class TimeBuffer
      * Sets the maximum age of items in the buffer, in milliseconds.
      * Whenever new items are added, items older than the maxAge will be removed.
      */
-    public function set maxAge (val :int) :void
-    {
+    public function set maxAge (val :int) :void {
         _maxAge = val;
         if (_maxAge > 0) {
             pruneOldEntries(_timerFn() - _maxAge);
@@ -63,8 +59,7 @@ public class TimeBuffer
      * Adds the specified elements to the back of the TimeBuffer.
      * Returns the new length of the TimeBuffer.
      */
-    public function push (...args) :uint
-    {
+    public function push (...args) :uint {
         if (_length + args.length > _array.length) {
             setCapacity(_array.length * 2);
         }
@@ -95,8 +90,7 @@ public class TimeBuffer
      * Removes the first element from the TimeBuffer and returns it.
      * If the TimeBuffer is empty, shift() will return undefined.
      */
-    public function shift () :*
-    {
+    public function shift () :* {
         if (this.empty) {
             return undefined;
         }
@@ -114,8 +108,7 @@ public class TimeBuffer
      * Removes the last element from the TimeBuffer and returns it.
      * If the TimeBuffer is empty, pop() will return undefined.
      */
-    public function pop () :*
-    {
+    public function pop () :* {
         if (this.empty) {
             return undefined;
         }
@@ -131,8 +124,7 @@ public class TimeBuffer
     }
 
     /** Removes all elements from the TimeBuffer. */
-    public function clear () :void
-    {
+    public function clear () :void {
         for each (var entry :Entry in _array) {
             if (entry != null) {
                 entry.data = null;
@@ -147,8 +139,7 @@ public class TimeBuffer
      * Returns the element at the specified index,
      * or undefined if index is out of bounds.
      */
-    public function at (index :uint) :*
-    {
+    public function at (index :uint) :* {
         var entry :Entry = entryAt(index);
         return (entry == null ? undefined : entry.data);
     }
@@ -157,8 +148,7 @@ public class TimeBuffer
      * Returns the timestamp of the element at the specified index,
      * or -1 if index is out of bounds.
      */
-    public function timestampAt (index :uint) :int
-    {
+    public function timestampAt (index :uint) :int {
         var entry :Entry = entryAt(index);
         return (entry == null ? -1 : entry.timestamp);
     }
@@ -173,8 +163,7 @@ public class TimeBuffer
      * Returns a Boolean value of true if all items in the buffer return
      * true for the specified function; otherwise, false.
      */
-    public function every (callback :Function) :Boolean
-    {
+    public function every (callback :Function) :Boolean {
         for (var ii :int = 0; ii < _length; ++ii) {
             var entry :Entry = entryAt(ii);
             if (!callback(entry.data, entry.timestamp)) {
@@ -189,8 +178,7 @@ public class TimeBuffer
      * Executes a function on each item in the buffer.
      * function callback (data :*, timestamp :int) :void
      */
-    public function forEach (callback :Function) :void
-    {
+    public function forEach (callback :Function) :void {
         for (var ii :int = 0; ii < _length; ++ii) {
             var entry :Entry = entryAt(ii);
             callback(entry.data, entry.timestamp);
@@ -202,8 +190,7 @@ public class TimeBuffer
      * (===) and returns the index position of the item, or -1
      * if the item is not found.
      */
-    public function indexOf (searchElement :*, fromIndex :int = 0) :int
-    {
+    public function indexOf (searchElement :*, fromIndex :int = 0) :int {
         for (var ii :int = 0; ii < _length; ++ii) {
             if (at(ii) === searchElement) {
                 return ii;
@@ -216,8 +203,7 @@ public class TimeBuffer
     /**
      * Removes all entries whose age is &lt; minTimestamp from the TimeBuffer.
      */
-    public function pruneOldEntries (minTimestamp :int) :void
-    {
+    public function pruneOldEntries (minTimestamp :int) :void {
         // Remove all entries whose age is < minTimestamp
         while (_length > 0) {
             var firstEntry :Entry = _array[_firstIndex];
@@ -234,8 +220,7 @@ public class TimeBuffer
         }
     }
 
-    protected function setCapacity (newCapacity :uint) :void
-    {
+    protected function setCapacity (newCapacity :uint) :void {
         if (newCapacity == _array.length) {
             return;
         }
@@ -251,8 +236,7 @@ public class TimeBuffer
         _firstIndex = 0;
     }
 
-    protected function entryAt (index :uint) :Entry
-    {
+    protected function entryAt (index :uint) :Entry {
         return (index < _length ? _array[(_firstIndex + index) % _array.length] : null);
     }
 

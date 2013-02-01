@@ -15,8 +15,7 @@ import aspire.util.Map;
  */
 public class ExpiringMap extends LinkedMap
 {
-    public function ExpiringMap (source :Map, ttl :int, expireHandler :Function = null)
-    {
+    public function ExpiringMap (source :Map, ttl :int, expireHandler :Function = null) {
         super(source);
         _ttl = ttl;
         _expireHandler = expireHandler;
@@ -25,8 +24,7 @@ public class ExpiringMap extends LinkedMap
     }
 
     /** @private */
-    override protected function newEntry (key :Object, value :Object) :LinkedEntry
-    {
+    override protected function newEntry (key :Object, value :Object) :LinkedEntry {
         var ee :ExpiringEntry = new ExpiringEntry(key, value, getTimer() + _ttl);
         if (!_timer.running) {
             _timer.delay = _ttl;
@@ -36,8 +34,7 @@ public class ExpiringMap extends LinkedMap
     }
 
     /** @private */
-    protected function handleTimer (event :TimerEvent) :void
-    {
+    protected function handleTimer (event :TimerEvent) :void {
         _timer.reset();
         var now :int = getTimer();
         // go through the entries, removing some as necessary

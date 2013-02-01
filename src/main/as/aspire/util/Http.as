@@ -18,13 +18,11 @@ import aspire.util.XmlUtil;
 
 public class Http
 {
-    public function Http (url :String)
-    {
+    public function Http (url :String) {
         _url = url;
     }
 
-    public function get (data :Object = null) :void
-    {
+    public function get (data :Object = null) :void {
         if (data != null) {
             Preconditions.checkArgument(getQualifiedClassName(data) === "Object",
                 "get must received a vanilla object");
@@ -34,8 +32,7 @@ public class Http
         call();
     }
 
-    public function post (data :Object) :void
-    {
+    public function post (data :Object) :void {
         Preconditions.checkNotNull(data, "postData data must be non-null");
         if (data is ByteArray) {
             binary();
@@ -47,14 +44,12 @@ public class Http
         call();
     }
 
-    public function onSuccess (callback :Function) :Http
-    {
+    public function onSuccess (callback :Function) :Http {
         _successCallback = callback;
         return this;
     }
 
-    public function onFailure (callback :Function) :Http
-    {
+    public function onFailure (callback :Function) :Http {
         _failureCallback = callback;
         return this;
     }
@@ -62,8 +57,7 @@ public class Http
     /**
      * Send/Retrieve data in binary, the success callback will receive a ByteArray
      */
-    public function binary () :Http
-    {
+    public function binary () :Http {
         _dataFormat = URLLoaderDataFormat.BINARY;
         return this;
     }
@@ -71,16 +65,14 @@ public class Http
     /**
      * Create XML with the response body before passing it to the onSuccess callback.
      */
-    public function xml () :Http
-    {
+    public function xml () :Http {
         return parser(XmlUtil.newXML);
     }
 
     /**
      * Set the MIME type of the data in the request.
      */
-    public function contentType (type :String) :Http
-    {
+    public function contentType (type :String) :Http {
         _contentType = type;
         return this;
     }
@@ -89,14 +81,12 @@ public class Http
      * Convert the response body to another type using a function before passing it to the
      * onSuccess callback.
      */
-    public function parser (parser :Function) :Http
-    {
+    public function parser (parser :Function) :Http {
         _parser = parser;
         return this;
     }
 
-    protected function call () :void
-    {
+    protected function call () :void {
         var req :URLRequest = new URLRequest(_url);
         if (_method != null) {
             req.method = _method;
@@ -129,8 +119,7 @@ public class Http
             _failureCallback == null ? failureLogger : _failureCallback);
     }
 
-    protected function failureLogger (event :IOErrorEvent) :void
-    {
+    protected function failureLogger (event :IOErrorEvent) :void {
         log.warning("Remote request failed", "reason", event.text);
     }
 

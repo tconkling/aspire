@@ -19,8 +19,7 @@ public class LineSegment implements Equalable
     public var start :Point;
     public var stop :Point;
 
-    public function LineSegment (start :Point, stop :Point)
-    {
+    public function LineSegment (start :Point, stop :Point) {
         this.start = start;
         this.stop = stop;
     }
@@ -28,21 +27,18 @@ public class LineSegment implements Equalable
     /**
      * Get the length of this line.
      */
-    public function getLength () :Number
-    {
+    public function getLength () :Number {
         return Point.distance(start, stop);
     }
 
-    public function isIntersected (line :LineSegment) :Boolean
-    {
+    public function isIntersected (line :LineSegment) :Boolean {
         return getIntersectionType(line) != DOES_NOT_INTERSECT;
     }
 
     /**
      * Return the point at which the other line intersects us.
      */
-    public function getIntersectionPoint (line :LineSegment) :Point
-    {
+    public function getIntersectionPoint (line :LineSegment) :Point {
         return getIntersection(line, true) as Point;
     }
 
@@ -55,14 +51,12 @@ public class LineSegment implements Equalable
      * Intersections are inclusive.  If one or both points lands on this line, interects will not
      * return DOES_NOT_INTERSECT.
      */
-    public function getIntersectionType (line :LineSegment) :int
-    {
+    public function getIntersectionType (line :LineSegment) :int {
         return getIntersection(line, false) as int;
     }
 
     // from interface Equalable
-    public function equals (o :Object) :Boolean
-    {
+    public function equals (o :Object) :Boolean {
         var other :LineSegment = o as LineSegment; // or null if not a line
         if (other == null) {
             return false;
@@ -77,8 +71,7 @@ public class LineSegment implements Equalable
      * and returns either the intersected point or merely the intersection
      * type.
      */
-    protected function getIntersection (line :LineSegment, returnPoint :Boolean) :*
-    {
+    protected function getIntersection (line :LineSegment, returnPoint :Boolean) :* {
         // rotate so that this line is horizontal, with the start on the left, at (0, 0)
         var trans :Matrix = new Matrix();
         trans.translate(-start.x, -start.y);

@@ -14,16 +14,14 @@ public class WeakReference
     /**
      * No, you cannot store undefined here.
      */
-    public function WeakReference (referant :Object)
-    {
+    public function WeakReference (referant :Object) {
         _ref[referant] = true;
     }
 
     /**
      * Return the referant, or undefined if it's been collected.
      */
-    public function get () :*
-    {
+    public function get () :* {
         for (var k :* in _ref) {
             return k;
         }

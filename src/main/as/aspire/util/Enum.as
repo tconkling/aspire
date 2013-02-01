@@ -52,8 +52,7 @@ public class Enum
     /**
      * Call this constructor in your enum subclass constructor.
      */
-    public function Enum (name :String)
-    {
+    public function Enum (name :String) {
         const clazz :Class = ClassUtil.getClass(this);
         if (Boolean(_blocked[clazz])) {
             throw new Error("You may not just construct an enum!");
@@ -82,8 +81,7 @@ public class Enum
     /**
      * Get the name of this enum.
      */
-    public final function name () :String
-    {
+    public final function name () :String {
         return _name;
     }
 
@@ -94,29 +92,25 @@ public class Enum
      * that generically handles enums in an efficient manner, and you are never persisting
      * anything where the ordinal can change.
      */
-    public final function ordinal () :int
-    {
+    public final function ordinal () :int {
         return (_enums[ClassUtil.getClass(this)] as Array).indexOf(this);
     }
 
     // from Hashable
-    public final function equals (other :Object) :Boolean
-    {
+    public final function equals (other :Object) :Boolean {
         // enums are singleton
         return (other === this);
     }
 
     // from Hashable
-    public final function hashCode () :int
-    {
+    public final function hashCode () :int {
         return ordinal();
     }
 
     /**
      * Return the String representation of this enum.
      */
-    public function toString () :String
-    {
+    public function toString () :String {
         return _name;
     }
 
@@ -124,14 +118,12 @@ public class Enum
      * Return the primitive value of this Object.
      * The default implementation for Enums is to return the ordinal.
      */
-    public function valueOf () :Object
-    {
+    public function valueOf () :Object {
         return ordinal();
     }
 
     // from Comparable
-    public function compareTo (other :Object) :int
-    {
+    public function compareTo (other :Object) :int {
         if (!ClassUtil.isSameClass(this, other)) {
             throw new ArgumentError("Not same class");
         }
@@ -141,8 +133,7 @@ public class Enum
     /**
      * Turn a String name into an Enum constant.
      */
-    public static function valueOf (clazz :Class, name :String) :Enum
-    {
+    public static function valueOf (clazz :Class, name :String) :Enum {
         for each (var enum :Enum in values(clazz)) {
             if (enum.name() === name) {
                 return enum;
@@ -154,8 +145,7 @@ public class Enum
     /**
      * Get all the enums of the specified class, or null if it's not an enum.
      */
-    public static function values (clazz :Class) :Array
-    {
+    public static function values (clazz :Class) :Array {
         var arr :Array = _enums[clazz] as Array;
         if (arr == null) {
             throw new ArgumentError(Joiner.pairs("Not an enum", "class", clazz));
@@ -167,8 +157,7 @@ public class Enum
      * This should be called by your enum subclass after you've finished enumating the enum
      * constants. See the example in the class header documentation.
      */
-    protected static function finishedEnumerating (clazz :Class) :void
-    {
+    protected static function finishedEnumerating (clazz :Class) :void {
         _blocked[clazz] = true;
     }
 

@@ -26,8 +26,7 @@ import aspire.util.Preconditions;
 // TODO: (probably not) "externally hashable" maps, like our old HashMap. Bleah.
 public class MapBuilder
 {
-    public function MapBuilder (keyClazz :Class)
-    {
+    public function MapBuilder (keyClazz :Class) {
         _keyClazz = keyClazz;
     }
 
@@ -37,8 +36,7 @@ public class MapBuilder
      *
      * @return this MapBuilder, for chaining.
      */
-    public function makeSorted (comp :Function = null) :MapBuilder
-    {
+    public function makeSorted (comp :Function = null) :MapBuilder {
         _sorted = true;
         _comp = comp;
         return this;
@@ -49,8 +47,7 @@ public class MapBuilder
      *
      * @return this MapBuilder, for chaining.
      */
-    public function makeWeakValues () :MapBuilder
-    {
+    public function makeWeakValues () :MapBuilder {
         _weakValues = true;
         return this;
     }
@@ -62,8 +59,7 @@ public class MapBuilder
      *
      * @return this MapBuilder, for chaining.
      */
-    public function makeLR (maxSize :int, accessOrder :Boolean = true) :MapBuilder
-    {
+    public function makeLR (maxSize :int, accessOrder :Boolean = true) :MapBuilder {
         _maxSizeLR = maxSize;
         _accessOrderLR = accessOrder;
         return this;
@@ -78,8 +74,7 @@ public class MapBuilder
      *
      * @return this MapBuilder, for chaining.
      */
-    public function makeExpiring (ttl :int, expireHandler :Function = null) :MapBuilder
-    {
+    public function makeExpiring (ttl :int, expireHandler :Function = null) :MapBuilder {
         _ttlExpiring = ttl;
         _expireHandler = expireHandler;
         return this;
@@ -88,8 +83,7 @@ public class MapBuilder
     /**
      * Make the Map immutable.
      */
-    public function makeImmutable () :MapBuilder
-    {
+    public function makeImmutable () :MapBuilder {
         _immutable = true;
         return this;
     }
@@ -99,8 +93,7 @@ public class MapBuilder
      * also used, the compute function will first create a value for a missing key, and if it
      * returns undefined, then the default value will be used.
      */
-    public function makeComputing (computer :Function) :MapBuilder
-    {
+    public function makeComputing (computer :Function) :MapBuilder {
         _computer = computer;
         return this;
     }
@@ -109,8 +102,7 @@ public class MapBuilder
      * Make the Map have a default value other than undefined.  If makeComputing is also used, this
      * will only be returned if the computing function returns undefined for a key.
      */
-    public function setDefaultValue (value :*) :MapBuilder
-    {
+    public function setDefaultValue (value :*) :MapBuilder {
         _defaultValue = value;
         return this;
     }
@@ -120,8 +112,7 @@ public class MapBuilder
      * If put is called more than once with the same key, the last value put will be
      * contained in the Map.
      */
-    public function put (key :Object, value :Object) :MapBuilder
-    {
+    public function put (key :Object, value :Object) :MapBuilder {
         _keyVals.push(key, value);
         return this;
     }
@@ -129,8 +120,7 @@ public class MapBuilder
     /**
      * Put all the mappings in the specified Map.
      */
-    public function putAll (other :Map) :MapBuilder
-    {
+    public function putAll (other :Map) :MapBuilder {
         other.forEach(function (key :Object, value :Object) :void {
             _keyVals.push(key, value);
         });
@@ -140,8 +130,7 @@ public class MapBuilder
     /**
      * Build the Map!
      */
-    public function build () :Map
-    {
+    public function build () :Map {
         var isLR :Boolean = (_maxSizeLR > 0);
         var isExpiring :Boolean = (_ttlExpiring > 0);
         Preconditions.checkArgument(!isLR || !isExpiring, "Cannot be both LR and Expiring");
