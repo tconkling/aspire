@@ -3,11 +3,11 @@
 
 package aspire.geom {
 
-import flash.geom.Point;
-
 import aspire.util.Equalable;
 import aspire.util.Preconditions;
 import aspire.util.StringUtil;
+
+import flash.geom.Point;
 
 /**
  * Basic 2D vector implementation.
@@ -23,6 +23,18 @@ public class Vector2
 
     /** Epsilon value used to compare Vector equivalency */
     public static const EPSILON :Number = 0.0001;
+
+    /** Returns the squared distance between two vectors */
+    public static function distanceSquared (x1 :Number, y1 :Number, x2 :Number, y2 :Number) :Number {
+        var x :Number = x2 - x1;
+        var y :Number = y2 - y1;
+        return (x * x + y * y);
+    }
+
+    /** Returns the distance between two vectors */
+    public static function distance (x1 :Number, y1 :Number, x2 :Number, y2 :Number) :Number {
+        return Math.sqrt(distanceSquared(x1, y1, x2, y2));
+    }
 
     /** Converts Point p to a Vector2. */
     public static function fromPoint (p :Point, out :Vector2 = null) :Vector2 {
