@@ -2,6 +2,7 @@
 // aspire
 
 package aspire.util {
+
 import flash.utils.Dictionary;
 import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
@@ -49,7 +50,7 @@ public class ClassUtil
     }
 
     public static function isSameClass (obj1 :Object, obj2 :Object) :Boolean {
-        return (getQualifiedClassName(obj1) == getQualifiedClassName(obj2));
+        return getClass(obj1) === getClass(obj2);
     }
 
     /**
@@ -74,10 +75,7 @@ public class ClassUtil
     }
 
     public static function getClass (obj :Object) :Class {
-        if (obj.constructor is Class) {
-            return Class(obj.constructor);
-        }
-        return getClassByName(getQualifiedClassName(obj));
+        return Class(obj.constructor);
     }
 
     public static function getClassByName (cname :String) :Class {
@@ -102,12 +100,12 @@ public class ClassUtil
 }
 }
 
-import flash.utils.describeType;
-
 import aspire.util.ClassUtil;
 import aspire.util.Set;
 import aspire.util.maps.DictionaryMap;
 import aspire.util.sets.MapSet;
+
+import flash.utils.describeType;
 
 class Metadata
 {
