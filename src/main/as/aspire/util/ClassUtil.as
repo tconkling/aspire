@@ -101,34 +101,33 @@ public class ClassUtil
 }
 
 import aspire.util.ClassUtil;
-import aspire.util.Set;
-import aspire.util.maps.DictionaryMap;
-import aspire.util.sets.MapSet;
 
+import flash.utils.Dictionary;
 import flash.utils.describeType;
 
 class Metadata
 {
-    public const extSet :Set = new MapSet(new DictionaryMap());
-    public const impSet :Set = new MapSet(new DictionaryMap());
-
     public function Metadata (forClass :Class) {
         const typeInfo :XMLList = describeType(forClass).child("factory");
 
         // See which classes we extend.
         const exts :XMLList = typeInfo.child("extendsClass").attribute("type");
         for each (var extStr :String in exts) {
-            extSet.add(ClassUtil.getClassByName(extStr));
+            extSet[ClassUtil.getClassByName(extStr)] = null;
         }
 
         // See which interfaces we implement.
         var imps :XMLList = typeInfo.child("implementsInterface").attribute("type");
         for each (var impStr :String in imps) {
-            impSet.add(ClassUtil.getClassByName(impStr));
+            impSet[ClassUtil.getClassByName(impStr)] = null;
         }
     }
 
     public function isSubtypeOf (asClass :Class) :Boolean {
-        return extSet.contains(asClass) || impSet.contains(asClass);
+        return (asClass in extSet) || (asClass in impSet);
     }
+
+    protected const extSet :Dictionary = new Dictionary();
+    protected const impSet :Dictionary = new Dictionary();
 }
+
