@@ -4,6 +4,8 @@
     <classEntry path="aspire.geom.PointI"/>
     <classEntry path="aspire.util.JsonUtil"/>
     <classEntry path="aspire.util.RandomStream"/>
+    <classEntry path="aspire.util.Flags"/>
+    <classEntry path="aspire.util.MutableFlags"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
