@@ -10,14 +10,14 @@ public class Flags
         return (bits & (1 << flag)) != 0;
     }
     
-    public static function setFlag (bits :uint, flag :uint) :void {
+    public static function setFlag (bits :uint, flag :uint) :uint {
         Preconditions.checkArgument(flag < 32, "flag out of range");
-        bits |= (1 << flag);
+        return (bits | (1 << flag));
     }
     
-    public static function clearFlag (bits :uint, flag :uint) :void {
+    public static function clearFlag (bits :uint, flag :uint) :uint {
         Preconditions.checkArgument(flag < 32, "flag out of range");
-        bits &= ~(1 << flag);
+        return (bits & ~(1 << flag));
     }
     
     public function Flags (bits :uint = 0) {

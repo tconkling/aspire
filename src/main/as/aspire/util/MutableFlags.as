@@ -10,11 +10,11 @@ public class MutableFlags extends Flags
     }
 
     public function setFlag (flag :uint) :void {
-        Flags.setFlag(_bits, flag);
+        _bits = Flags.setFlag(_bits, flag);
     }
 
     public function clearFlag (flag :uint) :void {
-        Flags.clearFlag(_bits, flag);
+        _bits = Flags.clearFlag(_bits, flag);
     }
 
     public function set bits (val :uint) :void {
