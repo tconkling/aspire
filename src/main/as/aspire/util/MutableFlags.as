@@ -10,13 +10,11 @@ public class MutableFlags extends Flags
     }
 
     public function setFlag (flag :uint) :void {
-        Preconditions.checkArgument(flag < 32, "flag out of range");
-        _bits |= (1 << flag);
+        Flags.setFlag(_bits, flag);
     }
 
     public function clearFlag (flag :uint) :void {
-        Preconditions.checkArgument(flag < 32, "flag out of range");
-        _bits &= ~(1 << flag);
+        Flags.clearFlag(_bits, flag);
     }
 
     public function set bits (val :uint) :void {
