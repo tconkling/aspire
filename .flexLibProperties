@@ -6,6 +6,8 @@
     <classEntry path="aspire.util.RandomStream"/>
     <classEntry path="aspire.util.Flags"/>
     <classEntry path="aspire.util.MutableFlags"/>
+    <classEntry path="aspire.util.Timers"/>
+    <classEntry path="aspire.util.TimerRegistration"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
