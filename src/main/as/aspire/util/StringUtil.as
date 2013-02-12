@@ -5,7 +5,6 @@ package aspire.util {
 
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
-import flash.utils.describeType;
 
 /**
  * Contains useful static function for performing operations on Strings.
@@ -370,7 +369,7 @@ public class StringUtil
         }
 
         var isDictionary :Boolean = obj is Dictionary;
-        if (obj is Array || isDictionary || Util.isPlainObject(obj)) {
+        if (obj is Array || isDictionary || ClassUtil.isPlainObject(obj)) {
             if (refs == null) {
                 refs = new Dictionary();
 

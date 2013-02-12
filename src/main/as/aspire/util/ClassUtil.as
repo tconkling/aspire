@@ -13,6 +13,13 @@ import flash.utils.getQualifiedClassName;
 public class ClassUtil
 {
     /**
+     * Returns true if the specified object is just a regular old associative hash.
+     */
+    public static function isPlainObject (obj :Object) :Boolean {
+        return getQualifiedClassName(obj) == "Object";
+    }
+    
+    /**
      * Get the full class name, e.g. "com.threerings.util.ClassUtil".
      * Calling getClassName with a Class object will return the same value as calling it with an
      * instance of that class. That is, getClassName(Foo) == getClassName(new Foo()).
