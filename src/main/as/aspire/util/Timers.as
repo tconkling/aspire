@@ -8,10 +8,14 @@ public class Timers
     /** 
      * Returns a timer with the given delay that will call the given callback when it fires.
      * Timers are not running when created; to run the timer you must call start()
-     * To have the timer run just once, you may call once()
+     * To have the timer run just once, you may call once().
+     * 
+     * @param delay the number of seconds to delay.
+     * @param callback the function to call when the timer fires.
      */
     public static function create (delay :Number, callback :Function) :TimerRegistration {
-        return new TimerImpl(delay, callback);
+        // convert seconds to millis
+        return new TimerImpl(delay * 1000, callback);
     }
     
     /** A convenience function that creates a timer that will call 'callback' on the next frame */
@@ -45,8 +49,8 @@ import flash.utils.Timer;
 class TimerImpl
     implements TimerRegistration
 {
-    public function TimerImpl (delay :Number, callback :Function) {
-        _timer = new Timer(delay);
+    public function TimerImpl (delayMs :Number, callback :Function) {
+        _timer = new Timer(delayMs);
         _callback = callback;
         _timer.addEventListener(TimerEvent.TIMER, onTimerEvent);
     }
