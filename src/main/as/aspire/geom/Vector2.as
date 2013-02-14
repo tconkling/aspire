@@ -4,6 +4,7 @@
 package aspire.geom {
 
 import aspire.util.Equalable;
+import aspire.util.MathUtil;
 import aspire.util.Preconditions;
 import aspire.util.StringUtil;
 
@@ -20,9 +21,6 @@ public class Vector2
 
     /** Infinite vector - often the result of normalizing a zero vector. */
     public static const INFINITE :Vector2 = new Vector2(Infinity, Infinity);
-
-    /** Epsilon value used to compare Vector equivalency */
-    public static const EPSILON :Number = 0.0001;
 
     /** Returns the squared distance between two vectors */
     public static function distanceSquared (x1 :Number, y1 :Number, x2 :Number, y2 :Number) :Number {
@@ -317,9 +315,9 @@ public class Vector2
         return (v != null && x == v.x && y == v.y);
     }
 
-    /** Returns true if this Vector's components are equal to v within EPSILON */
+    /** Returns true if this Vector's components are equal to v within MathUtil.EPSILON */
     public function epsilonEquals (v :Vector2) :Boolean {
-        return similar(v, EPSILON);
+        return similar(v, MathUtil.EPSILON);
     }
 
     /**

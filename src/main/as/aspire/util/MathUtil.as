@@ -10,38 +10,36 @@ public class MathUtil
 {
     public static const TWO_PI :Number = Math.PI * 2;
 
-    /**
-     * Returns the value of n clamped to be within the range [min, max].
-     */
+    /** A small value used to compare Number equivalency */
+    public static const EPSILON :Number = 0.0001;
+
+    /** Returns true if the two numbers differ by no more than EPSILON */
+    public static function epsilonEquals (a :Number, b :Number) :Boolean {
+        return Math.abs(b - a) <= EPSILON;
+    }
+
+    /** Returns the value of n clamped to be within the range [min, max]. */
     public static function clamp (n :Number, min :Number, max :Number) :Number {
         return Math.min(Math.max(n, min), max);
     }
 
-    /**
-     * Converts degrees to radians.
-     */
+    /** Converts degrees to radians. */
     public static function toRadians (degrees :Number) :Number {
         return degrees * D2R;
     }
 
-    /**
-     * Converts radians to degrees.
-     */
+    /** Converts radians to degrees. */
     public static function toDegrees (radians :Number) :Number {
-        return radians * R2D
+        return radians * R2D;
     }
 
-    /**
-     * Normalizes an angle in radians to occupy the [0, 2pi) range.
-     */
+    /** Normalizes an angle in radians to occupy the [0, 2pi) range. */
     public static function normalizeRadians (radians :Number) :Number {
         var norm :Number = radians % TWO_PI;
         return (norm >= 0) ? norm : (norm + TWO_PI);
     }
 
-    /**
-     * Normalizes an angle in degrees to occupy the [0, 360) range.
-     */
+    /** Normalizes an angle in degrees to occupy the [0, 360) range. */
     public static function normalizeDegrees (degrees :Number) :Number {
         var norm :Number = degrees % 360;
         return (norm >= 0) ? norm : (norm + 360);
