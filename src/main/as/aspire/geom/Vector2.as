@@ -106,9 +106,10 @@ public class Vector2
     }
 
     /** Sets the vector's components to the given values. */
-    public function set (x :Number, y :Number) :void {
+    public function set (x :Number, y :Number) :Vector2 {
         this.x = x;
         this.y = y;
+        return this;
     }
 
     /** Returns the dot product of this vector with vector v. */
@@ -135,9 +136,7 @@ public class Vector2
      * If 'out' is not null, it will be used for the clone.
      */
     public function clone (out :Vector2 = null) :Vector2 {
-        out = (out || new Vector2());
-        out.set(x, y);
-        return out;
+        return (out || new Vector2()).set(x, y);
     }
 
     /** Returns the angle represented by this Vector2, in radians. */
