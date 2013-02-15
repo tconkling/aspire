@@ -18,7 +18,7 @@ public class ClassUtil
     public static function isPlainObject (obj :Object) :Boolean {
         return getQualifiedClassName(obj) == "Object";
     }
-    
+
     /**
      * Get the full class name, e.g. "com.threerings.util.ClassUtil".
      * Calling getClassName with a Class object will return the same value as calling it with an
@@ -82,12 +82,19 @@ public class ClassUtil
     }
 
     public static function getClass (obj :Object) :Class {
-        return Class(obj.constructor);
+        var clazz :Class = (obj.constructor as Class);
+        // Objects that extend Proxy have flash.utils::Dictionary as their constructor object.
+        // We check for 'clazz !== Dictionary' instead of '!(obj is Proxy)' for speed.
+        if (clazz != null && clazz !== Dictionary) {
+            return clazz;
+        } else {
+            return getClassByName(getQualifiedClassName(obj));
+        }
     }
 
     public static function getClassByName (cname :String) :Class {
         try {
-            return (getDefinitionByName(cname.replace("::", ".")) as Class);
+            return (getDefinitionByName(cname) as Class);
 
         } catch (error :ReferenceError) {
             Log.getLog(ClassUtil).warning("Unknown class", "name", cname, error);
