@@ -3,8 +3,6 @@
 
 package aspire.util {
 
-import flash.events.Event;
-
 /**
  * Functional programming elements for AS3.
  */
@@ -140,30 +138,6 @@ public class F
      */
     public static function some (xs :Array, f :Function) :Boolean {
         return xs.some(adapt(f));
-    }
-
-    /**
-     * Creates a listener that removes itself from the event source and delegates to handler.
-     *
-     * @param handler (Event -> void)
-     */
-    public static function justOnce (handler :Function) :Function {
-        return function listener (event :Event) :void {
-            event.currentTarget.removeEventListener(event.type, listener);
-            handler(event);
-        }
-    }
-
-    /**
-     * Creates a listener that removes itself from the event source and calls f with args.
-     *
-     * Functionally equivalent to justOnce(callback(f, args));
-     */
-    public static function callbackOnce (f: Function, ... args) :Function {
-        return function listener (event :Event) :void {
-            event.currentTarget.removeEventListener(event.type, listener);
-            f.apply(this, args);
-        }
     }
 
     /**
