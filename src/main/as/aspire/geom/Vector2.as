@@ -34,6 +34,12 @@ public class Vector2
         return Math.sqrt(distanceSquared(x1, y1, x2, y2));
     }
 
+    /** Returns the angle of a vector */
+    public static function angleOf (x :Number, y :Number) :Number {
+        var val :Number = Math.atan2(y, x);
+        return (val >= 0 ? val : val + (2 * Math.PI));
+    }
+
     /** Converts Point p to a Vector2. */
     public static function fromPoint (p :Point, out :Vector2 = null) :Vector2 {
         out = (out || new Vector2());
@@ -139,8 +145,7 @@ public class Vector2
 
     /** Returns the angle represented by this Vector2, in radians. */
     public function get angle () :Number {
-        var angle :Number = Math.atan2(y, x);
-        return (angle >= 0 ? angle : angle + (2 * Math.PI));
+        return angleOf(x, y);
     }
 
     /** Returns this vector's length. */
