@@ -119,7 +119,7 @@ public class F
      * @param f (Object -> void)
      */
     public static function forEach (xs :Array, f :Function) :void {
-        return xs.forEach(adapt(f));
+        xs.forEach(adapt(f));
     }
 
     /**

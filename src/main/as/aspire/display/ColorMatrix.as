@@ -44,9 +44,9 @@ public class ColorMatrix
 
     public function ColorMatrix (mat :Object = null) {
         if (mat is ColorMatrix) {
-            matrix = mat.matrix.concat();
+            matrix = ColorMatrix(mat).matrix.concat();
         } else if (mat is Array) {
-            matrix = mat.concat();
+            matrix = (mat as Array).concat();
         } else {
             reset();
         }

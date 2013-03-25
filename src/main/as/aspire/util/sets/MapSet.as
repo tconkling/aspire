@@ -45,7 +45,7 @@ public class MapSet extends AbstractSet
 
     /** @inheritDoc */
     public function clear () :void {
-        return _source.clear();
+        _source.clear();
     }
 
     /** @inheritDoc */
