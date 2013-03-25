@@ -107,6 +107,20 @@ public class RectangleI
         return !(intersection(other, R).isEmpty);
     }
 
+    /** @return true if the rectangle contains the given point */
+    public function containsPt (p :PointI) :Boolean {
+        return contains(p.x, p.y);
+    }
+
+    /** @return true if the rectangle contains the given point */
+    public function contains (px :int, py :int) :Boolean {
+        if (this.isEmpty || px < x || py < y) {
+            return false;
+        } else {
+            return (px < x + width && py < y + height);
+        }
+    }
+
     public function copyFrom (src :RectangleI) :void {
         this.x = src.x;
         this.y = src.y;
