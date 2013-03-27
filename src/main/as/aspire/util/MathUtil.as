@@ -33,16 +33,26 @@ public class MathUtil
         return radians * R2D;
     }
 
-    /** Normalizes an angle in radians to occupy the [0, 2pi) range. */
-    public static function normalizeRadians (radians :Number) :Number {
-        var norm :Number = radians % TWO_PI;
-        return (norm >= 0) ? norm : (norm + TWO_PI);
+    /** Normalizes an angle in radians to occupy the [-pi, pi) range. */
+    public static function normalizeAngle (a :Number) :Number {
+        while (a < -Math.PI) {
+            a += TWO_PI;
+        }
+        while (a >= Math.PI) {
+            a -= TWO_PI;
+        }
+        return a;
     }
 
-    /** Normalizes an angle in degrees to occupy the [0, 360) range. */
-    public static function normalizeDegrees (degrees :Number) :Number {
-        var norm :Number = degrees % 360;
-        return (norm >= 0) ? norm : (norm + 360);
+    /** Normalizes an angle to occupy the [0, 2pi) range. */
+    public static function normalizeAnglePositive (a :Number) :Number {
+        while (a < 0) {
+            a += TWO_PI;
+        }
+        while (a >= TWO_PI) {
+            a -= TWO_PI;
+        }
+        return a;
     }
 
     /**
