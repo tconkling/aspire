@@ -9,6 +9,7 @@
     <classEntry path="aspire.util.Timers"/>
     <classEntry path="aspire.util.TimerRegistration"/>
     <classEntry path="aspire.geom.RectangleI"/>
+    <classEntry path="aspire.geom.Points"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

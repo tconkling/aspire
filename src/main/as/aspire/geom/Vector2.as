@@ -5,8 +5,6 @@ package aspire.geom {
 
 import aspire.util.Equalable;
 import aspire.util.MathUtil;
-import aspire.util.Preconditions;
-import aspire.util.StringUtil;
 
 import flash.geom.Point;
 
@@ -19,53 +17,27 @@ public class Vector2
     public var x :Number = 0;
     public var y :Number = 0;
 
-    /** Infinite vector - often the result of normalizing a zero vector. */
-    public static const INFINITE :Vector2 = new Vector2(Infinity, Infinity);
-
-    /** Returns the squared distance between two vectors */
-    public static function distanceSquared (x1 :Number, y1 :Number, x2 :Number, y2 :Number) :Number {
-        var x :Number = x2 - x1;
-        var y :Number = y2 - y1;
-        return (x * x + y * y);
-    }
-
-    /** Returns the distance between two vectors */
-    public static function distance (x1 :Number, y1 :Number, x2 :Number, y2 :Number) :Number {
-        return Math.sqrt(distanceSquared(x1, y1, x2, y2));
-    }
-
     /** Returns the angle of a vector */
     public static function angleOf (x :Number, y :Number) :Number {
-        var val :Number = Math.atan2(y, x);
+        const val :Number = Math.atan2(y, x);
         return (val >= 0 ? val : val + (2 * Math.PI));
     }
 
     /** Converts Point p to a Vector2. */
     public static function fromPoint (p :Point, out :Vector2 = null) :Vector2 {
-        out = (out || new Vector2());
-        out.set(p.x, p.y);
-        return out;
+        return (out || new Vector2()).set(p.x, p.y);
     }
 
-    /**
-     * Creates a Vector2 of magnitude 'len' that has been rotated about the origin by 'radians'.
-     */
-    public static function fromAngle (radians :Number, len :Number = 1, out :Vector2 = null) :Vector2 {
-        out = (out || new Vector2());
-        // we use the unit vector (1, 0)
-        out.set(
-            Math.cos(radians) * len,   // == len * (cos(theta)*x - sin(theta)*y)
-            Math.sin(radians) * len);  // == len * (sin(theta)*x + cos(theta)*y)
-        return out;
+    /** Creates a vector that points from a to b */
+    public static function fromPoints (a :Point, b :Point, out :Vector2 = null) :Vector2 {
+        return (out || new Vector2()).set(b.x - a.x, b.y - a.y);
     }
 
-    /** Parses a string in the form "x,y" into a Vector2 */
-    public static function fromString (str :String, out :Vector2 = null) :Vector2 {
-        var parts :Array = str.split(",");
-        Preconditions.checkState(parts.length == 2, "Bad format (should look like \"x,y\")");
-        out = (out || new Vector2());
-        out.set(StringUtil.parseNumber(parts[0]), StringUtil.parseNumber(parts[1]));
-        return out;
+    /** Creates a vector from polar coordinates */
+    public static function fromPolar (magnitude :Number, angle :Number, out :Vector2 = null) :Vector2 {
+        return (out || new Vector2()).set(
+            Math.cos(angle) * magnitude,   // == mag * (cos(angle)*x - sin(angle)*y)
+            Math.sin(angle) * magnitude);  // == mag * (sin(angle)*x + cos(angle)*y)
     }
 
     /**
@@ -74,13 +46,11 @@ public class Vector2
      * and p = 1 means the result is equal to b.
      */
     public static function interpolate (a :Vector2, b :Vector2, p :Number,
-        out :Vector2 = null) :Vector2
-    {
+        out :Vector2 = null) :Vector2 {
         out = (out || new Vector2());
-        var q :Number = 1 - p;
-        out.set(q * a.x + p * b.x,
-                q * a.y + p * b.y);
-        return out;
+        const q :Number = 1 - p;
+        return out.set(q * a.x + p * b.x,
+            q * a.y + p * b.y);
     }
 
     /**
@@ -91,9 +61,9 @@ public class Vector2
         // v1 dot v2 == |v1||v2|cos(theta)
         // theta = acos ((v1 dot v2) / (|v1||v2|))
 
-        var dot :Number = v1.dot(v2);
-        var len1 :Number = v1.length;
-        var len2 :Number = v2.length;
+        const dot :Number = v1.dot(v2);
+        const len1 :Number = v1.length;
+        const len2 :Number = v2.length;
 
         return Math.acos(dot / (len1 * len2));
     }
@@ -155,8 +125,7 @@ public class Vector2
 
     /** Sets this vector's length. */
     public function set length (newLen :Number) :void {
-        var scale :Number = newLen / this.length;
-
+        const scale :Number = newLen / this.length;
         x *= scale;
         y *= scale;
     }
@@ -171,10 +140,10 @@ public class Vector2
      * Returns a reference to 'this', for chaining.
      */
     public function rotateLocal (radians :Number) :Vector2 {
-        var cosTheta :Number = Math.cos(radians);
-        var sinTheta :Number = Math.sin(radians);
+        const cosTheta :Number = Math.cos(radians);
+        const sinTheta :Number = Math.sin(radians);
 
-        var oldX :Number = x;
+        const oldX :Number = x;
         x = (cosTheta * oldX) - (sinTheta * y);
         y = (sinTheta * oldX) + (cosTheta * y);
 
@@ -188,7 +157,7 @@ public class Vector2
 
     /** Normalizes the vector in place and returns its original length. */
     public function normalizeLocalAndGetLength () :Number {
-        var length :Number = this.length;
+        const length :Number = this.length;
 
         x /= length;
         y /= length;
@@ -201,11 +170,9 @@ public class Vector2
      * Returns a reference to 'this', for chaining.
      */
     public function normalizeLocal () :Vector2 {
-        var lengthInverse :Number = 1 / this.length;
-
-        x *= lengthInverse;
-        y *= lengthInverse;
-
+        const invLength :Number = 1.0 / this.length;
+        x *= invLength;
+        y *= invLength;
         return this;
     }
 
@@ -221,7 +188,6 @@ public class Vector2
     public function addLocal (v :Vector2) :Vector2 {
         x += v.x;
         y += v.y;
-
         return this;
     }
 
@@ -237,7 +203,6 @@ public class Vector2
     public function subtractLocal (v :Vector2) :Vector2 {
         x -= v.x;
         y -= v.y;
-
         return this;
     }
 
@@ -269,18 +234,16 @@ public class Vector2
     public function getPerp (ccw :Boolean = true, out :Vector2 = null) :Vector2 {
         out = (out || new Vector2());
         if (ccw) {
-            out.set(-y, x);
+            return out.set(-y, x);
         } else {
-            out.set(y, -x);
+            return out.set(y, -x);
         }
-        return out;
     }
 
     /** Scales this vector by value. */
     public function scaleLocal (value :Number) :Vector2 {
         x *= value;
         y *= value;
-
         return this;
     }
 
@@ -305,7 +268,6 @@ public class Vector2
     public function invertLocal () :Vector2 {
         x = -x;
         y = -y;
-
         return this;
     }
 
@@ -316,7 +278,7 @@ public class Vector2
 
     /** Returns true if this vector is exactly equal to v. */
     public function equals (obj :Object) :Boolean {
-        var v :Vector2 = obj as Vector2;
+        const v :Vector2 = obj as Vector2;
         return (v != null && x == v.x && y == v.y);
     }
 
