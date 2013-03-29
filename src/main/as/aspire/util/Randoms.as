@@ -34,7 +34,7 @@ public class Randoms
      *
      * @throws IllegalArgumentException if <code>high - low</code> is not positive.
      */
-    public function getInRange (low :int, high :int) :int {
+    public function getIntInRange (low :int, high :int) :int {
         return low + _stream.nextInt(high - low);
     }
 
