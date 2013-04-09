@@ -61,7 +61,7 @@ public class Randoms
      *
      * @throws IllegalArgumentException if <code>n</code> is not positive.
      */
-    public function getChance (n :int) :Boolean {
+    public function oneIn (n :int) :Boolean {
         return (0 == _stream.nextInt(n));
     }
 
@@ -76,7 +76,7 @@ public class Randoms
      * Returns <code>true</code> or <code>false</code> with approximately even probability.
      */
     public function getBoolean () :Boolean {
-        return getChance(2);
+        return oneIn(2);
     }
 
     /**
