@@ -10,7 +10,7 @@ public class WeightedArray
         _dataDirty = true;
     }
 
-    public function push (data :*, relativeChance :Number) :void {
+    public function push (data :Object, relativeChance :Number) :void {
         if (relativeChance <= 0) {
             throw new ArgumentError("relativeChance must be > 0");
         }
@@ -27,7 +27,7 @@ public class WeightedArray
         }
 
         var max :Number = _data[_data.length - 1].max;
-        var val :Number = rands.getNumberInRange(0, max);
+        var val :Number = rands.getNumber(max);
 
         // binary-search the set of WeightedData
         var loIdx :int = 0;
@@ -80,7 +80,7 @@ public class WeightedArray
      * @return the percentage chance - a value in [0, 1] - that the given data will be returned
      * from a call to getNextData(), given the relative chance of all other data in the array.
      */
-    public function getAbsoluteChance (data :*) :Number {
+    public function getAbsoluteChance (data :Object) :Number {
         updateData();
 
         if (_data.length == 0) {
@@ -89,7 +89,7 @@ public class WeightedArray
 
         var max :Number = _data[_data.length - 1].max;
         var dataChance :Number = 0;
-        forEach(function (thisData :*, relativeChance :Number) :void {
+        forEach(function (thisData :Object, relativeChance :Number) :void {
             if (thisData === data) {
                 dataChance += relativeChance;
             }
