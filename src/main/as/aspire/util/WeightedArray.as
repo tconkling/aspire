@@ -5,12 +5,8 @@ package aspire.util {
 
 public class WeightedArray
 {
-    public function WeightedArray (rands :Randoms) {
-        _rands = rands;
-    }
-
     public function clear () :void {
-        _data = [];
+        _data.length = 0;
         _dataDirty = true;
     }
 
@@ -23,15 +19,15 @@ public class WeightedArray
         _dataDirty = true;
     }
 
-    public function getNextData () :* {
+    public function pick (rands :Randoms) :* {
         updateData();
 
         if (_data.length == 0) {
             return undefined;
         }
 
-        var max :Number = WeightedData(_data[_data.length - 1]).max;
-        var val :Number = _rands.getNumberInRange(0, max);
+        var max :Number = _data[_data.length - 1].max;
+        var val :Number = rands.getNumberInRange(0, max);
 
         // binary-search the set of WeightedData
         var loIdx :int = 0;
@@ -60,13 +56,13 @@ public class WeightedArray
         return undefined;
     }
 
-    /**
-     * Get an array of all of the items that can be returned by this WeightedArray.
-     */
-    public function getAllData () :Array {
-        return _data.map(function (wd :WeightedData, ...ignored) :* {
-            return wd.data;
-        });
+    /** @return an Array view of all of the data in this WeightedArray. */
+    public function getAll () :Array {
+        var out :Array = [];
+        for each (var wd :WeightedData in _data) {
+            out.push(wd);
+        }
+        return out;
     }
 
     /**
@@ -91,7 +87,7 @@ public class WeightedArray
             return 0;
         }
 
-        var max :Number = WeightedData(_data[_data.length - 1]).max;
+        var max :Number = _data[_data.length - 1].max;
         var dataChance :Number = 0;
         forEach(function (thisData :*, relativeChance :Number) :void {
             if (thisData === data) {
@@ -118,10 +114,8 @@ public class WeightedArray
         }
     }
 
-    protected var _rands :Randoms;
     protected var _dataDirty :Boolean;
-
-    protected var _data :Array = [];
+    protected var _data :Vector.<WeightedData> = new <WeightedData>[];
 }
 
 }
