@@ -63,20 +63,10 @@ public class Arrays
      * @return the maximum value, or undefined if the array is empty.
      */
     public static function max (arr :Array, comp :Function = null) :* {
-        var len :uint = arr.length;
-        if (len == 0) {
-            return undefined;
-        }
         if (comp == null) {
             comp = Comparators.compareUnknowns;
         }
-        var max :* = arr[0];
-        for (var ii :uint = 1; ii < len; ii++) {
-            if (comp(max, arr[ii]) < 0) {
-                max = arr[ii];
-            }
-        }
-        return max;
+        return min(arr, Comparators.createReverse(comp));
     }
 
     /**
@@ -86,18 +76,20 @@ public class Arrays
      * @return the minimum value, or undefined if the array is empty.
      */
     public static function min (arr :Array, comp :Function = null) :* {
+        var len :uint = arr.length;
+        if (len == 0) {
+            return undefined;
+        }
         if (comp == null) {
             comp = Comparators.compareUnknowns;
         }
-        return max(arr, Comparators.createReverse(comp));
-    }
-
-    /**
-     * Sort the specified array according to natural order- all elements
-     * must implement Comparable or be null.
-     */
-    public static function sort (arr :Array) :void {
-        arr.sort(Comparators.compareComparables);
+        var min :* = arr[0];
+        for (var ii :uint = 1; ii < len; ii++) {
+            if (comp(arr[ii], min) < 0) {
+                min = arr[ii];
+            }
+        }
+        return min;
     }
 
     /**
