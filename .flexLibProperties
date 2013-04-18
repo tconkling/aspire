@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses>
-    <classEntry path="aspire.geom.PointI"/>
-    <classEntry path="aspire.util.JsonUtil"/>
-    <classEntry path="aspire.util.RandomStream"/>
-    <classEntry path="aspire.util.Flags"/>
-    <classEntry path="aspire.util.MutableFlags"/>
-    <classEntry path="aspire.util.Timers"/>
-    <classEntry path="aspire.util.TimerRegistration"/>
-    <classEntry path="aspire.geom.RectangleI"/>
-    <classEntry path="aspire.geom.Points"/>
-  </includeClasses>
+  <includeClasses/>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>
