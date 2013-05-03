@@ -1,9 +1,12 @@
 //
 // aspire
 
-package aspire.util {
+package aspire.error {
 
-public class XmlReadError extends Error
+import aspire.util.Joiner;
+import aspire.util.XmlUtil;
+
+public class XmlReadError extends Throwable
 {
     /**
      * Creates a new XmlReadError
@@ -13,7 +16,7 @@ public class XmlReadError extends Error
      * (that is, if the args list has an odd number of elements, and the last element is an XML),
      * its XML content will be included in a new line, below the rest of the message content.
      */
-    public function XmlReadError (message :String = "", ...args) {
+    public function XmlReadError (message :String, ...args) {
         super(getErrString(message, args));
     }
 

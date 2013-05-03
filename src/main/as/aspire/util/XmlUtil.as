@@ -2,6 +2,7 @@
 // aspire
 
 package aspire.util {
+import aspire.error.XmlReadError;
 
 public class XmlUtil
 {
@@ -184,7 +185,7 @@ public class XmlUtil
         try {
             value = (null != parseFunction ? parseFunction(attr) : attr);
         } catch (e :ArgumentError) {
-            throw new XmlReadError("error reading attribute '" + name + "': " + e.message, xml);
+            throw new XmlReadError("error reading attribute '" + name + "'", xml).initCause(e);
         }
 
         return value;
