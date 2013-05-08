@@ -29,7 +29,7 @@ public class HashMap extends AbstractMap
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
-        var firstEntry :HashMap_Entry = (_entries[index] as HashMap_Entry);
+        var firstEntry :HashMap_Entry = _entries[index];
         for (var e :HashMap_Entry = firstEntry; e != null; e = e.next) {
             if ((e.hash == hash) && e.key.equals(hkey)) {
                 var oldValue :Object = e.value;
@@ -54,7 +54,7 @@ public class HashMap extends AbstractMap
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
-        var e :HashMap_Entry = (_entries[index] as HashMap_Entry);
+        var e :HashMap_Entry = _entries[index];
         while (e != null) {
             if ((e.hash == hash) && e.key.equals(hkey)) {
                 return e.value;
@@ -74,7 +74,7 @@ public class HashMap extends AbstractMap
         var hkey :Hashable = toKey(key);
         var hash :int = hkey.hashCode();
         var index :int = indexFor(hash);
-        var prev :HashMap_Entry = (_entries[index] as HashMap_Entry);
+        var prev :HashMap_Entry = _entries[index];
         var e :HashMap_Entry = prev;
         while (e != null) {
             var next :HashMap_Entry = e.next;
@@ -100,8 +100,7 @@ public class HashMap extends AbstractMap
 
     /** @inheritDoc */
     public function clear () :void {
-        _entries = [];
-        _entries.length = DEFAULT_BUCKETS;
+        _entries = new Vector.<HashMap_Entry>(DEFAULT_BUCKETS);
         _size = 0;
     }
 
@@ -130,7 +129,7 @@ public class HashMap extends AbstractMap
      */
     override public function forEach (fn :Function) :void {
         for (var ii :int = _entries.length - 1; ii >= 0; ii--) {
-            for (var e :HashMap_Entry = (_entries[ii] as HashMap_Entry); e != null; e = e.next) {
+            for (var e :HashMap_Entry = _entries[ii]; e != null; e = e.next) {
                 if (Boolean(fn(fromKey(e.key), e.value))) {
                     return;
                 }
@@ -178,17 +177,16 @@ public class HashMap extends AbstractMap
      * @private
      */
     protected function resize (newSize :int) :void {
-        var oldEntries :Array = _entries;
-        _entries = [];
-        _entries.length = newSize;
+        var oldEntries :Vector.<HashMap_Entry> = _entries;
+        _entries = new Vector.<HashMap_Entry>(newSize);
 
         // place all the old entries in the new map
         for (var ii :int = 0; ii < oldEntries.length; ii++) {
-            var e :HashMap_Entry = (oldEntries[ii] as HashMap_Entry);
+            var e :HashMap_Entry = oldEntries[ii];
             while (e != null) {
                 var next :HashMap_Entry = e.next;
                 var index :int = indexFor(e.hash);
-                e.next = (_entries[index] as HashMap_Entry);
+                e.next = _entries[index];
                 _entries[index] = e;
                 e = next;
             }
@@ -199,7 +197,7 @@ public class HashMap extends AbstractMap
     protected var _loadFactor :Number;
 
     /** If non-null, contains Hashable keys and their values. @private */
-    protected var _entries :Array;
+    protected var _entries :Vector.<HashMap_Entry>;
 
     /** The default size for the bucketed hashmap. @private */
     protected static const DEFAULT_BUCKETS :int = 16;
