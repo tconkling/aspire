@@ -4,7 +4,6 @@
 package aspire.util {
 
 import flash.events.ErrorEvent;
-import flash.system.Capabilities;
 import flash.utils.getQualifiedClassName;
 
 /**
@@ -434,9 +433,7 @@ public class Log
     protected static var _levels :Object = {};
 
     /** The configured log levels. @private */
-    protected static var _setLevels :Object = {
-        "": (flash.system.Capabilities.isDebugger ? DEBUG : OFF) // global: debug or off
-    };
+    protected static var _setLevels :Object = { "": DEBUG };
 
     /** The string names of each level. The last one is unused, it corresponds with OFF. @private */
     protected static const LEVEL_NAMES :Array = [ "debug", "INFO", "WARN", "ERROR", false ];
