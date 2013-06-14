@@ -3,14 +3,14 @@
 
 package aspire.geom {
 
-import aspire.util.Equalable;
+import aspire.util.Hashable;
 import aspire.util.StringUtil;
 
 /**
  * Rectangle with integer location and size
  */
 public class RectangleI
-    implements Equalable
+    implements Hashable
 {
     public var x :int;
     public var y :int;
@@ -137,6 +137,15 @@ public class RectangleI
     public function equals (obj :Object) :Boolean {
         const o :RectangleI = (obj as RectangleI);
         return (o != null && x == o.x && y == o.y && width == o.width && height == o.height);
+    }
+
+    public function hashCode () :int {
+        var hash :int = 17;
+        hash = (31 * hash) + x;
+        hash = (31 * hash) + y;
+        hash = (31 * hash) + width;
+        hash = (31 * hash) + height;
+        return hash;
     }
 
     public function toString () :String {

@@ -3,15 +3,15 @@
 
 package aspire.geom {
 
-import flash.geom.Point;
+import aspire.util.Hashable;
 
-import aspire.util.Equalable;
+import flash.geom.Point;
 
 /**
  * An integer-based point
  */
 public class PointI
-    implements Equalable
+    implements Hashable
 {
     public var x :int = 0;
     public var y :int = 0;
@@ -111,6 +111,10 @@ public class PointI
     public function equals (obj :Object) :Boolean {
         var p :PointI = obj as PointI;
         return (p != null && x == p.x && y == p.y);
+    }
+
+    public function hashCode () :int {
+        return (31 * x) + y;
     }
 
     /** Returns a string representation of the PointI. */
