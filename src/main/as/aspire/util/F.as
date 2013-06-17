@@ -57,6 +57,13 @@ public class F
         }
     }
 
+    /** Creates a function that will set property p on Object o with the passed in value */
+    public static function setter (o :Object, p :String) :Function {
+        return function (value :Object) :void {
+            o[p] = value;
+        }
+    }
+
     public static function compose (f :Function, g :Function) :Function {
         return function (... rest) :* {
             return f(g.apply(this, rest));
