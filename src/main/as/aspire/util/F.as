@@ -58,7 +58,7 @@ public class F
     }
 
     /** Creates a function that will set property p on Object o with the passed in value */
-    public static function setter (o :Object, p :String) :Function {
+    public static function set (o :Object, p :String) :Function {
         return function (value :Object) :void {
             o[p] = value;
         }
