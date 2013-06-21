@@ -29,10 +29,11 @@ public class PointI
         this.y = y;
     }
 
-    /** Sets the point's components to the given values. */
-    public function set (x :int, y :int) :void {
+    /** Sets the point's components to the given values. Returns this, for chaining. */
+    public function set (x :int, y :int) :PointI {
         this.x = x;
         this.y = y;
+        return this;
     }
 
     /** Converts the PointI to a Point. */
