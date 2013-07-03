@@ -59,16 +59,18 @@ public class RectangleI
         return (width <= 0 || height <= 0);
     }
 
-    public function offset (dx :int, dy :int) :void {
+    public function offset (dx :int, dy :int) :RectangleI {
         x += dx;
         y += dy;
+        return this;
     }
 
-    public function setTo (x :int, y :int, width :int, height :int) :void {
+    public function setTo (x :int, y :int, width :int, height :int) :RectangleI {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        return this;
     }
 
     /**
@@ -76,11 +78,12 @@ public class RectangleI
      * by the specified amount in the negative x and y direction and the width and height grow by
      * twice the specified amount).
      */
-    public function grow (dx :int, dy :int) :void {
+    public function grow (dx :int, dy :int) :RectangleI {
         x -= dx;
         y -= dy;
         width += dx + dx;
         height += dy + dy;
+        return this;
     }
 
     public function union (other :RectangleI, out :RectangleI = null) :RectangleI {
@@ -121,11 +124,12 @@ public class RectangleI
         }
     }
 
-    public function copyFrom (src :RectangleI) :void {
+    public function copyFrom (src :RectangleI) :RectangleI {
         this.x = src.x;
         this.y = src.y;
         this.width = src.width;
         this.height = src.height;
+        return this;
     }
 
     public function clone (out :RectangleI = null) :RectangleI {
