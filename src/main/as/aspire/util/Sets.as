@@ -82,7 +82,7 @@ public class Sets
     /**
      * Return true if the two sets are equal.
      */
-    public static function equals (a :Set, b :Set) :Boolean {
+    public static function equals (a :SetView, b :SetView) :Boolean {
         if (a === b) {
             return true;
 
@@ -107,7 +107,7 @@ public class Sets
      *
      * @return result
      */
-    public static function union (a :Set, b :Set, result :Set) :Set {
+    public static function union (a :SetView, b :SetView, result :Set) :Set {
         checkSets(a, b, result);
 
         function addToResult (e :Object) :void {
@@ -125,12 +125,12 @@ public class Sets
      *
      * @return result
      */
-    public static function intersection (a :Set, b :Set, result :Set) :Set {
+    public static function intersection (a :SetView, b :SetView, result :Set) :Set {
         checkSets(a, b, result);
 
         // iterate the smaller of the two sets
         if (b.size() < a.size()) {
-            var tmp :Set = a;
+            var tmp :SetView = a;
             a = b;
             b = tmp;
         }
@@ -150,7 +150,7 @@ public class Sets
      *
      * @return result
      */
-    public static function difference (a :Set, b :Set, result :Set) :Set {
+    public static function difference (a :SetView, b :SetView, result :Set) :Set {
         checkSets(a, b, result);
 
         a.forEach(function (o :Object) :void {
@@ -170,7 +170,7 @@ public class Sets
      *
      * @return result
      */
-    public static function symmetricDifference (a :Set, b :Set, result :Set) :Set {
+    public static function symmetricDifference (a :SetView, b :SetView, result :Set) :Set {
         checkSets(a, b, result);
 
         a.forEach(function (o :Object) :void {
@@ -197,7 +197,7 @@ public class Sets
      * </listing>
      * @see Predicates
      */
-    public static function some (theSet :Set, condition :Function) :Boolean {
+    public static function some (theSet :SetView, condition :Function) :Boolean {
         var found :Boolean = false;
         theSet.forEach(function (o :Object) :Boolean {
             if (condition(o)) {
@@ -262,7 +262,7 @@ public class Sets
     /**
      * Helper method for Set operations.
      */
-    protected static function checkSets (a :Set, b :Set, result :Set) :void {
+    protected static function checkSets (a :SetView, b :SetView, result :Set) :void {
         if (a == result || b == result) {
             throw new ArgumentError("result must not be a or b");
         }

@@ -85,7 +85,7 @@ public class Maps
     /**
      * Do the two Maps contain the same keys and values?
      */
-    public static function equals (map1 :Map, map2 :Map) :Boolean {
+    public static function equals (map1 :MapView, map2 :MapView) :Boolean {
         if (map1 === map2) {
             return true;
 
@@ -108,7 +108,7 @@ public class Maps
     /**
      * Return the first key found for the specified value, or undefined if not found.
      */
-    public static function findKey (map :Map, value :Object) :* {
+    public static function findKey (map :MapView, value :Object) :* {
         var key :* = undefined;
         map.forEach(function (k :Object, v :Object) :Boolean {
             if (Util.equals(value, v)) {
@@ -128,7 +128,7 @@ public class Maps
      *     function predicate (key :Object, value :Object) :Boolean
      * </listing>
      */
-    public static function some (map :Map, condition :Function) :Boolean {
+    public static function some (map :MapView, condition :Function) :Boolean {
         var found :Boolean = false;
         map.forEach(function (key :Object, val :Object) :Boolean {
             if (condition(key, val)) {
@@ -169,7 +169,7 @@ public class Maps
      *     If the transform is null, the map values are returned.
      */
     public static function filter (
-        map :Map, condition :Function, transform :Function = null) :Array {
+        map :MapView, condition :Function, transform :Function = null) :Array {
         if (transform == null) {
             transform = selectValue;
         }
