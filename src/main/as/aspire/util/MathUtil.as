@@ -20,7 +20,7 @@ public class MathUtil
 
     /** Returns the value of n clamped to be within the range [min, max]. */
     public static function clamp (n :Number, min :Number, max :Number) :Number {
-        return Math.min(Math.max(n, min), max);
+        return (n < min ? min : (n > max ? max : n));
     }
 
     /** Converts degrees to radians. */
