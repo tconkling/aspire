@@ -16,7 +16,7 @@ public class Comparators
      * Create a Comparator function that reverses the ordering of the specified Comparator.
      */
     public static function createReverse (comparator :Function) :Function {
-        return function (o1 :Object, o2 :Object, ... ignored) :int {
+        return function (o1 :Object, o2 :Object) :int {
             return comparator(o2, o1); // simply reverse the ordering
         };
     }
