@@ -168,6 +168,13 @@ public class Arrays
     }
 
     /**
+     * Returns true if the given predicate returns true for any of the items in the array.
+     */
+    public static function any (arr :Array, predicate :Function) :Boolean {
+        return indexIf(arr, predicate) >= 0;
+    }
+
+    /**
      * Returns the index of the first item in the array for which the predicate function
      * returns true, or -1 if no such item was found. The predicate function should be of type:
      *   function (element :*) :Boolean { }
