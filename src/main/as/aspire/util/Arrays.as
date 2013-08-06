@@ -182,11 +182,9 @@ public class Arrays
      * @return the zero-based index of the matching element, or -1 if none found.
      */
     public static function indexIf (arr :Array, predicate :Function) :int {
-        if (arr != null) {
-            for (var ii :int = 0; ii < arr.length; ii++) {
-                if (predicate(arr[ii])) {
-                    return ii;
-                }
+        for (var ii :int = 0; ii < arr.length; ii++) {
+            if (predicate(arr[ii])) {
+                return ii;
             }
         }
         return -1; // never found
@@ -200,11 +198,9 @@ public class Arrays
      * @return the zero-based index of the matching element, or -1 if none found.
      */
     public static function lastIndexIf (arr :Array, predicate :Function) :int {
-        if (arr != null) {
-            for (var ii :int = arr.length - 1; ii >= 0; ii--) {
-                if (predicate(arr[ii])) {
-                    return ii;
-                }
+        for (var ii :int = arr.length - 1; ii >= 0; ii--) {
+            if (predicate(arr[ii])) {
+                return ii;
             }
         }
         return -1; // never found
@@ -218,7 +214,7 @@ public class Arrays
      * @return the matching element, or undefined if no matching element was found.
      */
     public static function findIf (arr :Array, predicate :Function) :* {
-        var index :int = (arr != null ? indexIf(arr, predicate) : -1);
+        var index :int = indexIf(arr, predicate);
         return (index >= 0 ? arr[index] : undefined);
     }
 
@@ -230,7 +226,7 @@ public class Arrays
      * @return the matching element, or undefined if no matching element was found.
      */
     public static function findLastIf (arr :Array, predicate :Function) :* {
-        var index :int = (arr != null ? lastIndexIf(arr, predicate) : -1);
+        var index :int = lastIndexIf(arr, predicate);
         return (index >= 0 ? arr[index] : undefined);
     }
 
@@ -243,11 +239,9 @@ public class Arrays
      * @return the zero-based index of the matching element, or -1 if none found.
      */
     public static function indexOf (arr :Array, element :Object) :int {
-        if (arr != null) {
-            for (var ii :int = 0; ii < arr.length; ii++) {
-                if (Util.equals(arr[ii], element)) {
-                    return ii;
-                }
+        for (var ii :int = 0; ii < arr.length; ii++) {
+            if (Util.equals(arr[ii], element)) {
+                return ii;
             }
         }
         return -1; // never found
@@ -262,11 +256,9 @@ public class Arrays
      * @return the zero-based index of the matching element, or -1 if none found.
      */
     public static function lastIndexOf (arr :Array, element :Object) :int {
-        if (arr != null) {
-            for (var ii :int = arr.length - 1; ii >= 0; ii--) {
-                if (Util.equals(arr[ii], element)) {
-                    return ii;
-                }
+        for (var ii :int = arr.length - 1; ii >= 0; ii--) {
+            if (Util.equals(arr[ii], element)) {
+                return ii;
             }
         }
         return -1; // never found
