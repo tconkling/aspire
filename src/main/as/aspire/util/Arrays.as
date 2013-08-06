@@ -175,6 +175,13 @@ public class Arrays
     }
 
     /**
+     * Returns true if the given predicate returns true for all of the items in the array.
+     */
+    public static function all (arr :Array, predicate :Function) :Boolean {
+        return !(any(arr, function (item :*) :Boolean { return !predicate(item); }));
+    }
+
+    /**
      * Returns the index of the first item in the array for which the predicate function
      * returns true, or -1 if no such item was found. The predicate function should be of type:
      *   function (element :*) :Boolean { }
