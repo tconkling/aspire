@@ -282,20 +282,20 @@ public class Arrays
     /**
      * Remove the first instance of the specified element from the array.
      *
-     * @return true if an element was removed, false otherwise.
+     * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeFirst (arr :Array, element :Object) :Boolean {
+    public static function removeFirst (arr :Array, element :Object) :* {
         return removeImpl(arr, element, true);
     }
 
     /**
      * Remove the last instance of the specified element from the array.
      *
-     * @return true if an element was removed, false otherwise.
+     * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeLast (arr :Array, element :Object) :Boolean {
+    public static function removeLast (arr :Array, element :Object) :* {
         arr.reverse();
-        var removed :Boolean = removeFirst(arr, element);
+        var removed :* = removeFirst(arr, element);
         arr.reverse();
         return removed;
     }
@@ -306,7 +306,7 @@ public class Arrays
      * @return true if at least one element was removed, false otherwise.
      */
     public static function removeAll (arr :Array, element :Object) :Boolean {
-        return removeImpl(arr, element, false);
+        return (removeImpl(arr, element, false) !== undefined);
     }
 
     /**
@@ -314,9 +314,9 @@ public class Arrays
      *
      * @param pred a Function of the form: function (element :*) :Boolean
      *
-     * @return true if an element was removed, false otherwise.
+     * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeFirstIf (arr :Array, pred :Function) :Boolean {
+    public static function removeFirstIf (arr :Array, pred :Function) :* {
         return removeIfImpl(arr, pred, true);
     }
 
@@ -325,11 +325,11 @@ public class Arrays
      *
      * @param pred a Function of the form: function (element :*) :Boolean
      *
-     * @return true if an element was removed, false otherwise.
+     * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeLastIf (arr :Array, pred :Function) :Boolean {
+    public static function removeLastIf (arr :Array, pred :Function) :* {
         arr.reverse();
-        var removed :Boolean = removeFirstIf(arr, pred);
+        var removed :* = removeFirstIf(arr, pred);
         arr.reverse();
         return removed;
     }
@@ -342,7 +342,7 @@ public class Arrays
      * @return true if an element was removed, false otherwise.
      */
     public static function removeAllIf (arr :Array, pred :Function) :Boolean {
-        return removeIfImpl(arr, pred, false);
+        return (removeIfImpl(arr, pred, false) !== undefined);
     }
 
     /**
@@ -487,24 +487,26 @@ public class Arrays
     /**
      * Implementation of remove methods.
      */
-    private static function removeImpl (arr :Array, element :Object, firstOnly :Boolean) :Boolean {
+    private static function removeImpl (arr :Array, element :Object, firstOnly :Boolean) :* {
         return removeIfImpl(arr, Predicates.createEquals(element), firstOnly);
     }
 
     /**
      * Implementation of removeIf methods.
      */
-    private static function removeIfImpl (arr :Array, pred :Function, firstOnly :Boolean) :Boolean {
-        var removed :Boolean = false;
+    private static function removeIfImpl (arr :Array, pred :Function, firstOnly :Boolean) :* {
+        var removed :* = undefined;
         for (var ii :int = 0; ii < arr.length; ii++) {
-            if (pred(arr[ii])) {
+            var item :* = arr[ii];
+            if (pred(item)) {
                 arr.splice(ii--, 1);
                 if (firstOnly) {
-                    return true;
+                    return item;
                 }
-                removed = true;
+                removed = item;
             }
         }
+
         return removed;
     }
 }
