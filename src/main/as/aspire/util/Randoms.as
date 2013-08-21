@@ -98,7 +98,7 @@ public class Randoms
         if (arr["length"] === undefined) {
             throw new ArgumentError("arr must be an Array or Vector!");
         }
-        if (arr == null || arr.length == 0) {
+        if (arr.length == 0) {
             return ifEmpty;
         }
 
@@ -113,7 +113,7 @@ public class Randoms
         if (arr["length"] === undefined) {
             throw new ArgumentError("arr must be an Array or Vector!");
         }
-        if (arr == null || arr.length == 0) {
+        if (arr.length == 0) {
             return ifEmpty;
         }
 
