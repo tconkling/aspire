@@ -95,7 +95,7 @@ public class Randoms
      * if it is empty.
      */
     public function pick (arr :*, ifEmpty :* = undefined) :* {
-        if (!(arr is Array || arr is Vector)) {
+        if (arr["length"] === undefined) {
             throw new ArgumentError("arr must be an Array or Vector!");
         }
         if (arr == null || arr.length == 0) {
@@ -110,7 +110,7 @@ public class Randoms
      * return <code>ifEmpty</code> if it is empty.
      */
     public function pluck (arr :*, ifEmpty :* = undefined) :* {
-        if (!(arr is Array || arr is Vector)) {
+        if (arr["length"] === undefined) {
             throw new ArgumentError("arr must be an Array or Vector!");
         }
         if (arr == null || arr.length == 0) {
