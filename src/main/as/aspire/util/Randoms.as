@@ -91,10 +91,13 @@ public class Randoms
     }
 
     /**
-     * Pick a random element from the specified Array, or return <code>ifEmpty</code>
+     * Pick a random element from the specified Array or Vector, or return <code>ifEmpty</code>
      * if it is empty.
      */
-    public function pick (arr :Array, ifEmpty :* = undefined) :* {
+    public function pick (arr :*, ifEmpty :* = undefined) :* {
+        if (!(arr is Array || arr is Vector)) {
+            throw new ArgumentError("arr must be an Array or Vector!");
+        }
         if (arr == null || arr.length == 0) {
             return ifEmpty;
         }
@@ -103,10 +106,13 @@ public class Randoms
     }
 
     /**
-     * Pick a random element from the specified Array and remove it from the list, or return
-     * <code>ifEmpty</code> if it is empty.
+     * Pick a random element from the specified Array or Vector and remove it from the list, or
+     * return <code>ifEmpty</code> if it is empty.
      */
-    public function pluck (arr :Array, ifEmpty :* = undefined) :* {
+    public function pluck (arr :*, ifEmpty :* = undefined) :* {
+        if (!(arr is Array || arr is Vector)) {
+            throw new ArgumentError("arr must be an Array or Vector!");
+        }
         if (arr == null || arr.length == 0) {
             return ifEmpty;
         }
