@@ -9,6 +9,8 @@ package aspire.util {
  * So, for example, removeFirst() understands Equalable and will remove
  * an element that is equals() to the specified element, rather than just
  * === (strictly equals) to the specified element.
+ *
+ * Methods which take * for the array parameter may accept either an Array or Vector.
  */
 public class Arrays
 {
@@ -28,7 +30,8 @@ public class Arrays
      * An Array grown with the Array class's length setter will not actually have the
      * number of elements that it claims to.
      */
-    public static function resize (arr :Array, newLength :uint) :void {
+    public static function resize (arr :*, newLength :uint) :void {
+        requireArrayOrVector(arr);
         if (arr.length > newLength) {
             arr.length = newLength;
         } else {
@@ -40,7 +43,8 @@ public class Arrays
      * Pad the array to the specified length with the value specified, returning the passed-in
      * array for convenience.
      */
-    public static function padToLength (arr :Array, size :uint, val :* = null) :Array {
+    public static function padToLength (arr :*, size :uint, val :* = null) :Array {
+        requireArrayOrVector(arr);
         while (arr.length < size) {
             arr.push(val);
         }
@@ -52,7 +56,8 @@ public class Arrays
      *
      * @internal TODO: add support for copy ranges and deep copies?
      */
-    public static function copyOf (arr :Array) :Array {
+    public static function copyOf (arr :*) :Array {
+        requireArrayOrVector(arr);
         return arr.concat();
     }
 
@@ -62,7 +67,8 @@ public class Arrays
      *
      * @return the maximum value, or undefined if the array is empty.
      */
-    public static function max (arr :Array, comp :Function = null) :* {
+    public static function max (arr :*, comp :Function = null) :* {
+        // min will check arr type
         if (comp == null) {
             comp = Comparators.compareUnknowns;
         }
@@ -75,7 +81,8 @@ public class Arrays
      *
      * @return the minimum value, or undefined if the array is empty.
      */
-    public static function min (arr :Array, comp :Function = null) :* {
+    public static function min (arr :*, comp :Function = null) :* {
+        requireArrayOrVector(arr);
         var len :uint = arr.length;
         if (len == 0) {
             return undefined;
@@ -100,7 +107,8 @@ public class Arrays
      *
      * @param sortFields an Array of Strings, representing the order of fields to sort the array by
      */
-    public static function sortOn (arr :Array, sortFields :Array) :void {
+    public static function sortOn (arr :*, sortFields :Array) :void {
+        // stableSort will check arr type
         stableSort(arr, Comparators.createFields(sortFields));
     }
 
@@ -111,7 +119,8 @@ public class Arrays
      * and 0 if the order does not matter. If omitted, Comparators.compareComparables is used and
      * the array elements should be Comparable objects.
      */
-    public static function stableSort (arr :Array, comp :Function = null) :void {
+    public static function stableSort (arr :*, comp :Function = null) :void {
+        requireArrayOrVector(arr);
         if (comp == null) {
             comp = Comparators.compareComparables;
         }
@@ -146,7 +155,8 @@ public class Arrays
      *
      * @return the index of the inserted item
      */
-    public static function sortedInsert (arr :Array, val :*, comp :Function = null) :int {
+    public static function sortedInsert (arr :*, val :*, comp :Function = null) :int {
+        requireArrayOrVector(arr);
         if (comp == null) {
             comp = Comparators.compareComparables;
         }
@@ -161,7 +171,8 @@ public class Arrays
     /**
      * Swap the elements in the specified positions in the specified list.
      */
-    public static function swap (arr :Array, ii :int, jj :int) :void {
+    public static function swap (arr :*, ii :int, jj :int) :void {
+        requireArrayOrVector(arr);
         var tmp :* = arr[ii];
         arr[ii] = arr[jj];
         arr[jj] = tmp;
@@ -170,14 +181,16 @@ public class Arrays
     /**
      * Returns true if the given predicate returns true for any of the items in the array.
      */
-    public static function any (arr :Array, predicate :Function) :Boolean {
+    public static function any (arr :*, predicate :Function) :Boolean {
+        // indexIf will check arr type
         return indexIf(arr, predicate) >= 0;
     }
 
     /**
      * Returns true if the given predicate returns true for all of the items in the array.
      */
-    public static function all (arr :Array, predicate :Function) :Boolean {
+    public static function all (arr :*, predicate :Function) :Boolean {
+        // any will check arr type
         return !(any(arr, function (item :*) :Boolean { return !predicate(item); }));
     }
 
@@ -201,7 +214,8 @@ public class Arrays
      *
      * @return the zero-based index of the matching element, or -1 if none found.
      */
-    public static function indexIf (arr :Array, predicate :Function) :int {
+    public static function indexIf (arr :*, predicate :Function) :int {
+        requireArrayOrVector(arr);
         for (var ii :int = 0; ii < arr.length; ii++) {
             if (predicate(arr[ii])) {
                 return ii;
@@ -217,7 +231,8 @@ public class Arrays
      *
      * @return the zero-based index of the matching element, or -1 if none found.
      */
-    public static function lastIndexIf (arr :Array, predicate :Function) :int {
+    public static function lastIndexIf (arr :*, predicate :Function) :int {
+        requireArrayOrVector(arr);
         for (var ii :int = arr.length - 1; ii >= 0; ii--) {
             if (predicate(arr[ii])) {
                 return ii;
@@ -233,7 +248,8 @@ public class Arrays
      *
      * @return the matching element, or undefined if no matching element was found.
      */
-    public static function findIf (arr :Array, predicate :Function) :* {
+    public static function findIf (arr :*, predicate :Function) :* {
+        // indexIf will check arr type
         var index :int = indexIf(arr, predicate);
         return (index >= 0 ? arr[index] : undefined);
     }
@@ -245,7 +261,8 @@ public class Arrays
      *
      * @return the matching element, or undefined if no matching element was found.
      */
-    public static function findLastIf (arr :Array, predicate :Function) :* {
+    public static function findLastIf (arr :*, predicate :Function) :* {
+        // lastIndexIf will check arr type
         var index :int = lastIndexIf(arr, predicate);
         return (index >= 0 ? arr[index] : undefined);
     }
@@ -258,7 +275,8 @@ public class Arrays
      *
      * @return the zero-based index of the matching element, or -1 if none found.
      */
-    public static function indexOf (arr :Array, element :Object) :int {
+    public static function indexOf (arr :*, element :Object) :int {
+        requireArrayOrVector(arr);
         for (var ii :int = 0; ii < arr.length; ii++) {
             if (Util.equals(arr[ii], element)) {
                 return ii;
@@ -275,7 +293,8 @@ public class Arrays
      *
      * @return the zero-based index of the matching element, or -1 if none found.
      */
-    public static function lastIndexOf (arr :Array, element :Object) :int {
+    public static function lastIndexOf (arr :*, element :Object) :int {
+        requireArrayOrVector(arr);
         for (var ii :int = arr.length - 1; ii >= 0; ii--) {
             if (Util.equals(arr[ii], element)) {
                 return ii;
@@ -288,7 +307,8 @@ public class Arrays
      * @return true if the specified element, or one that is Equalable.equals() to it, is
      * contained in the array.
      */
-    public static function contains (arr :Array, element :Object) :Boolean {
+    public static function contains (arr :*, element :Object) :Boolean {
+        // indexOf will check arr type.
         return (indexOf(arr, element) != -1);
     }
 
@@ -297,7 +317,8 @@ public class Arrays
      *
      * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeFirst (arr :Array, element :Object) :* {
+    public static function removeFirst (arr :*, element :Object) :* {
+        // removeImpl will check arr type
         return removeImpl(arr, element, true);
     }
 
@@ -306,7 +327,8 @@ public class Arrays
      *
      * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeLast (arr :Array, element :Object) :* {
+    public static function removeLast (arr :*, element :Object) :* {
+        requireArrayOrVector(arr);
         arr.reverse();
         var removed :* = removeFirst(arr, element);
         arr.reverse();
@@ -318,7 +340,8 @@ public class Arrays
      *
      * @return true if at least one element was removed, false otherwise.
      */
-    public static function removeAll (arr :Array, element :Object) :Boolean {
+    public static function removeAll (arr :*, element :Object) :Boolean {
+        // removeImpl will check arr type
         return (removeImpl(arr, element, false) !== undefined);
     }
 
@@ -329,7 +352,8 @@ public class Arrays
      *
      * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeFirstIf (arr :Array, pred :Function) :* {
+    public static function removeFirstIf (arr :*, pred :Function) :* {
+        // removeIfImpl will check arr type
         return removeIfImpl(arr, pred, true);
     }
 
@@ -340,7 +364,8 @@ public class Arrays
      *
      * @return the element that was removed, or undefined if the element was not in the array.
      */
-    public static function removeLastIf (arr :Array, pred :Function) :* {
+    public static function removeLastIf (arr :*, pred :Function) :* {
+        requireArrayOrVector(arr);
         arr.reverse();
         var removed :* = removeFirstIf(arr, pred);
         arr.reverse();
@@ -354,7 +379,8 @@ public class Arrays
      *
      * @return true if an element was removed, false otherwise.
      */
-    public static function removeAllIf (arr :Array, pred :Function) :Boolean {
+    public static function removeAllIf (arr :*, pred :Function) :Boolean {
+        // removeIfImpl will check arr type
         return (removeIfImpl(arr, pred, false) !== undefined);
     }
 
@@ -386,7 +412,9 @@ public class Arrays
     /**
      * Do the two arrays contain elements that are all equals()?
      */
-    public static function equals (ar1 :Array, ar2 :Array) :Boolean {
+    public static function equals (ar1 :*, ar2 :*) :Boolean {
+        requireArrayOrVector(ar1);
+        requireArrayOrVector(ar2);
         if (ar1 === ar2) {
             return true;
 
@@ -412,7 +440,9 @@ public class Arrays
      * @param dstOffset the position in the destition array to begin copying into
      * @param count the number of elements to copy
      */
-    public static function copy (src :Array, srcOffset :uint, dst :Array, dstOffset :uint, count :uint) :void {
+    public static function copy (src :*, srcOffset :uint, dst :*, dstOffset :uint, count :uint) :void {
+        requireArrayOrVector(src);
+        requireArrayOrVector(dst);
         // see if we need to make a temporary copy
         if ((src == dst) && (srcOffset + count > dstOffset)) {
             src = src.slice(srcOffset, srcOffset + count);
@@ -469,7 +499,8 @@ public class Arrays
      * <code>(-(<i>insertion point</i>) - 1)</code> (always a negative
      * value) if the object was not found in the list.
      */
-    public static function binarySearch (array :Array, offset :int, length :int, key :*, comp :Function) :int {
+    public static function binarySearch (array :*, offset :int, length :int, key :*, comp :Function) :int {
+        requireArrayOrVector(array);
         var low :int = offset;
         var high :int = offset + length - 1;
         while (low <= high) {
@@ -491,7 +522,8 @@ public class Arrays
     /**
      * Fills the array entirely with the value provided.
      */
-    public static function fill (array :Array, val :*) :void {
+    public static function fill (array :*, val :*) :void {
+        requireArrayOrVector(array);
         for (var idx :* in array) {
             array[idx] = val;
         }
@@ -500,14 +532,16 @@ public class Arrays
     /**
      * Implementation of remove methods.
      */
-    private static function removeImpl (arr :Array, element :Object, firstOnly :Boolean) :* {
+    private static function removeImpl (arr :*, element :Object, firstOnly :Boolean) :* {
+        // removeIfImpl will check arr type.
         return removeIfImpl(arr, Predicates.createEquals(element), firstOnly);
     }
 
     /**
      * Implementation of removeIf methods.
      */
-    private static function removeIfImpl (arr :Array, pred :Function, firstOnly :Boolean) :* {
+    private static function removeIfImpl (arr :*, pred :Function, firstOnly :Boolean) :* {
+        requireArrayOrVector(arr);
         var removed :* = undefined;
         for (var ii :int = 0; ii < arr.length; ii++) {
             var item :* = arr[ii];
@@ -521,6 +555,12 @@ public class Arrays
         }
 
         return removed;
+    }
+
+    private static function requireArrayOrVector (arr :*) :void {
+        if (arr["length"] === undefined) {
+            throw new ArgumentError("Parameter must be an Array or Vector");
+        }
     }
 }
 }
