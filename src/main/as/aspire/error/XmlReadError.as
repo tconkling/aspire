@@ -6,7 +6,7 @@ package aspire.error {
 import aspire.util.Joiner;
 import aspire.util.XmlUtil;
 
-public class XmlReadError extends Throwable
+public class XmlReadError extends ChainableError
 {
     /**
      * Creates a new XmlReadError
