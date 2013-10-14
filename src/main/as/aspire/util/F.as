@@ -8,7 +8,7 @@ package aspire.util {
  */
 public class F
 {
-    /** @see #partial */
+    /** @see #bind */
     public static const _1 :F_Positional = new F_Positional(0);
     public static const _2 :F_Positional = new F_Positional(1);
     public static const _3 :F_Positional = new F_Positional(2);
@@ -34,26 +34,19 @@ public class F
      * function divide (x :Number, y :Number) :Number {
      *     return x / y;
      * }
-     * var addFirstAndThird :Function = F.partial(add, F._3, F._1);
-     * var divideByTwo :Function = F.partial(divide, F._1, 2);
+     * var addFirstAndThird :Function = F.bind(add, F._3, F._1);
+     * var divideByTwo :Function = F.bind(divide, F._1, 2);
      *
      * trace(addFirstAndThird(10, 999, 7)); // 17
      * trace(divideByTwo(12)); // 6
      * </listing>
      */
-    public static function partial (f :Function, ... left) :Function {
-        return function (... right) :* {
-            return adapt(f).apply(this,
+    public static function bind (f :Function, ...left) :Function {
+        return function (...right) :* {
+            return f.apply(this,
                 left.map(function (arg :*, index :int, arr :Array) :* {
                     return (arg is F_Positional) ? right[F_Positional(arg).idx] : arg;
                 }));
-        }
-    }
-
-    /** Creates a function that calls f with args and ignores any extra args passed to it. */
-    public static function callback (f: Function, ... args) :Function {
-        return function (... _) :* {
-            return f.apply(this, args);
         }
     }
 
