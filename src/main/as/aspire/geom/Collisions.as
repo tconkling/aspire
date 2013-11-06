@@ -7,19 +7,71 @@ package aspire.geom {
 public class Collisions
 {
     /**
-     * Calls the given callback for each integer grid coordinate that the given line passes through.
+     * Calls the given callback for each integer point that the given line passes through,
+     * using the Bresenham line algorithm.
      *
      * @param callback the function to call for each coordinate.
      * It should be of the form: <code>function (x :int, y :int) :Boolean</code>
      * Return true from the callback to stop the intersection test, or false/void to continue.
      */
-    public static function forEachLineGridIntersection (x1 :int, y1 :int, x2 :int, y2 :int,
-        callback :Function) :void
+    public static function getBresenhamLineIntersections (x0 :int, y0 :int, x1 :int, y1 :int,
+        callback :Function) :void {
+
+        // Bresenham line algorithm, copied from here:
+        // http://trystans.blogspot.com/2013/02/line-of-sight-los-in-actionscript.html
+
+        var dx:int = Math.abs(x1 - x0);
+        var dy:int = Math.abs(y1 - y0);
+        var sx:int = x0 < x1 ? 1 : -1;
+        var sy:int = y0 < y1 ? 1 : -1;
+        var err:int = dx - dy;
+
+        while (true) {
+            if (callback(x0, y0)) {
+                return;
+            }
+
+            if (x0 == x1 && y0 == y1) {
+                break;
+            }
+
+            var e2 :int = err * 2;
+            if (e2 > -dx) {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx){
+                err += dx;
+                y0 += sy;
+            }
+        }
+    }
+    /**
+     * Calls the given callback for each integer point that the given line passes through,
+     * using a "supercover" algorithm that covers all points, not just one per axis, as
+     * in Bresenham.
+     *
+     * @param cornersTouchNeighbors if true, then a line that passes at a 45-degree diagonal
+     * between two points will "touch" all points in the 2x2 square that those coordinates
+     * are a part of. For example, a line passing through (0,0) and (1,1) would intersect all four
+     * points (0,0), (0,1), (1,0), and (1,1):
+     *          **
+     *          **
+     * If cornersTouchNeighbors is false, only (0,0) and (1,1) would be intersected:
+     *          -*
+     *          *-
+     *
+     * @param callback the function to call for each point.
+     * It should be of the form: <code>function (x :int, y :int) :Boolean</code>
+     * Return true from the callback to stop the intersection test, or false/void to continue.
+     */
+    public static function getSupercoverLineIntersections (x0 :int, y0 :int, x1 :int, y1 :int,
+        cornersTouchNeighbors :Boolean, callback :Function) :void
     {
-        // "supercover line algorithm", described here:
+        // "supercover" line algorithm, described here:
         // http://lifc.univ-fcomte.fr/~dedu/projects/bresenham/index.html
 
-        if (callback(x1, y1)) {
+        if (callback(x0, y0)) {
             return;
         }
 
@@ -28,12 +80,12 @@ public class Collisions
         var xstep :int;         // the step on y and x axis
         var error :int;         // the error accumulated during the increment
         var errorprev :int;     // *vision the previous value of the error variable
-        var yy :int = y1;
-        var xx :int = x1;     // the line points
+        var yy :int = y0;
+        var xx :int = x0;       // the line points
         var ddy :int;
         var ddx :int;           // compulsory variables: the double values of dy and dx
-        var dx :int = x2 - x1;
-        var dy :int = y2 - y1;
+        var dx :int = x1 - x0;
+        var dy :int = y1 - y0;
 
         // NB the last point can't be here, because of its previous point (which has to be verified)
         if (dy < 0) {
@@ -71,7 +123,7 @@ public class Collisions
                         if (callback(xx - xstep, yy)) {
                             return;
                         }
-                    } else {  // corner: bottom and left squares also
+                    } else if (cornersTouchNeighbors) {  // corner: bottom and left squares also
                         if (callback(xx, yy - ystep)) {
                             return;
                         }
@@ -103,7 +155,7 @@ public class Collisions
                         if (callback(xx, yy - ystep)) {
                             return;
                         }
-                    } else {
+                    } else if (cornersTouchNeighbors) {
                         if (callback(xx - xstep, yy)) {
                             return;
                         }
@@ -118,8 +170,8 @@ public class Collisions
                 errorprev = error;
             }
         }
-        // the last point (y2,x2) has to be the same with the last point of the algorithm
-        // assert ((y == y2) && (x == x2));
+        // the last point (y1,x1) has to be the same with the last point of the algorithm
+        // assert ((y == y1) && (x == x1));
     }
 
     /** Returns true if the two circles intersect. */
