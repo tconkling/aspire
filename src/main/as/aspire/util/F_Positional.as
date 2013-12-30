@@ -6,7 +6,7 @@ package aspire.util {
 /**
  * @private
  */
-public class F_Positional
+internal class F_Positional
 {
     internal var idx :int;
 

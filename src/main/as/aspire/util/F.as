@@ -9,15 +9,15 @@ package aspire.util {
 public class F
 {
     /** @see #bind */
-    public static const _1 :F_Positional = new F_Positional(0);
-    public static const _2 :F_Positional = new F_Positional(1);
-    public static const _3 :F_Positional = new F_Positional(2);
-    public static const _4 :F_Positional = new F_Positional(3);
-    public static const _5 :F_Positional = new F_Positional(4);
-    public static const _6 :F_Positional = new F_Positional(5);
-    public static const _7 :F_Positional = new F_Positional(6);
-    public static const _8 :F_Positional = new F_Positional(7);
-    public static const _9 :F_Positional = new F_Positional(8);
+    public static const _1 :Object = new F_Positional(0);
+    public static const _2 :Object = new F_Positional(1);
+    public static const _3 :Object = new F_Positional(2);
+    public static const _4 :Object = new F_Positional(3);
+    public static const _5 :Object = new F_Positional(4);
+    public static const _6 :Object = new F_Positional(5);
+    public static const _7 :Object = new F_Positional(6);
+    public static const _8 :Object = new F_Positional(7);
+    public static const _9 :Object = new F_Positional(8);
 
     /**
      * Curry a function to be evaluated later.
