@@ -87,7 +87,7 @@ public class SetBuilder
     public function addAll (objects :Object) :SetBuilder {
         if (objects is Set) {
             Set(objects).forEach(function (item :Object) :void {
-                _mb.put(o, true);
+                _mb.put(item, true);
             });
         } else if (objects is Array) {
             for each (var o :Object in objects as Array) {
