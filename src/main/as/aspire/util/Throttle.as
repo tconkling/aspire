@@ -150,7 +150,7 @@ public class Throttle
      */
     public function opsToString () :String {
         var now :int = getTimer();
-        var ages :Array = []
+        var ages :Array = [];
         for (var ii :int = 0; ii < _ops.length; ++ii) {
             ages.push(now - _ops[ii]);
         }

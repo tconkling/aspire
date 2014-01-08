@@ -3,8 +3,6 @@
 
 package aspire.util.sets {
 
-import aspire.util.Set;
-
 /**
  * A skeletal building block for sets.
  * @private

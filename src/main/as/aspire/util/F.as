@@ -47,27 +47,27 @@ public class F
                 left.map(function (arg :*, index :int, arr :Array) :* {
                     return (arg is F_Positional) ? right[F_Positional(arg).idx] : arg;
                 }));
-        }
+        };
     }
 
     /** Creates a function that will set property p on Object o with the passed in value */
     public static function set (o :Object, p :String) :Function {
         return function (value :Object) :void {
             o[p] = value;
-        }
+        };
     }
 
     public static function compose (f :Function, g :Function) :Function {
         return function (... rest) :* {
             return f(g.apply(this, rest));
-        }
+        };
     }
 
     /** Creates a function that always returns x. */
     public static function constant (x :*) :Function {
         return function (... _) :* {
             return x;
-        }
+        };
     }
 
     /** The identity function. */
@@ -92,7 +92,7 @@ public class F
         return function (... args) :* {
             args.length = f.length; // fit the args to the fn, filling in 'undefined' if growing
             return f.apply(this, args);
-        }
+        };
     }
 
     /**
@@ -172,7 +172,7 @@ public class F
                 default:
                     throw new Error("You animal!  F.constructor only handles up to 10 args!");
             }
-        }
+        };
     }
 
     /**

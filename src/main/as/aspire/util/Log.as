@@ -320,7 +320,7 @@ public class Log
             errMsg = err.message; // otherwise, let's use the message (code) of the error
 
         } else if (lastArg is ErrorEvent) {
-            errMsg = String(lastArg.text);
+            errMsg = ErrorEvent(lastArg).text;
 
         } else {
             // Either the last arg was not an Error, ErrorEvent, or UncaughtErrorEvent,

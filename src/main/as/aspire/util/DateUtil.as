@@ -46,19 +46,19 @@ public class DateUtil
      * Return the name of the given (integer) month; 0 is January, and so on.
      */
     public static function getMonthName (month :uint, full :Boolean = false) :String {
-        return full ? _months[month] : _months[month].substr(0, 3);
+        return full ? _months[month] : (_months[month] as String).substr(0, 3);
     }
 
     /**
      * Return the name of the given (integer) day; 0 is Sunday, and so on.
      */
     public static function getDayName (day :uint, full :Boolean = false) :String {
-        return full ? _days[day] : _days[day].substr(0, 3);
+        return full ? _days[day] : (_days[day] as String).substr(0, 3);
     }
 
     protected static var _days :Array =
         [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-    protected static var _months :Object =
+    protected static var _months :Array =
         [ "January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December" ];
 }

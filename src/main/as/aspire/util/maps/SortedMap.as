@@ -6,7 +6,6 @@ package aspire.util.maps {
 import aspire.util.Comparators;
 import aspire.util.F;
 import aspire.util.Map;
-import aspire.util.Util;
 
 /**
  * A sorted Map implementation.

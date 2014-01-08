@@ -19,7 +19,7 @@ public class ValueComputingMap extends ForwardingMap
 
     /** Creates a new ValueComputing map that fills in empty arrays for missing keys. */
     public static function newArrayMapOf(keyClazz :Class) :Map {
-        return new ValueComputingMap(Maps.newMapOf(keyClazz), function (..._) :Array { return [] });
+        return new ValueComputingMap(Maps.newMapOf(keyClazz), function (..._) :Array { return []; });
     }
 
     public function ValueComputingMap (source :Map, computer :Function) {

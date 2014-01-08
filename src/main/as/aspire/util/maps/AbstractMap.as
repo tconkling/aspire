@@ -58,7 +58,7 @@ public /* abstract */ class AbstractMap
 
     /** @copy com.threerings.util.Equalable#equals() */
     public function equals (o :Object) :Boolean {
-        const m :Map = o as Map
+        const m :Map = o as Map;
         if (m == null) return false;
         return Maps.equals(Map(this), m);
 

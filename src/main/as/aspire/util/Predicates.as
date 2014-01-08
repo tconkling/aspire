@@ -36,7 +36,7 @@ public class Predicates
      */
     public static function hasProperty (propName :String) :Function {
         return function (item :*, ... _) :Boolean {
-            return (item != null) && item.hasOwnProperty(propName);
+            return (item != null) && (item as Object).hasOwnProperty(propName);
         };
     }
 
@@ -46,7 +46,7 @@ public class Predicates
      */
     public static function propertyEquals (propName :String, value :Object) :Function {
         return function (item :*, ... _) :Boolean {
-            return (item != null) && item.hasOwnProperty(propName) &&
+            return (item != null) && (item as Object).hasOwnProperty(propName) &&
                 Util.equals(item[propName], value);
         };
     }

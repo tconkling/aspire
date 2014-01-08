@@ -101,7 +101,7 @@ public class LineSegment implements Equalable
                 return trans.transformPoint(interp);
 
             } else {
-                return type
+                return type;
             }
         }
 

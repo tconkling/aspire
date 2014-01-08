@@ -138,7 +138,7 @@ public class RingBuffer
         if (index >= _length) {
             return undefined;
         } else {
-            var index :uint = ((_firstIndex + index) % _capacity);
+            index = ((_firstIndex + index) % _capacity);
             return _array[index];
         }
     }
