@@ -242,26 +242,6 @@ public class ColorMatrix
                 0, 0, 0, 1, 0]);
     }
 
-    public function setChannels (r :int = 1, g :int = 2, b :int = 4, a :int = 8) :ColorMatrix {
-        var rf :Number = ((((((r & 1) == 1)) ? 1 : 0 + (((r & 2) == 2)) ? 1 : 0) + (((r & 4) == 4)) ? 1 : 0) + (((r & 8) == 8)) ? 1 : 0);
-        if (rf > 0) {
-            rf = (1 / rf);
-        }
-        var gf :Number = ((((((g & 1) == 1)) ? 1 : 0 + (((g & 2) == 2)) ? 1 : 0) + (((g & 4) == 4)) ? 1 : 0) + (((g & 8) == 8)) ? 1 : 0);
-        if (gf > 0) {
-            gf = (1 / gf);
-        }
-        var bf :Number = ((((((b & 1) == 1)) ? 1 : 0 + (((b & 2) == 2)) ? 1 : 0) + (((b & 4) == 4)) ? 1 : 0) + (((b & 8) == 8)) ? 1 : 0);
-        if (bf > 0) {
-            bf = (1 / bf);
-        }
-        var af :Number = ((((((a & 1) == 1)) ? 1 : 0 + (((a & 2) == 2)) ? 1 : 0) + (((a & 4) == 4)) ? 1 : 0) + (((a & 8) == 8)) ? 1 : 0);
-        if (af > 0) {
-            af = (1 / af);
-        }
-        return concat([(((r & 1) == 1)) ? rf : 0, (((r & 2) == 2)) ? rf : 0, (((r & 4) == 4)) ? rf : 0, (((r & 8) == 8)) ? rf : 0, 0, (((g & 1) == 1)) ? gf : 0, (((g & 2) == 2)) ? gf : 0, (((g & 4) == 4)) ? gf : 0, (((g & 8) == 8)) ? gf : 0, 0, (((b & 1) == 1)) ? bf : 0, (((b & 2) == 2)) ? bf : 0, (((b & 4) == 4)) ? bf : 0, (((b & 8) == 8)) ? bf : 0, 0, (((a & 1) == 1)) ? af : 0, (((a & 2) == 2)) ? af : 0, (((a & 4) == 4)) ? af : 0, (((a & 8) == 8)) ? af : 0, 0]);
-    }
-
     public function blend (mat :ColorMatrix, amount :Number) :ColorMatrix {
         var inv_amount :Number = (1 - amount);
         var ii :int = 0;
