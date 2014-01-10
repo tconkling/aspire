@@ -18,6 +18,24 @@ public class MathUtil
         return Math.abs(b - a) <= EPSILON;
     }
 
+    /**
+     * Returns the smaller of two values.
+     * This differs from the built-in Math.min in that it doesn't accept varargs, and so doesn't
+     * involve the creation of a temporary array.
+     */
+    public static function min (a :Number, b :Number) :Number {
+        return (a < b ? a : b);
+    }
+
+    /**
+     * Returns the larger of two values.
+     * This differs from the built-in Math.max in that it doesn't accept varargs, and so doesn't
+     * involve the creation of a temporary array.
+     */
+    public static function max (a :Number, b :Number) :Number {
+        return (a > b ? a : b);
+    }
+
     /** Returns the value of n clamped to be within the range [min, max]. */
     public static function clamp (n :Number, min :Number, max :Number) :Number {
         return (n < min ? min : (n > max ? max : n));
