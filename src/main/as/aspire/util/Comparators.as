@@ -4,10 +4,7 @@
 package aspire.util {
 
 /**
- * Contains sorting Comparators.
- * These functions take any parameters but require only the first to, so they are suitable
- * for passing to Array.sort(), or with a flex Sort object. Note that returning values other
- * than 1, 0, or -1 confuse a flex Sort object.
+ * Compare functions for sorting, etc.
  * In general, these functions don't handle sorting undefined, it will be coerced to null.
  */
 public class Comparators
@@ -49,7 +46,7 @@ public class Comparators
             defaults = [];
         }
         // TODO: copy the arrays for safety?
-        return function (a :Object, b :Object, ... ignored) :int {
+        return function (a :Object, b :Object) :int {
             for (var ii :int = 0; ii < sortFields.length; ii++) {
                 var sortField :String = sortFields[ii];
                 var def :Object = defaults[ii];
@@ -74,7 +71,7 @@ public class Comparators
      * </listing>
      */
     public static function createNullSafe (comparator :Function) :Function {
-        return function (o1 :Object, o2 :Object, ... ignored) :int {
+        return function (o1 :Object, o2 :Object) :int {
             if (o1 === o2) { // same obj, or both null
                 return 0;
             } else if (o1 == null) {
@@ -90,7 +87,7 @@ public class Comparators
     /**
      * A standard Comparator for comparing Comparable values.
      */
-    public static function compareComparables (c1 :Comparable, c2 :Comparable, ... ignored) :int {
+    public static function compareComparables (c1 :Comparable, c2 :Comparable) :int {
         return c1.compareTo(c2);
     }
 
@@ -99,7 +96,7 @@ public class Comparators
      * Yes, you can pass any objects to this function, and actionscript will coerce them
      * to Strings, calling toString() if not a simple type.
      */
-    public static function compareStrings (s1 :String, s2 :String, ... ignored) :int {
+    public static function compareStrings (s1 :String, s2 :String) :int {
         return (s1 == s2) ? 0 : ((s1 > s2) ? 1 : -1);
     }
 
@@ -108,7 +105,7 @@ public class Comparators
      * Yes, you can pass any objects to this function, and actionscript will coerce them
      * to Strings, calling toString() if not a simple type.
      */
-    public static function compareStringsInsensitively (s1 :String, s2 :String, ... ignored) :int {
+    public static function compareStringsInsensitively (s1 :String, s2 :String) :int {
         return compareStrings(s1.toLowerCase(), s2.toLowerCase());
     }
 
@@ -116,7 +113,7 @@ public class Comparators
      * Compare two Enums by their name().
      * If your Enum doesn't override toString(), then you could just use compareStrings.
      */
-    public static function compareEnumsByName (e1 :Enum, e2 :Enum, ... ignored) :int {
+    public static function compareEnumsByName (e1 :Enum, e2 :Enum) :int {
         return compareStrings(e1.name(), e2.name());
     }
 
@@ -131,7 +128,7 @@ public class Comparators
      * If in doubt, try using createNullSafe(compareStrings), which can safely and consistently
      * sort <b>anything</b>.
      */
-    public static function compareUnknowns (o1 :Object, o2 :Object, ... ignored) :int {
+    public static function compareUnknowns (o1 :Object, o2 :Object) :int {
         if (o1 === o2) { // use strict equality
             return 0;
         } else if (o1 == null) {
@@ -153,21 +150,21 @@ public class Comparators
     /**
      * Compares two Boolean values.
      */
-    public static function compareBooleans (v1 :Boolean, v2 :Boolean, ... ignored) :int {
+    public static function compareBooleans (v1 :Boolean, v2 :Boolean) :int {
         return (v1 == v2) ? 0 : (v1 ? 1 : -1);
     }
 
     /**
      * Compares two int values in an overflow safe manner.
      */
-    public static function compareInts (v1 :int, v2 :int, ... ignored) :int {
+    public static function compareInts (v1 :int, v2 :int) :int {
         return (v1 > v2) ? 1 : (v1 == v2 ? 0 : -1);
     }
 
     /**
      * Compares two Number values, taking into account the intricacies of dealing with NaN.
      */
-    public static function compareNumbers (v1 :Number, v2 :Number, ... ignored) :int {
+    public static function compareNumbers (v1 :Number, v2 :Number) :int {
         if (v1 > v2) {
             return 1;
         } else if (v1 < v2) {
