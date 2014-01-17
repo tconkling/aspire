@@ -80,9 +80,12 @@ public class Randoms
     }
 
     /**
-     * Shuffle the specified array
+     * Shuffle the specified Array or Vector.
      */
-    public function shuffle (arr :Array) :void {
+    public function shuffle (arr :*) :void {
+        if (arr["length"] === undefined) {
+            throw new ArgumentError("arr must be an Array or Vector!");
+        }
         // starting from the end of the list, repeatedly swap the element in question with a
         // random element previous to it up to and including itself
         for (var ii :int = arr.length; ii > 1; ii--) {
