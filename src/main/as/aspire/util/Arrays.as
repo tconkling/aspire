@@ -43,7 +43,7 @@ public class Arrays
      * Pad the array to the specified length with the value specified, returning the passed-in
      * array for convenience.
      */
-    public static function padToLength (arr :*, size :uint, val :* = null) :Array {
+    public static function padToLength (arr :*, size :uint, val :* = null) :* {
         requireArrayOrVector(arr);
         while (arr.length < size) {
             arr.push(val);
@@ -56,7 +56,7 @@ public class Arrays
      *
      * @internal TODO: add support for copy ranges and deep copies?
      */
-    public static function copyOf (arr :*) :Array {
+    public static function copyOf (arr :*) :* {
         requireArrayOrVector(arr);
         return arr.concat();
     }
