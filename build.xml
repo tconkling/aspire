@@ -17,7 +17,7 @@
 
   <target name="aslib" depends="-prepare" description="Builds the library (.swc file)">
     <mkdir dir="${deploy.dir}"/>
-    <compc srcdir="${asrc.dir}" dest="${deploy.dir}/${ant.project.name}.swc"/>
+    <compc-asc1 srcdir="${asrc.dir}" dest="${deploy.dir}/${ant.project.name}.swc"/>
   </target>
 
   <target name="asdoc" depends="-prepare" description="Builds the documentation">
