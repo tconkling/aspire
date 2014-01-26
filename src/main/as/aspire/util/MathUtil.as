@@ -13,6 +13,11 @@ public class MathUtil
     /** A small value used to compare Number equivalency */
     public static const EPSILON :Number = 0.0001;
 
+    /** Return the sign of the value. val > 0 -> 1; val < 0 -> -1; val == 0 -> 0 */
+    public static function sign (val :Number) :Number {
+        return (val > 0 ? 1 : (val < 0 ? -1 : 0));
+    }
+
     /** Returns true if the two numbers differ by no more than EPSILON */
     public static function epsilonEquals (a :Number, b :Number) :Boolean {
         return Math.abs(b - a) <= EPSILON;
