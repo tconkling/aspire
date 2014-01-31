@@ -5,6 +5,7 @@ package aspire.util.sets {
 
 import aspire.util.ClassUtil;
 import aspire.util.Set;
+import aspire.util.SetView;
 import aspire.util.maps.MapBuilder;
 
 /**
@@ -82,30 +83,20 @@ public class SetBuilder
     }
 
     /**
-     * Add all the values in the specified Set or Array.
+     * Add all the values in the specified Set or Array to this Set, once built.
      */
-    public function addAll (objects :Object) :SetBuilder {
-        if (objects is Set) {
-            Set(objects).forEach(function (item :Object) :void {
+    public function addAll (setOrArray :Object) :SetBuilder {
+        if (setOrArray is SetView) {
+            SetView(setOrArray).forEach(function (item :Object) :void {
                 _mb.put(item, true);
             });
-        } else if (objects is Array) {
-            for each (var o :Object in objects as Array) {
+        } else if (setOrArray is Array) {
+            for each (var o :Object in setOrArray as Array) {
                 _mb.put(o, true);
             }
         } else {
-            throw new ArgumentError("objects must be an Array or a Set, not a '" +
-                ClassUtil.getClassName(objects) + "'");
-        }
-        return this;
-    }
-
-    /**
-     * Adds all objects in the values Array to the Set, once built.
-     */
-    public function addEach (values :Array) :SetBuilder {
-        for each (var value :Object in values) {
-            add(value);
+            throw new ArgumentError("'setOrArray' must be an Array or a Set, not a '" +
+                ClassUtil.getClassName(setOrArray) + "'");
         }
         return this;
     }
