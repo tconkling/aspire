@@ -5,6 +5,7 @@ package aspire.util.maps {
 
 import aspire.util.Comparators;
 import aspire.util.Map;
+import aspire.util.MapView;
 import aspire.util.Maps;
 import aspire.util.Preconditions;
 
@@ -120,7 +121,7 @@ public class MapBuilder
     /**
      * Put all the mappings in the specified Map.
      */
-    public function putAll (other :Map) :MapBuilder {
+    public function putAll (other :MapView) :MapBuilder {
         other.forEach(function (key :Object, value :Object) :void {
             _keyVals.push(key, value);
         });
