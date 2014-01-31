@@ -190,7 +190,7 @@ public class Sets
 
     /**
      * Tests if at least one entry in a set meets a condition.
-     * @param set the set whose entries are to be tested
+     * @param theSet the set whose entries are to be tested
      * @param condition a function that tests a set entry:
      * <listing version="3.0">
      *     function condition (o :Object) :Boolean
@@ -213,23 +213,23 @@ public class Sets
      * Adds an Array or Set of objects to the given set.
      * @return true if any object was added to the set, and false otherwise.
      */
-    public static function addAll (theSet :Set, objects :Object) :Boolean {
+    public static function addAll (theSet :Set, setOrArray :Object) :Boolean {
         var modified :Boolean = false;
-        if (objects is Set) {
-            Set(objects).forEach(function (item :Object) :void {
+        if (setOrArray is SetView) {
+            SetView(setOrArray).forEach(function (item :Object) :void {
                 if (theSet.add(item)) {
                     modified = true;
                 }
             });
-        } else if (objects is Array) {
-            for each (var o :Object in objects as Array) {
+        } else if (setOrArray is Array) {
+            for each (var o :Object in setOrArray as Array) {
                 if (theSet.add(o)) {
                     modified = true;
                 }
             }
         } else {
-            throw new ArgumentError("objects must be an Array or a Set, not a '" +
-                ClassUtil.getClassName(objects) + "'");
+            throw new ArgumentError("'setOrArray' must be an Array or a Set, not a '" +
+                ClassUtil.getClassName(setOrArray) + "'");
         }
         return modified;
     }
@@ -238,23 +238,23 @@ public class Sets
      * Removes an Array or Set of objects from the given set.
      * @return true if any object was removed from the set, and false otherwise.
      */
-    public static function removeAll (theSet :Set, objects :Object) :Boolean {
+    public static function removeAll (theSet :Set, setOrArray :Object) :Boolean {
         var modified :Boolean = false;
-        if (objects is Set) {
-            Set(objects).forEach(function (item :Object) :void {
+        if (setOrArray is SetView) {
+            SetView(setOrArray).forEach(function (item :Object) :void {
                 if (theSet.remove(item)) {
                     modified = true;
                 }
             });
-        } else if (objects is Array) {
-            for each (var o :Object in objects as Array) {
+        } else if (setOrArray is Array) {
+            for each (var o :Object in setOrArray as Array) {
                 if (theSet.remove(o)) {
                     modified = true;
                 }
             }
         } else {
-            throw new ArgumentError("objects must be an Array or a Set, not a '" +
-                ClassUtil.getClassName(objects) + "'");
+            throw new ArgumentError("'setOrArray' must be an Array or a Set, not a '" +
+                ClassUtil.getClassName(setOrArray) + "'");
         }
         return modified;
     }
