@@ -25,7 +25,7 @@ public class Random
      * Creates a pseudo random number generator with the specified seed.
      */
     public function Random (seed :uint) {
-        _x = new Array();
+        _x = [];
         setSeed(seed);
     }
 
