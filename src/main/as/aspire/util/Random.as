@@ -3,6 +3,8 @@
 
 package aspire.util {
 
+import flash.utils.ByteArray;
+
 /**
  * A seedable pseudorandom generator of the Mersenne Twister variety, with an extremely
  * long period. Note that this is not a cryptographically sound generator.
@@ -25,8 +27,29 @@ public class Random
      * Creates a pseudo random number generator with the specified seed.
      */
     public function Random (seed :uint) {
-        _x = [];
         setSeed(seed);
+    }
+
+    /** Serialize our internal state into a ByteArray */
+    public function saveState (ba :ByteArray = null) :ByteArray {
+        ba = (ba || new ByteArray());
+        for (var ii :int = 0; ii < N; ++ii) {
+            ba.writeUnsignedInt(_x[ii]);
+        }
+        ba.writeInt(_p);
+        ba.writeInt(_q);
+        ba.writeInt(_r);
+        return ba;
+    }
+
+    /** Restore our internal state from a ByteArray */
+    public function restoreState (ba :ByteArray) :void {
+        for (var ii :int = 0; ii < N; ++ii) {
+            _x[ii] = ba.readUnsignedInt();
+        }
+        _p = ba.readInt();
+        _q = ba.readInt();
+        _r = ba.readInt();
     }
 
     /**
@@ -36,8 +59,7 @@ public class Random
     public function setSeed (seed :uint) :void {
         _x[0] = seed;
         for (var ii :int = 1; ii < N; ii++) {
-            _x[ii] = imul(1812433253, _x[ii - 1] ^ (_x[ii - 1] >>> 30)) + ii;
-            _x[ii] &= 0xffffffff;
+            _x[ii] = (imul(1812433253, _x[ii - 1] ^ (_x[ii - 1] >>> 30)) + ii) & 0xffffffff;
         }
         _p = 0;
         _q = 1;
@@ -110,7 +132,7 @@ public class Random
         return (mh << 16) | (ml & 0xffff);
     }
 
-    protected var _x :Array;
+    protected var _x :Vector.<uint> = new Vector.<uint>(N, true);
     protected var _p :int;
     protected var _q :int;
     protected var _r :int;
