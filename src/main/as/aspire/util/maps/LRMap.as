@@ -16,10 +16,12 @@ import aspire.util.Map;
  */
 public class LRMap extends LinkedMap
 {
-    public function LRMap (source :Map, maxSize :int, accessOrder :Boolean = true) {
+    public function LRMap (source :Map, maxSize :int, accessOrder :Boolean = true,
+            invalidationHandler :Function = null) {
         super(source);
         _maxSize = maxSize;
         _accessOrder = accessOrder;
+        _invalidationHandler = invalidationHandler;
     }
 
     /** @inheritDoc */
@@ -27,6 +29,9 @@ public class LRMap extends LinkedMap
         var oldVal :* = super.put(key, value);
         if ((oldVal === undefined) && (size() > _maxSize)) {
             // remove the oldest entry
+            if (_invalidationHandler != null) {
+                _invalidationHandler(_anchor.after.key, _anchor.after.value);
+            }
             remove(_anchor.after.key);
         }
         return oldVal;
@@ -48,5 +53,8 @@ public class LRMap extends LinkedMap
 
     /** Are we keeping in access order, or merely insertion order? @private */
     protected var _accessOrder :Boolean;
+
+    /** A function to optionally receive notification when a mapping is invalidated */
+    protected var _invalidationHandler :Function;
 }
 }
