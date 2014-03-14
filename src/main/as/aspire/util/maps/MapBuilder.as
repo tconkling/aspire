@@ -58,11 +58,19 @@ public class MapBuilder
      * mappings whenever size exceeds maxSize. Iterating over this map (via keys(), values(),
      * or forEach()) will visit the oldest mappings first.
      *
+     * @param maxSize The maximum size to maintain in the cache before invalidating old entries
+     * @param accessOrder If true, all access (as opposed to just insertion) is used to determine
+     *  entry age.
+     * @param invalidationHandler a function to receive notifications when a mapping is invalidated.
+     *  signature: function (key :Object, value :Object) :void;
+     *
      * @return this MapBuilder, for chaining.
      */
-    public function makeLR (maxSize :int, accessOrder :Boolean = true) :MapBuilder {
+    public function makeLR (maxSize :int, accessOrder :Boolean = true,
+            invalidationHandler :Function = null) :MapBuilder {
         _maxSizeLR = maxSize;
         _accessOrderLR = accessOrder;
+        _invalidationHandler = invalidationHandler;
         return this;
     }
 
@@ -70,7 +78,7 @@ public class MapBuilder
      * Make the Map auto-expire elements.
      *
      * @param ttl the time to live
-     * @param a function to receive notifications when a mapping expires.
+     * @param expireHandler a function to receive notifications when a mapping expires.
      * signature: function (key :Object, value :Object) :void;
      *
      * @return this MapBuilder, for chaining.
@@ -137,7 +145,7 @@ public class MapBuilder
         Preconditions.checkArgument(!isLR || !isExpiring, "Cannot be both LR and Expiring");
         var map :Map = Maps.newMapOf(_keyClazz);
         if (isLR) {
-            map = new LRMap(map, _maxSizeLR, _accessOrderLR);
+            map = new LRMap(map, _maxSizeLR, _accessOrderLR, _invalidationHandler);
         } else if (isExpiring) {
             map = new ExpiringMap(map, _ttlExpiring, _expireHandler);
         }
@@ -186,6 +194,8 @@ public class MapBuilder
     protected var _maxSizeLR :int;
     /** @private */
     protected var _accessOrderLR :Boolean;
+    /** @private */
+    protected var _invalidationHandler :Function;
 
     /** Tracks expiring. @private */
     protected var _ttlExpiring :int;
