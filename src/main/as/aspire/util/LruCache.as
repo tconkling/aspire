@@ -77,12 +77,13 @@ public class LruCache
         entry.val = val;
 
         // We push to the head and pop from the tail
-        if (_head == null) {
-            _head = _tail = entry;
+        var oldHead :Entry = _head;
+        _head = entry;
+        if (oldHead != null) {
+            _head.next = oldHead;
+            oldHead.prev = _head;
         } else {
-            var head :Entry = _head;
-            entry.next = head;
-            head.prev = entry;
+            _tail = _head;
         }
 
         _size++;
