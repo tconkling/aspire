@@ -197,7 +197,7 @@ public class Arrays
     /**
      * Returns the number of elements in the Array for which the given predicate returns true.
      */
-   public static function count (arr :Array, predicate :Function) :uint {
+   public static function count (arr :*, predicate :Function) :uint {
         var count :uint = 0;
         for (var ii :int = 0; ii < arr.length; ++ii) {
             if (predicate(arr[ii])) {
