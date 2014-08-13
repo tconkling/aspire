@@ -47,7 +47,7 @@ import flash.utils.Dictionary;
  * the Hashable, Equalable, or Comparable classes, so there could be larger problems.
  */
 public class Enum
-    implements Hashable, Comparable
+    implements Equalable, Comparable
 {
     /**
      * Call this constructor in your enum subclass constructor.
@@ -96,15 +96,10 @@ public class Enum
         return _ordinal;
     }
 
-    // from Hashable
+    // from Equalable
     public final function equals (other :Object) :Boolean {
         // enums are singleton
         return (other === this);
-    }
-
-    // from Hashable
-    public final function hashCode () :int {
-        return ordinal();
     }
 
     /**

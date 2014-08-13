@@ -27,18 +27,12 @@ public class Maps
 {
     /**
      * Create a new Map designed to hold keys of the specified class.
-     * If the class is Hashable (but not an Enum) then a HashMap will be used, otherwise a
-     * DictionaryMap. If your key type is not Hashable, then be sure that reference equality
-     * (the == operator) can be used to compare your keys!
+     * If the class is Hashable, then a HashMap will be used, otherwise a DictionaryMap.
+     * If your key type is not Hashable, then be sure that reference equality (the == operator)
+     * can be used to compare your keys!
      */
     public static function newMapOf (keyClazz :Class) :Map {
-        if (ClassUtil.isAssignableAs(Hashable, keyClazz) &&
-                !ClassUtil.isAssignableAs(Enum, keyClazz)) {
-            return new HashMap();
-
-        } else {
-            return new DictionaryMap();
-        }
+        return (ClassUtil.isAssignableAs(Hashable, keyClazz) ? new HashMap() : new DictionaryMap());
     }
 
     /**
