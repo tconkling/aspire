@@ -93,7 +93,7 @@ public class Enum
      * anything where the ordinal can change.
      */
     public final function ordinal () :int {
-        return (_enums[ClassUtil.getClass(this)] as Array).indexOf(this);
+        return _ordinal;
     }
 
     // from Hashable
@@ -159,10 +159,18 @@ public class Enum
      */
     protected static function finishedEnumerating (clazz :Class) :void {
         _blocked[clazz] = true;
+        var arr :Array = _enums[clazz] as Array;
+        var ord :int = 0;
+        for each (var enum :Enum in arr) {
+            enum._ordinal = ord++;
+        }
     }
 
     /** The String name of this enum value. */
     protected var _name :String;
+
+    /** The ordinal of this enum value. (Not set until finishedEnumerating() is called) */
+    protected var _ordinal :int = -1;
 
     /** An array of enums for each enum class. */
     private static const _enums :Dictionary = new Dictionary(true);
