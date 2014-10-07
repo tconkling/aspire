@@ -73,8 +73,8 @@ public class Util
      * will end up being arg 1.
      */
     public static function unfuckVarargs (args :Array) :Array {
-        return (args.length == 1 && (args[0] is Array)) ? (args[0] as Array)
-                                                        : args;
+        while (args.length == 1 && (args[0] is Array)) args = args[0] as Array;
+        return args
     }
 }
 }
