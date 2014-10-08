@@ -277,7 +277,10 @@ public class StringUtil
      */
     public static function substitute (str :String, ... args) :String {
         // if someone passed an array as arg 1, fix it
-        args = Util.unfuckVarargs(args);
+        if (args.length == 1 && args[0] is Array) {
+            args = args[0];
+        }
+
         var len :int = args.length;
         // TODO: FIXME: this might be wrong, if your {0} replacement has a {1} in it, then
         // that'll get replaced next iteration.
