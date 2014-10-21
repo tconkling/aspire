@@ -98,6 +98,23 @@ public class ComparisonChain
     }
 
     /**
+     * Compares two Booleans, considering true to be less than false, <i>if</i>
+     * the result of this comparison chain has not already been determined.
+     */
+    public function compareTrueFirst (left :Boolean, right :Boolean) :ComparisonChain {
+        return compareBooleans(right, left);
+    }
+
+    /**
+     * Compares two Booleans, considering false to be less than true, <i>if</i>
+     * the result of this comparison chain has not already been determined.
+     * (Equivalent to compareBooleans).
+     */
+    public function compareFalseFirst (left :Boolean, right :Boolean) :ComparisonChain {
+        return compareBooleans(left, right);
+    }
+
+    /**
      * Ends this ComparisonChain and returns its reuslt.
      */
     public function result () :int {
