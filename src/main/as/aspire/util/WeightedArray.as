@@ -10,12 +10,12 @@ public class WeightedArray
         _dataDirty = true;
     }
 
-    public function push (data :Object, relativeChance :Number) :void {
-        if (relativeChance <= 0) {
-            throw new ArgumentError("relativeChance must be > 0");
+    public function push (data :Object, weight :Number) :void {
+        if (weight <= 0) {
+            throw new ArgumentError("weight must be > 0");
         }
 
-        _data.push(new WeightedData(data, relativeChance));
+        _data.push(new WeightedData(data, weight));
         _dataDirty = true;
     }
 
@@ -72,7 +72,7 @@ public class WeightedArray
      */
     public function forEach (callback :Function) :void {
         _data.forEach(function (wd :WeightedData, ...ignored) :void {
-            callback(wd.data, wd.relativeChance);
+            callback(wd.data, wd.weight);
         });
     }
 
@@ -107,7 +107,7 @@ public class WeightedArray
             var totalVal :Number = 0;
             for each (var wd :WeightedData in _data) {
                 wd.min = totalVal;
-                totalVal += wd.relativeChance;
+                totalVal += wd.weight;
             }
 
             _dataDirty = false;
@@ -123,15 +123,15 @@ public class WeightedArray
 class WeightedData
 {
     public var data :*;
-    public var relativeChance :Number;
+    public var weight :Number;
     public var min :Number;
 
     public function get max () :Number {
-        return min + relativeChance;
+        return min + weight;
     }
 
-    public function WeightedData (data :*, relativeChance :Number) {
+    public function WeightedData (data :*, weight :Number) {
         this.data = data;
-        this.relativeChance = relativeChance;
+        this.weight = weight;
     }
 }
