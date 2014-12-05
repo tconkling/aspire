@@ -148,10 +148,24 @@ public class Comparators
     }
 
     /**
-     * Compares two Boolean values.
+     * Compares two Boolean values. 'False' will compare less than 'True'.
      */
     public static function compareBooleans (v1 :Boolean, v2 :Boolean) :int {
         return (v1 == v2) ? 0 : (v1 ? 1 : -1);
+    }
+
+    /**
+     * Compares two Boolean values. 'False' will compare less than 'True'.
+     */
+    public static function compareFalseFirst (v1 :Boolean, v2 :Boolean) :int {
+        return compareBooleans(v1, v2);
+    }
+
+    /**
+     * Compares two Boolean values. 'True' will compare less than 'False'.
+     */
+    public static function compareTrueFirst (v1 :Boolean, v2 :Boolean) :int {
+        return compareBooleans(v2, v1);
     }
 
     /**
