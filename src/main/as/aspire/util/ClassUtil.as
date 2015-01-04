@@ -64,6 +64,11 @@ public class ClassUtil
      * Returns true if an object of type srcClass is a subclass of or
      * implements the interface represented by the asClass paramter.
      *
+     * Note that this only works for classes and interfaces with public visibility.
+     * ClassUtil.isAssignableAs(MyInternalType, someClass) will always return false if
+     * MyInternalType is non-public.
+     *
+     *
      * <code>
      * if (ClassUtil.isAssignableAs(Streamable, someClass)) {
      *     var s :Streamable = (new someClass() as Streamable);
@@ -114,34 +119,45 @@ public class ClassUtil
 }
 }
 
-import aspire.util.ClassUtil;
-
 import flash.utils.Dictionary;
 import flash.utils.describeType;
+import flash.utils.getDefinitionByName;
 
 class Metadata
 {
     public function Metadata (forClass :Class) {
         const typeInfo :XMLList = describeType(forClass).child("factory");
 
+        var name :String;
+
         // See which classes we extend.
-        const exts :XMLList = typeInfo.child("extendsClass").attribute("type");
-        for each (var extStr :String in exts) {
-            extSet[ClassUtil.getClassByName(extStr)] = null;
+        for each (name in typeInfo.child("extendsClass").attribute("type")) {
+            addSupertype(name);
         }
 
         // See which interfaces we implement.
-        var imps :XMLList = typeInfo.child("implementsInterface").attribute("type");
-        for each (var impStr :String in imps) {
-            impSet[ClassUtil.getClassByName(impStr)] = null;
+        for each (name in typeInfo.child("implementsInterface").attribute("type")) {
+            addSupertype(name);
+        }
+    }
+
+    protected function addSupertype (name :String) :void {
+        var supertype :Class;
+        try {
+            supertype = getDefinitionByName(name) as Class;
+        } catch (e :ReferenceError) {
+            // Reference errors will be thrown for internal classes/interfaces.
+        }
+
+        if (supertype != null) {
+            _supertypes[supertype] = null;
         }
     }
 
     public function isSubtypeOf (asClass :Class) :Boolean {
-        return (asClass in extSet) || (asClass in impSet);
+        return (asClass in _supertypes);
     }
 
-    protected const extSet :Dictionary = new Dictionary();
-    protected const impSet :Dictionary = new Dictionary();
+    protected const _supertypes :Dictionary = new Dictionary();
 }
 
