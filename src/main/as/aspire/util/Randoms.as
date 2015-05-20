@@ -123,6 +123,49 @@ public class Randoms
         return arr.splice(_stream.nextInt(arr.length), 1)[0];
     }
 
+    /**
+     * Pick a random index from the array, weighted by the value of the corresponding array
+     * element.
+     *
+     * @param weightsArray an Array or Vector of non-negative floats.
+     *
+     * @return an index into the array, or -1 if the sum of the weights is less than or equal to
+     * 0.0 or any individual element is negative.  For example, passing in {0.2, 0.0, 0.6, 0.8}
+     * will return:
+     *
+     * <pre>{@code
+     * 0 - 1/8th of the time
+     * 1 - never
+     * 2 - 3/8th of the time
+     * 3 - half of the time
+     * }</pre>
+     *
+     * (See also: WeightedArray)
+     */
+    public function getWeightedIndex (weightsArray :*) :int {
+        var sum :Number = 0;
+        for each (var weight :Number in weightsArray) {
+            if (weight < 0) {
+                return -1;
+            }
+            sum += weight;
+        }
+
+        if (sum <= 0.0) {
+            return -1;
+        }
+        var pick :Number = getNumber(sum);
+        for (var ii :int = 0, nn :int = weightsArray.length; ii < nn; ++ii) {
+            pick -= weightsArray[ii];
+            if (pick < 0) {
+                return ii;
+            }
+        }
+
+        // we'll never get here
+        return 0;
+    }
+
     protected var _stream :RandomStream;
 }
 }
