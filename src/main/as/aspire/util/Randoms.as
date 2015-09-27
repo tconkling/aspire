@@ -120,7 +120,7 @@ public class Randoms
             return ifEmpty;
         }
 
-        return arr.splice(_stream.nextInt(arr.length), 1)[0];
+        return arr.removeAt(_stream.nextInt(arr.length));
     }
 
     /**

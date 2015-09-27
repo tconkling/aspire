@@ -546,7 +546,7 @@ public class Arrays
         for (var ii :int = 0; ii < arr.length; ii++) {
             var item :* = arr[ii];
             if (pred(item)) {
-                arr.splice(ii--, 1);
+                arr.removeAt(ii--);
                 if (firstOnly) {
                     return item;
                 }

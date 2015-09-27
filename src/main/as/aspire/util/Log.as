@@ -97,7 +97,7 @@ public class Log
     public static function removeTarget (target :LogTarget) :void {
         var idx :int = _targets.indexOf(target);
         if (idx >= 0) {
-            _targets.splice(idx, 1);
+            _targets.removeAt(idx);
         }
     }
 
@@ -114,7 +114,7 @@ public class Log
     public static function removePreformatTarget (target :PreformatLogTarget) :void {
         var idx :int = _preformatTargets.indexOf(target);
         if (idx >= 0) {
-            _preformatTargets.splice(idx, 1);
+            _preformatTargets.removeAt(idx);
         }
     }
 
