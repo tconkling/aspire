@@ -157,6 +157,12 @@ public class ColorUtil
     /**
      * Returns the uint representing the color in RGB that is equivalent to the hue, saturation,
      *  and brightness specified.  Based upon java.awt.Color.HSBtoRGB.
+     *
+     *  @param hue can be any floating-point number. The floor of this number is subtracted from it
+     *  to create a fraction between 0 and 1. This fractional number is then multiplied by 360
+     *  to produce the hue angle in the HSB color model.
+     *  @param saturation a value between 0 and 1
+     *  @param brightness a value between 0 and 1
      */
     public static function HSBtoRGB (hue :Number, saturation :Number, brightness :Number) :uint {
         var r :int = 0;
