@@ -39,6 +39,16 @@ public class Randoms
     }
 
     /**
+     * Returns a pseudorandom, uniformly distributed <code>int</code> value between
+     * <code>base-variance</code> (inclusive) and <code>base+variance</code> (inclusive).
+     *
+     * @throws IllegalArgumentException if <code>high - low</code> is not positive.
+     */
+    public function getIntWithVariance (base :int, variance :int) :int {
+        return getIntInRange(base - variance, base + variance + 1);
+    }
+
+    /**
      * Returns a pseudorandom, uniformly distributed <code>Number</code> value between
      * <code>0.0</code> (inclusive) and the <code>high</code> (exclusive).
      *
@@ -54,6 +64,14 @@ public class Randoms
      */
     public function getNumberInRange (low :Number, high :Number) :Number {
         return low + (_stream.nextNumber() * (high - low));
+    }
+
+    /**
+     * Returns a pseudorandom, uniformly distributed <code>Number</code> value between
+     * <code>base-variance</code> (inclusive) and <code>base+variance</code> (exclusive).
+     */
+    public function getNumberWithVariance (base :Number, variance :Number) :Number {
+        return getNumberInRange(base - variance, base + variance);
     }
 
     /**
