@@ -129,7 +129,7 @@ public class Enum
      * Turn a String name into an Enum constant.
      */
     public static function valueOf (clazz :Class, name :String) :Enum {
-        for each (var enum :Enum in values(clazz)) {
+        for each (var enum :Enum in rawValues(clazz)) {
             if (enum.name() === name) {
                 return enum;
             }
@@ -138,27 +138,36 @@ public class Enum
     }
 
     /**
-     * Get all the enums of the specified class, or null if it's not an enum.
+     * Get a copy of the Array of enums in the specified class.
      */
     public static function values (clazz :Class) :Array {
+        return rawValues(clazz).concat();
+    }
+
+    /**
+     * Get the Array of enums for the specified class. Not a copy! Do not modify the Array.
+     */
+    public static function rawValues (clazz :Class) :Array {
         var arr :Array = _enums[clazz] as Array;
         if (arr == null) {
             throw new ArgumentError(Joiner.pairs("Not an enum", "class", clazz));
         }
-        return arr.concat(); // return a copy, so that callers may not fuxor
+        return arr;
     }
 
     /**
      * This should be called by your enum subclass after you've finished enumating the enum
      * constants. See the example in the class header documentation.
      */
-    protected static function finishedEnumerating (clazz :Class) :void {
+    protected static function finishedEnumerating (clazz :Class) :Array {
         _blocked[clazz] = true;
         var arr :Array = _enums[clazz] as Array;
         var ord :int = 0;
         for each (var enum :Enum in arr) {
             enum._ordinal = ord++;
         }
+
+        return arr;
     }
 
     /** The String name of this enum value. */
