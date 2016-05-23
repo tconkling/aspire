@@ -18,9 +18,9 @@ public class MatrixUtil
             m.a *= scale;
             m.b *= scale;
         } else {
-            var skewY :Number = skewY(m);
-            m.a = Math.cos(skewY) * scaleX;
-            m.b = Math.sin(skewY) * scaleX;
+            var skewYVal :Number = skewY(m);
+            m.a = Math.cos(skewYVal) * scaleX;
+            m.b = Math.sin(skewYVal) * scaleX;
         }
     }
 
@@ -35,9 +35,9 @@ public class MatrixUtil
             m.c *= scale;
             m.d *= scale;
         } else {
-            var skewX :Number = skewX(m);
-            m.c = -Math.sin(skewX) * scaleY;
-            m.d = Math.cos(skewX) * scaleY;
+            var skewXVal :Number = skewX(m);
+            m.c = -Math.sin(skewXVal) * scaleY;
+            m.d = Math.cos(skewXVal) * scaleY;
         }
     }
 
