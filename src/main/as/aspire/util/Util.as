@@ -4,6 +4,7 @@
 package aspire.util {
 
 import flash.utils.ByteArray;
+import flash.utils.getQualifiedClassName;
 
 /**
  * Contains a variety of utility functions.
@@ -66,6 +67,41 @@ public class Util
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the specified object is just a regular old associative hash.
+     */
+    public static function isPlainObject (obj :Object) :Boolean {
+        return getQualifiedClassName(obj) == "Object";
+    }
+
+    /**
+     * Is the specified object 'simple': one of the basic built-in flash types.
+     */
+    public static function isSimple (obj :Object) :Boolean {
+        var type :String = typeof(obj);
+        switch (type) {
+        case "number":
+        case "string":
+        case "boolean":
+            return true;
+
+        case "object":
+            return (obj is Date) || (obj is Array);
+
+        default:
+            return false;
+        }
+    }
+
+    /**
+     * If you call a varargs method by passing it an array, the array
+     * will end up being arg 1.
+     */
+    public static function unfuckVarargs (args :Array) :Array {
+        return (args.length == 1 && (args[0] is Array)) ? (args[0] as Array)
+            : args;
     }
 }
 }
