@@ -46,7 +46,7 @@ public class Arrays
     public static function padToLength (arr :*, size :uint, val :* = null) :* {
         requireArrayOrVector(arr);
         while (arr.length < size) {
-            arr.push(val);
+            arr[arr.length] = val;
         }
         return arr;
     }
