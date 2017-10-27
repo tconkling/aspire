@@ -60,7 +60,7 @@ public class WeightedArray
     public function getAll () :Array {
         var out :Array = [];
         for each (var wd :WeightedData in _data) {
-            out.push(wd);
+            out.push(wd.data);
         }
         return out;
     }
