@@ -3,7 +3,7 @@
 
 package aspire.util {
 
-public class FileUtil
+public class PathUtil
 {
     /**
      * Returns the substring composed of the characters after the last '.' in the supplied string.
@@ -46,6 +46,18 @@ public class FileUtil
      */
     public static function stripPathAndDotSuffix (filename :String, separator :String = "/") :String {
         return stripDotSuffix(stripPath(filename, separator));
+    }
+
+    /**
+     * Returns the portion of the filename up to and including the final path separator.
+     * If there is no path separator, the empty string will be returned
+     *
+     *  getPath("foo/bar/baz.png") -> "foo/bar/"
+     *  getPath("baz.png") -> ""
+     */
+    public static function getPath (filename :String, separator :String = "/") :String {
+        var ix :int = filename.lastIndexOf(separator);
+        return (ix >= 0 ? filename.substr(0, ix + 1) : "");
     }
 }
 
